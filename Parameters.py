@@ -17,7 +17,7 @@ class ParametrizationSettings:
         self.N = 100 # Number of points for Meridional length's discretisation
 
         self.type_of_parametrization = 'Bezier' # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
-        self.w1 = 1 # Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
+        self.w1 = 10 # Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
 
         # NOTE: This overrides the previous declarations
         self.__dict__.update(kwargs)
