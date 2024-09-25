@@ -22,6 +22,7 @@ def read_bgi_file(file_path):
     return lines
 
 def parse_bgi_to_dict(lines):
+
     """
     Converts the list of lines from the .bgi file into a structured dictionary.
     This version supports infinitely nested subsections using a stack,
@@ -31,6 +32,7 @@ def parse_bgi_to_dict(lines):
     stack = []  # Stack to handle nested sections/subsections
     current_data = []  # For storing (x, y) or other data points
     current_subsection = None  # To track the current subsection
+    subsection_counters = {}  # Track counters for repeated subsection names
 
     for line in lines:
         line = line.strip()
@@ -42,7 +44,18 @@ def parse_bgi_to_dict(lines):
             if stack:
                 # Add the new section to the current section at the top of the stack
                 parent_section = stack[-1]
-                parent_section[section_name] = new_section
+
+                # Handle cases like 'SpanLayer' with multiple instances
+                if section_name in parent_section:
+                    if section_name not in subsection_counters:
+                        subsection_counters[section_name] = 1
+                    subsection_counters[section_name] += 1
+                    section_name_with_index = f"{section_name}{subsection_counters[section_name]}"
+                else:
+                    section_name_with_index = section_name
+                    subsection_counters[section_name] = 1
+
+                parent_section[section_name_with_index] = new_section
             else:
                 # This is a top-level section
                 data_dict[section_name] = new_section
@@ -50,13 +63,13 @@ def parse_bgi_to_dict(lines):
             current_subsection = None  # Reset current_subsection on new section
 
         elif line.startswith("End"):
-            if current_subsection and stack:
-                # Store the current data into the subsection's data
+            if current_data and stack:
+                # Store the current data into the section at the top of the stack
                 parent_section = stack[-1]
-                if "data" not in parent_section[current_subsection]:
-                    parent_section[current_subsection]["data"] = []  # Initialize data list
-                parent_section[current_subsection]["data"].extend(current_data)  # Append data
-                current_data = []  # Reset current data for the next segment
+                if "data" not in parent_section:
+                    parent_section["data"] = []  # Initialize data list
+                parent_section["data"].extend(current_data)  # Append data to the "data" key
+                current_data = []
             # Pop the section off the stack when it ends
             stack.pop()
             if stack:  # Reset current_subsection when not at the top level
@@ -66,33 +79,31 @@ def parse_bgi_to_dict(lines):
             # Handle key=value lines
             key, value = line.split("=", 1)
             if stack:
+                # Add the key-value pair to the current section
                 current_section = stack[-1]
-                if current_subsection:
-                    # Initialize the subsection if it doesn't exist
-                    if current_subsection not in current_section:
-                        current_section[current_subsection] = {}
-                    current_section[current_subsection][key.strip()] = value.strip()
-                else:
-                    # Add the key-value pair to the current section
-                    current_section[key.strip()] = value.strip()
+                current_section[key.strip()] = value.strip()
             else:
                 print(f"Warning: Key-value pair found outside of any section: {line}")
 
         elif "(" in line and ")" in line:
             # Handle data points in the form (x, y)
-            current_data.append(re.findall(r"\((.*?)\)", line)[0])
+            # Extract and convert the (x, y) points to tuples of floats
+            point = re.findall(r"\((.*?)\)", line)[0]
+            x, y = map(float, point.split(','))
+            current_data.append((x, y))
 
         elif "New" in line:
             # Handle new subsections (e.g., New Segment, New AngleCurve, etc.)
             subsection_name = line
             new_subsection = {}
             if stack:
+                # Add the new subsection to the current section at the top of the stack
                 current_section = stack[-1]
                 if subsection_name not in current_section:
                     current_section[subsection_name] = []  # Initialize list for multiple segments
                 current_section[subsection_name].append(new_subsection)  # Add new subsection
-                current_subsection = subsection_name  # Track the current subsection
             stack.append(new_subsection)  # Push the new subsection onto the stack
+            current_subsection = subsection_name  # Track the current subsection
 
         elif line == '':
             # Ignore empty lines
@@ -101,13 +112,13 @@ def parse_bgi_to_dict(lines):
         else:
             # Handle any other plain lines
             if stack:
+                # Add the line to the current section as a key with a value of None
                 current_section = stack[-1]
-                current_section[line] = None  # Add line as key with None value
+                current_section[line] = None
             else:
                 print(f"Warning: Unrecognized line found outside of any section: {line}")
 
     return data_dict
-
 def save_dict_as_json(data_dict, output_file):
     """
     Saves the dictionary into a JSON file.
@@ -115,7 +126,7 @@ def save_dict_as_json(data_dict, output_file):
     with open(output_file, 'w') as json_file:
         json.dump(data_dict, json_file, indent=4)
 
-def convert_json_to_bji(json_file, bji_file):
+def convert_json_to_bji(json_file, bji_file): 
     """
     Reads a JSON file and converts it into a .bji format
     that preserves specific formatting.
@@ -126,28 +137,46 @@ def convert_json_to_bji(json_file, bji_file):
     with open(bji_file, 'w') as file:
         def write_bji(data, indent_level=0):
             indent = '    ' * indent_level  # Use 4 spaces for indentation
-            for key, value in data.items():
-                if isinstance(value, dict):
-                    # Begin a new section
-                    file.write(f"{indent}Begin {key}\n")
-                    write_bji(value, indent_level + 1)
-                    file.write(f"{indent}End {key}\n\n")  # Adding a blank line after the section
+            if isinstance(data, dict):
+                # Iterate over key-value pairs in dictionaries
+                for key, value in data.items():
+                    if isinstance(value, dict):
+                        # Handle nested sections (dictionaries)
+                        file.write(f"{indent}Begin {key}\n")
+                        write_bji(value, indent_level + 1)
+                        file.write(f"{indent}End {key}\n\n")  # Add a blank line after the section
 
-                elif isinstance(value, list):
-                    # Handle lists of items (like segments)
-                    for index, item in enumerate(value):
-                        file.write(f"{indent}New {key}\n")
-                        write_bji(item, indent_level + 1)
-                        file.write(f"{indent}End {key}\n\n")  # Blank line after each item
+                    elif isinstance(value, list):
+                        # Handle lists of subsections or multiple entries like SpanLayer
+                        for item in value:
+                            if isinstance(item, dict):
+                                if key.startswith("New"):
+                                    # Handle subsections like 'New Segment'
+                                    file.write(f"{indent}{key}\n")
+                                    write_bji(item, indent_level + 1)
+                                    file.write(f"{indent}End {key.split()[1]}\n\n")  # End <subsection>
+                                else:
+                                    # Handle regular sections in a list (e.g., SpanLayer1, SpanLayer2)
+                                    file.write(f"{indent}Begin {key}\n")
+                                    write_bji(item, indent_level + 1)
+                                    file.write(f"{indent}End {key}\n\n")
+                            else:
+                                # If item is not a dictionary, just write the list content
+                                file.write(f"{indent}{item}\n")
 
-                elif key == "data":
-                    # Handle the data points under a subsection
-                    for point in value:
-                        file.write(f"{indent}({', '.join(map(str, point))})\n")
+                    elif key == "data":
+                        # Handle the data points under a subsection (formatted as (x, y))
+                        for point in value:
+                            file.write(f"{indent}({', '.join(map(str, point))})\n")
 
-                else:
-                    # Write key=value pairs
-                    file.write(f"{indent}{key} = {value}\n")
+                    else:
+                        # Handle key-value pairs
+                        file.write(f"{indent}{key} = {value}\n")
+
+            elif isinstance(data, list):
+                # If for some reason a raw list is passed, handle it (this should be rare)
+                for item in data:
+                    file.write(f"{indent}{item}\n")
 
         write_bji(json_data)
 
@@ -164,7 +193,7 @@ if __name__ == "__main__":
     save_dict_as_json(data_dict, json_file_path)
     
     # Step 4: Convert JSON to DJI (optional, depends on your DJI format requirements)
-    dji_file_path = 'output_data.dji'
+    dji_file_path = 'output_data.bji'
     convert_json_to_bji(json_file_path, dji_file_path)
     
     print("Conversion completed successfully!")

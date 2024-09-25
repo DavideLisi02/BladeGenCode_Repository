@@ -1,0 +1,387 @@
+Begin Defaults
+End Defaults
+
+Begin Equations
+End Equations
+
+Begin Model
+    NumMainBlades = 9
+    Mode = Angle/Thickness
+    LeftHandedCoordSystem = None
+    OutputBladePoints = None
+    BladeOutputPointClustering = BothEnds
+    NumBladePoints = 60
+    NumLeadingEdgePoints = 9
+    NumTrailingEdgePoints = 9
+    CurveDisplayMaximumError = 0.01000000000
+    DataFromLeToTe = None
+    BetaAxialDef = None
+    ThicknessIsDimension = None
+    MeridionalSpanCurveRuledShape = RuledElementOnly
+    Component = "MainBlade1"
+    Designer = ""
+    Company = ""
+    Comment = ""
+    DeviceType = Compressor
+    ConfigurationType = Unknown
+    RotationType = Unknown
+    GeometryUnits = MM
+End Model
+
+Begin Meridional
+    MeridionalControlCurveMode = Normal
+    SpanByGeom = None
+    Begin HubCurve
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [0.0, 2.00072]
+                [20.0, 2.00072]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [20.0, 2.00072]
+                [29.8205, 2.00072]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [29.8205, 2.00072]
+                [33.2527, 2.00072]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [33.2527, 2.00072]
+                [33.4115, 2.00094]
+                [33.5704, 2.00052]
+                [33.7291, 2.0023]
+                [33.8879, 2.00781]
+                [34.0465, 2.01475]
+                [34.2045, 2.03136]
+                [34.3629, 2.04375]
+                [34.5213, 2.05584]
+                [34.6794, 2.07078]
+                [34.837, 2.0901]
+                [34.9942, 2.11319]
+                [35.1508, 2.13989]
+                [35.3065, 2.17141]
+                [35.4628, 2.19938]
+                [35.6195, 2.22501]
+                [35.7747, 2.2588]
+                [35.9281, 2.30027]
+                [36.0815, 2.34128]
+                [36.2364, 2.37666]
+                [36.3894, 2.41863]
+                [36.5412, 2.46544]
+                [36.6914, 2.51715]
+                [36.8439, 2.56125]
+                [36.9937, 2.61408]
+                [37.1423, 2.67032]
+                [37.2885, 2.73222]
+                [37.4374, 2.78777]
+                [37.585, 2.84601]
+                [37.7261, 2.91903]
+                [37.8691, 2.98807]
+                [38.0111, 3.05928]
+                [38.1547, 3.12704]
+                [38.2909, 3.20882]
+                [38.4298, 3.28626]
+                [38.5604, 3.3761]
+                [38.6889, 3.46944]
+                [38.8219, 3.5563]
+                [38.9492, 3.65117]
+                [39.0693, 3.75514]
+                [39.1898, 3.85868]
+                [39.3126, 3.95946]
+                [39.4217, 4.07476]
+                [39.5297, 4.1912]
+                [39.637, 4.30828]
+                [39.7467, 4.42309]
+                [39.8448, 4.54809]
+                [39.9394, 4.67566]
+                [40.0352, 4.8023]
+                [40.1294, 4.93015]
+                [40.2108, 5.06659]
+                [40.2914, 5.20344]
+                [40.3715, 5.34057]
+                [40.45, 5.47852]
+                [40.5136, 5.62405]
+                [40.5769, 5.76971]
+                [40.6399, 5.91553]
+                [40.7028, 6.06137]
+                [40.7518, 6.21243]
+                [40.8035, 6.36258]
+                [40.8526, 6.51368]
+                [40.9019, 6.6646]
+                [40.9374, 6.81943]
+                [40.9742, 6.97394]
+                [41.0091, 7.12888]
+                [41.0453, 7.28353]
+                [41.0759, 7.4394]
+                [41.096, 7.59694]
+                [41.1182, 7.75422]
+                [41.1385, 7.91174]
+                [41.1584, 8.06931]
+                [41.1787, 8.22684]
+                [41.1955, 8.38476]
+                [41.208, 8.54312]
+                [41.2186, 8.70158]
+                [41.2265, 8.86022]
+                [41.234, 9.01887]
+                [41.2407, 9.17755]
+                [41.2449, 9.33633]
+                [41.2478, 9.49513]
+                [41.2501, 9.65394]
+                [41.252, 9.81276]
+                [41.2521, 9.97158]
+                [41.25, 10.1304]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [41.25, 10.1304]
+                [41.25, 30.0]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+    End HubCurve
+
+    Begin ShroudCurve
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [-0.09444444444, 6.138888889]
+                [20.0, 5.6]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [20.0, 5.6]
+                [29.8205, 5.6]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [29.8205, 5.6]
+                [33.2527, 5.59987]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [33.2527, 5.59987]
+                [33.4161, 5.59901]
+                [33.5794, 5.59915]
+                [33.7428, 5.60007]
+                [33.9062, 5.60113]
+                [34.0695, 5.60318]
+                [34.2329, 5.60677]
+                [34.3962, 5.60982]
+                [34.5595, 5.61319]
+                [34.7228, 5.61866]
+                [34.886, 5.62549]
+                [35.0492, 5.63339]
+                [35.2122, 5.64406]
+                [35.3751, 5.65734]
+                [35.5378, 5.67172]
+                [35.7006, 5.68481]
+                [35.8635, 5.69704]
+                [36.0253, 5.72022]
+                [36.1876, 5.7383]
+                [36.3491, 5.76352]
+                [36.5105, 5.78852]
+                [36.6712, 5.8178]
+                [36.8309, 5.85247]
+                [36.9899, 5.88991]
+                [37.1489, 5.92729]
+                [37.3084, 5.96293]
+                [37.4629, 6.01567]
+                [37.6184, 6.06568]
+                [37.7714, 6.123]
+                [37.9262, 6.17505]
+                [38.0754, 6.24171]
+                [38.2212, 6.31536]
+                [38.3643, 6.39407]
+                [38.5082, 6.47157]
+                [38.6428, 6.56384]
+                [38.7752, 6.65941]
+                [38.907, 6.75604]
+                [39.0299, 6.86361]
+                [39.1509, 6.97328]
+                [39.2566, 7.09781]
+                [39.3652, 7.21987]
+                [39.4662, 7.34772]
+                [39.5585, 7.48257]
+                [39.6505, 7.61756]
+                [39.7329, 7.75867]
+                [39.7985, 7.90822]
+                [39.8669, 8.0566]
+                [39.933, 8.20601]
+                [39.9875, 8.35997]
+                [40.0373, 8.51559]
+                [40.0754, 8.67443]
+                [40.1116, 8.83376]
+                [40.1478, 8.99308]
+                [40.178, 9.15361]
+                [40.1997, 9.31554]
+                [40.2133, 9.47834]
+                [40.2273, 9.64111]
+                [40.2396, 9.804]
+                [40.2499, 9.96706]
+                [40.25, 10.1304]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [40.25, 10.1304]
+                [40.25, 30.0]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+    End ShroudCurve
+
+    Begin InletCurve
+        New Segment
+            CurveType = Linear
+            Begin Data
+                [0.0, 2.00072]
+                [-0.09444444444, 6.138888889]
+            End Data
+
+        End Segment
+
+    End InletCurve
+
+    Begin ExhaustCurve
+        New Segment
+            CurveType = Linear
+            Begin Data
+                [41.25, 30.0]
+                [40.25, 30.0]
+            End Data
+
+        End Segment
+
+    End ExhaustCurve
+
+    Begin LeadingEdgeCurve
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [33.55813716, 2.000519926]
+                [33.5749, 2.90062]
+                [33.5722, 3.8001]
+                [33.5886, 4.69971]
+                [33.58669975, 5.599179392]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+    End LeadingEdgeCurve
+
+    Begin TrailingEdgeCurve
+        New Segment
+            CurveType = Spline
+            UpstreamControl = Free
+            Begin Data
+                [41.25188711, 9.99989214]
+                [41.0014, 10.0]
+                [40.7512, 10.0]
+                [40.501, 10.0]
+                [40.25091801, 9.999790231]
+            End Data
+
+            DownstreamControl = Free
+        End Segment
+
+    End TrailingEdgeCurve
+
+    New SpanLayer
+        Name = Layer1
+        OutputLayer = T
+        SpanFraction = 0.000000000
+    End SpanLayer
+
+    New SpanLayer
+        Name = Layer2
+        OutputLayer = T
+        SpanFraction = 0.2500000000
+    End SpanLayer
+
+    New SpanLayer
+        Name = Layer3
+        OutputLayer = T
+        SpanFraction = 0.5000000000
+    End SpanLayer
+
+    New SpanLayer
+        Name = Layer4
+        OutputLayer = T
+        SpanFraction = 0.7500000000
+    End SpanLayer
+
+    New SpanLayer
+        Name = Layer5
+        OutputLayer = T
+        SpanFraction = 1.000000000
+    End SpanLayer
+
+End Meridional
+
+Begin PlusData
+    Begin Case
+        MachineType = Comp_Radial
+        Units = MM
+    End Case
+
+End PlusData
+
