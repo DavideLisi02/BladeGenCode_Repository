@@ -119,6 +119,7 @@ def parse_bgi_to_dict(lines):
                 print(f"Warning: Unrecognized line found outside of any section: {line}")
 
     return data_dict
+
 def save_dict_as_json(data_dict, output_file):
     """
     Saves the dictionary into a JSON file.
@@ -129,7 +130,9 @@ def save_dict_as_json(data_dict, output_file):
 def convert_json_to_bji(json_file, bji_file): 
     """
     Reads a JSON file and converts it into a .bji format
-    that preserves specific formatting.
+    that preserves specific formatting. 
+    If a key's value is None, only the key is written without '=' or 'None'.
+    Points are written as (x.xx, y.yy).
     """
     with open(json_file, 'r') as file:
         json_data = json.load(file)
@@ -141,10 +144,19 @@ def convert_json_to_bji(json_file, bji_file):
                 # Iterate over key-value pairs in dictionaries
                 for key, value in data.items():
                     if isinstance(value, dict):
-                        # Handle nested sections (dictionaries)
-                        file.write(f"{indent}Begin {key}\n")
-                        write_bji(value, indent_level + 1)
-                        file.write(f"{indent}End {key}\n\n")  # Add a blank line after the section
+                        if key in ["Case","PlusData"]:
+                            # Handle nested sections (dictionaries)
+                            file.write(f"Begin {key}\n")
+                            write_bji(value, 0)
+                            file.write(f"End {key}\n\n")
+                        else:    
+                            # Handle nested sections (dictionaries)
+                            file.write(f"{indent}Begin {key}\n")
+                            write_bji(value, indent_level + 1)
+                            if key == "Data":
+                                file.write(f"{indent}End {key}\n")  # Add a blank line after the section
+                            else:
+                                file.write(f"{indent}End {key}\n\n")
 
                     elif isinstance(value, list):
                         # Handle lists of subsections or multiple entries like SpanLayer
@@ -154,24 +166,27 @@ def convert_json_to_bji(json_file, bji_file):
                                     # Handle subsections like 'New Segment'
                                     file.write(f"{indent}{key}\n")
                                     write_bji(item, indent_level + 1)
-                                    file.write(f"{indent}End {key.split()[1]}\n\n")  # End <subsection>
+                                    file.write(f"{indent}End {key.split()[1]}\n")  # End <subsection>
                                 else:
                                     # Handle regular sections in a list (e.g., SpanLayer1, SpanLayer2)
                                     file.write(f"{indent}Begin {key}\n")
                                     write_bji(item, indent_level + 1)
-                                    file.write(f"{indent}End {key}\n\n")
+                                    file.write(f"{indent}End {key}\n")
                             else:
                                 # If item is not a dictionary, just write the list content
-                                file.write(f"{indent}{item}\n")
+                                if key == 'data':
+                                    item = tuple(item)
+                                    file.write(f"{indent}{item}\n")
+                                else:
+                                    file.write(f"{indent}{item}\n")
 
-                    elif key == "data":
-                        # Handle the data points under a subsection (formatted as (x, y))
-                        for point in value:
-                            file.write(f"{indent}({', '.join(map(str, point))})\n")
+                    elif value is None:
+                        # If the value is None, just write the key without '=' or 'None'
+                        file.write(f"{indent}{key}\n")
 
                     else:
-                        # Handle key-value pairs
-                        file.write(f"{indent}{key} = {value}\n")
+                        # Handle key-value pairs with normal values
+                        file.write(f"{indent}{key}={value}\n")
 
             elif isinstance(data, list):
                 # If for some reason a raw list is passed, handle it (this should be rare)
@@ -179,6 +194,7 @@ def convert_json_to_bji(json_file, bji_file):
                     file.write(f"{indent}{item}\n")
 
         write_bji(json_data)
+
 
 if __name__ == "__main__":
     # Step 1: Read the .bgi file
