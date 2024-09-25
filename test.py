@@ -33,6 +33,7 @@ def parse_bgi_to_dict(lines):
     current_data = []  # For storing (x, y) or other data points
     current_subsection = None  # To track the current subsection
     subsection_counters = {}  # Track counters for repeated subsection names
+    BladeCounter = 0
 
     for line in lines:
         line = line.strip()
@@ -93,17 +94,42 @@ def parse_bgi_to_dict(lines):
             current_data.append((x, y))
 
         elif "New" in line:
-            # Handle new subsections (e.g., New Segment, New AngleCurve, etc.)
-            subsection_name = line
-            new_subsection = {}
-            if stack:
-                # Add the new subsection to the current section at the top of the stack
-                current_section = stack[-1]
-                if subsection_name not in current_section:
-                    current_section[subsection_name] = []  # Initialize list for multiple segments
-                current_section[subsection_name].append(new_subsection)  # Add new subsection
-            stack.append(new_subsection)  # Push the new subsection onto the stack
-            current_subsection = subsection_name  # Track the current subsection
+            if "Blade" in line:
+                section_name = f"{line.split()[1]}{BladeCounter}"
+                BladeCounter +=1
+                new_section = {}
+                if stack:
+                    # Add the new section to the current section at the top of the stack
+                    parent_section = stack[-1]
+
+                    # Handle cases like 'SpanLayer' with multiple instances
+                    if section_name in parent_section:
+                        if section_name not in subsection_counters:
+                            subsection_counters[section_name] = 1
+                        subsection_counters[section_name] += 1
+                        section_name_with_index = f"{section_name}{subsection_counters[section_name]}"
+                    else:
+                        section_name_with_index = section_name
+                        subsection_counters[section_name] = 1
+
+                    parent_section[section_name_with_index] = new_section
+                else:
+                    # This is a top-level section
+                    data_dict[section_name] = new_section
+                stack.append(new_section)  # Push the new section onto the stack
+                current_subsection = None  # Reset current_subsection on new section
+            else:
+                # Handle new subsections (e.g., New Segment, New AngleCurve, etc.)
+                subsection_name = line
+                new_subsection = {}
+                if stack:
+                    # Add the new subsection to the current section at the top of the stack
+                    current_section = stack[-1]
+                    if subsection_name not in current_section:
+                        current_section[subsection_name] = []  # Initialize list for multiple segments
+                    current_section[subsection_name].append(new_subsection)  # Add new subsection
+                stack.append(new_subsection)  # Push the new subsection onto the stack
+                current_subsection = subsection_name  # Track the current subsection
 
         elif line == '':
             # Ignore empty lines
@@ -117,7 +143,6 @@ def parse_bgi_to_dict(lines):
                 current_section[line] = None
             else:
                 print(f"Warning: Unrecognized line found outside of any section: {line}")
-
     return data_dict
 
 def save_dict_as_json(data_dict, output_file):
@@ -151,13 +176,18 @@ def convert_json_to_bji(json_file, bji_file):
                             file.write(f"End {key}\n\n")
                         else:    
                             # Handle nested sections (dictionaries)
-                            file.write(f"{indent}Begin {key}\n")
+                            if "Blade" in key:
+                                name_key = key[:-1]
+                            else:
+                                name_key = key
+                            file.write(f"{indent}New {name_key}\n")
                             write_bji(value, indent_level + 1)
                             if key == "Data":
-                                file.write(f"{indent}End {key}\n")  # Add a blank line after the section
+                                file.write(f"{indent}End {name_key}\n")  # Add a blank line after the section
                             else:
-                                file.write(f"{indent}End {key}\n\n")
+                                file.write(f"{indent}End {name_key}\n\n")
 
+                                
                     elif isinstance(value, list):
                         # Handle lists of subsections or multiple entries like SpanLayer
                         for item in value:

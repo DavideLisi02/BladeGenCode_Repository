@@ -1,0 +1,20 @@
+Begin Defaults
+End Defaults
+
+Begin Equations
+End Equations
+
+Begin Model
+End Model
+
+Begin Meridional
+End Meridional
+
+New Blade
+End Blade
+
+New Blade
+End Blade
+
+Begin PlusData
+End PlusData

@@ -1,10 +1,10 @@
-Begin Defaults
+New Defaults
 End Defaults
 
-Begin Equations
+New Equations
 End Equations
 
-Begin Model
+New Model
     NumMainBlades=9
     Mode=Angle/Thickness
     LeftHandedCoordSystem
@@ -28,14 +28,14 @@ Begin Model
     GeometryUnits=MM
 End Model
 
-Begin Meridional
+New Meridional
     MeridionalControlCurveMode=Normal
     SpanByGeom
-    Begin HubCurve
+    New HubCurve
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (0.0, 2.00072)
                 (20.0, 2.00072)
             End Data
@@ -44,7 +44,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (20.0, 2.00072)
                 (29.8205, 2.00072)
             End Data
@@ -53,7 +53,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (29.8205, 2.00072)
                 (33.2527, 2.00072)
             End Data
@@ -62,7 +62,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (33.2527, 2.00072)
                 (33.4115, 2.00094)
                 (33.5704, 2.00052)
@@ -153,7 +153,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (41.25, 10.1304)
                 (41.25, 30.0)
             End Data
@@ -161,11 +161,11 @@ Begin Meridional
         End Segment
     End HubCurve
 
-    Begin ShroudCurve
+    New ShroudCurve
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (-0.09444444444, 6.138888889)
                 (20.0, 5.6)
             End Data
@@ -174,7 +174,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (20.0, 5.6)
                 (29.8205, 5.6)
             End Data
@@ -183,7 +183,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (29.8205, 5.6)
                 (33.2527, 5.59987)
             End Data
@@ -192,7 +192,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (33.2527, 5.59987)
                 (33.4161, 5.59901)
                 (33.5794, 5.59915)
@@ -259,7 +259,7 @@ Begin Meridional
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (40.25, 10.1304)
                 (40.25, 30.0)
             End Data
@@ -267,31 +267,31 @@ Begin Meridional
         End Segment
     End ShroudCurve
 
-    Begin InletCurve
+    New InletCurve
         New Segment
             CurveType=Linear
-            Begin Data
+            New Data
                 (0.0, 2.00072)
                 (-0.09444444444, 6.138888889)
             End Data
         End Segment
     End InletCurve
 
-    Begin ExhaustCurve
+    New ExhaustCurve
         New Segment
             CurveType=Linear
-            Begin Data
+            New Data
                 (41.25, 30.0)
                 (40.25, 30.0)
             End Data
         End Segment
     End ExhaustCurve
 
-    Begin LeadingEdgeCurve
+    New LeadingEdgeCurve
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (33.55813716, 2.000519926)
                 (33.5749, 2.90062)
                 (33.5722, 3.8001)
@@ -302,11 +302,11 @@ Begin Meridional
         End Segment
     End LeadingEdgeCurve
 
-    Begin TrailingEdgeCurve
+    New TrailingEdgeCurve
         New Segment
             CurveType=Spline
             UpstreamControl=Free
-            Begin Data
+            New Data
                 (41.25188711, 9.99989214)
                 (41.0014, 10.0)
                 (40.7512, 10.0)
@@ -343,6 +343,249 @@ Begin Meridional
         SpanFraction=1.000000000
     End SpanLayer
 End Meridional
+
+New Blade
+    PitchFraction=0.000000000
+    LeadingEdgeEndType=Ellipse
+    HubLE_EllipseRatio=2.000000000
+    ShrLE_EllipseRatio=2.000000000
+    TrailingEdgeEndType=CutOff
+    EllipseAtMean=T
+    New AngleDefinition
+        AngleLocation=MeanLine
+        SpanwiseDistribution=General
+        New AngleCurve
+            Layer="Layer1"
+            DefinitionType=ThetaCurve
+            HorizDim=MeridionalPrime
+            VertDim=Degree
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, -88.41712807)
+                    (0.496931, -76.16385266)
+                    (0.993862, -64.63021225)
+                    (1.49079, -53.43839845)
+                    (1.98772, -42.77611225)
+                    (2.48465, -32.12499873)
+                    (2.98159, -21.2363942)
+                    (3.47852, -4.711202766)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End AngleCurve
+        New AngleCurve
+            Layer="Layer2"
+            DefinitionType=ThetaCurve
+            HorizDim=MeridionalPrime
+            VertDim=Degree
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, -88.52427118)
+                    (0.372456, -73.99119671)
+                    (0.744913, -61.25090717)
+                    (1.11737, -49.66581515)
+                    (1.48983, -39.15043532)
+                    (1.86228, -29.01584325)
+                    (2.23474, -18.89523135)
+                    (2.60719, -4.721579032)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End AngleCurve
+        New AngleCurve
+            Layer="Layer3"
+            DefinitionType=ThetaCurve
+            HorizDim=MeridionalPrime
+            VertDim=Degree
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, -88.10372016)
+                    (0.294586, -72.58745011)
+                    (0.589172, -59.02897684)
+                    (0.883757, -47.15545786)
+                    (1.17834, -36.59194959)
+                    (1.47293, -26.73266373)
+                    (1.76752, -17.08502849)
+                    (2.0621, -4.728592035)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End AngleCurve
+        New AngleCurve
+            Layer="Layer4"
+            DefinitionType=ThetaCurve
+            HorizDim=MeridionalPrime
+            VertDim=Degree
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, -88.11174157)
+                    (0.239166, -71.30115986)
+                    (0.478331, -57.20805967)
+                    (0.717497, -45.05654157)
+                    (0.956662, -34.38640585)
+                    (1.19583, -24.70949246)
+                    (1.43499, -15.5766598)
+                    (1.67416, -4.743334239)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End AngleCurve
+        New AngleCurve
+            Layer="Layer5"
+            DefinitionType=ThetaCurve
+            HorizDim=MeridionalPrime
+            VertDim=Degree
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, -87.93469761)
+                    (0.1982, -70.43255584)
+                    (0.396401, -55.88785032)
+                    (0.594601, -43.29228993)
+                    (0.792801, -32.42608805)
+                    (0.991001, -22.83546211)
+                    (1.1892, -14.33253925)
+                    (1.3874, -4.755979418)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End AngleCurve
+    End AngleDefinition
+
+    New ThicknessDefinition
+        ThicknessType=Normal To Camber Line
+        SpanwiseDistribution=General
+        New ThicknessCurve
+            Layer="Layer1"
+            HorizDim=Meridional
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, 0.401765)
+                    (1.82066, 0.396009)
+                    (3.64132, 0.405707)
+                    (5.46198, 0.39848)
+                    (7.28265, 0.396675)
+                    (9.10331, 0.40116)
+                    (10.924, 0.391107)
+                    (12.7446, 0.403242)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End ThicknessCurve
+        New ThicknessCurve
+            Layer="Layer2"
+            HorizDim=Meridional
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, 0.343174)
+                    (1.68449, 0.357717)
+                    (3.36898, 0.359891)
+                    (5.05347, 0.350229)
+                    (6.73796, 0.357492)
+                    (8.42244, 0.362715)
+                    (10.1069, 0.35709)
+                    (11.7914, 0.365673)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End ThicknessCurve
+        New ThicknessCurve
+            Layer="Layer3"
+            HorizDim=Meridional
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, 0.31149)
+                    (1.55512, 0.318485)
+                    (3.11023, 0.318126)
+                    (4.66535, 0.305768)
+                    (6.22047, 0.319915)
+                    (7.77559, 0.325636)
+                    (9.3307, 0.323504)
+                    (10.8858, 0.328244)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End ThicknessCurve
+        New ThicknessCurve
+            Layer="Layer4"
+            HorizDim=Meridional
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, 0.261013)
+                    (1.42823, 0.281921)
+                    (2.85645, 0.281627)
+                    (4.28468, 0.265968)
+                    (5.71291, 0.284125)
+                    (7.14114, 0.288691)
+                    (8.56936, 0.290238)
+                    (9.99759, 0.291996)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End ThicknessCurve
+        New ThicknessCurve
+            Layer="Layer5"
+            HorizDim=Meridional
+            New Segment
+                CurveType=Spline
+                UpstreamControl=Free
+                New Data
+                    (0.0, 0.253069)
+                    (1.31052, 0.2503)
+                    (2.62105, 0.251397)
+                    (3.93156, 0.232511)
+                    (5.24208, 0.251363)
+                    (6.5526, 0.253658)
+                    (7.86313, 0.257302)
+                    (9.17365, 0.255717)
+                End Data
+                DownstreamControl=Free
+            End Segment
+        End ThicknessCurve
+    End ThicknessDefinition
+
+End Blade
+
+New Blade
+    PitchFraction=0.5000000000
+    LeadingEdgeEndType=Ellipse
+    HubLE_EllipseRatio=2.000000000
+    ShrLE_EllipseRatio=2.000000000
+    TrailingEdgeEndType=CutOff
+    EllipseAtMean=T
+    New LeadingEdgeCut
+        New Segment
+            CurveType=Spline
+            UpstreamControl=Free
+            New Data
+                (38.51850191, 3.345418288)
+                (38.2351, 4.01949)
+                (37.9425, 4.67598)
+                (37.6599, 5.32989)
+                (37.38499776, 5.988007459)
+            End Data
+            DownstreamControl=Free
+        End Segment
+    End LeadingEdgeCut
+
+End Blade
 
 Begin PlusData
 Begin Case
