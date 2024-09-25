@@ -193,7 +193,7 @@ if __name__ == "__main__":
     save_dict_as_json(data_dict, json_file_path)
     
     # Step 4: Convert JSON to DJI (optional, depends on your DJI format requirements)
-    dji_file_path = 'output_data.bji'
-    convert_json_to_bji(json_file_path, dji_file_path)
+    bgi_out_file_path = 'output_data.bgi'
+    convert_json_to_bji(json_file_path, bgi_out_file_path)
     
     print("Conversion completed successfully!")
