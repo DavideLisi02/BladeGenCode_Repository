@@ -170,8 +170,8 @@ class Geometry:
         '''
         modified_Dict = data_dict
         if object == "Blade" and definition == 'beta-M%':
-            for layer in range(0,1): #To implement later: fro modifying more layers
-                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][0]["New Segment"][layer]["Data"]["data"][0] = curve_points_list #Blade0 (Layer1)
+            for layer in range(0,5): #To implement later: modify more layers differently
+                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["New Segment"][0]["Data"]["data"][0] = curve_points_list #Blade0 (Layer1)
         return modified_Dict
     
     def save_json(self, output_jsonPath, data_dict):
