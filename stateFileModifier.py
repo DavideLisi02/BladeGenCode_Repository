@@ -203,7 +203,7 @@ class Geometry:
                             if key in ["Case","PlusData", "Model", "Equations", "Defaults", "Meridional", "HubCurve", "Data"]:
                                 # Handle nested sections (dictionaries)
                                 file.write(f"Begin {key}\n")
-                                write_bji(value, 0)
+                                write_bji(value, indent_level)
                                 file.write(f"End {key}\n\n")
                             else:    
                                 # Handle nested sections (dictionaries)
