@@ -301,3 +301,11 @@ class Geometry:
         DataDict = self.convert_list_to_dict(DataList)
         self.save_json(self.output_jsonPath, DataDict)
         return
+    
+    def create_unmodified_bgi_geometry(self):
+        DataList = self.readfile(filePath =  self.defaultfilePath)
+        UnModDataDict = self.convert_list_to_dict(DataList)
+        self.save_json(self.output_jsonPath, UnModDataDict)
+        self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
+        self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
+        return
