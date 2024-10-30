@@ -20,6 +20,7 @@ class ParametrizationSettings:
             self.tau = [0.5, 0.5] # Adimensional parameters for varying the parametrization configuration. The first value affects the meridional position of the control point. The second value affects the beta value of the control point
             self.N = 100 # Number of points for Meridional length's discretisation
 
+            self.radialFibers = True #Set True if the .bgi file has Radial Fiber definition
             self.type_of_parametrization = 'Bezier' # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
             self.w1 = 10 # Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
 

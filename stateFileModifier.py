@@ -1,6 +1,7 @@
 import os
 import json
 import subprocess
+import re
 
 class Geometry:
 
@@ -20,11 +21,13 @@ class Geometry:
         
         self.object = parameters.object
         self.definition = parameters.definition
+        self.parameters = parameters
         self.curves = curves
         
         self.defaultfilePath = defaultfilePath
         self.output_jsonPath = output_jsonPath
         self.output_bgiPath = output_bgiPath
+        self.output_bgdPath = output_bgdPath
 
         self.std_ANSYS_Folder = std_ANSYS_Folder
 
@@ -35,7 +38,7 @@ class Geometry:
             DataList = file.readlines()
         return DataList
 
-    def convert_list_to_dict(list):
+    def convert_list_to_dict(self, list):
         """
         Converts the list of lines from the .bgi file into a structured dictionary.
         This version supports infinitely nested subsections using a stack,
@@ -159,16 +162,19 @@ class Geometry:
 
         return data_dict
 
-    def modify_dict(object, definition, curve_points_list, data_dict):
+    def modify_dict(self, object, definition, curve_points_list, data_dict):
         '''
         Modifies the default geometry, descripted in a json file, accordingly to
         the object and the definition of the parametrization by inserting the curve data points 
         in a new json file which is the output of the function
         '''
-        modified_Dict = None
+        modified_Dict = data_dict
+        if object == "Blade" and definition == 'beta-M%':
+            for layer in range(0,1): #To implement later: fro modifying more layers
+                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][0]["New Segment"][layer]["Data"]["data"][0] = curve_points_list #Blade0 (Layer1)
         return modified_Dict
     
-    def save_json(output_jsonPath, data_dict):
+    def save_json(self, output_jsonPath, data_dict):
         """
         Saves the dictionary into a JSON file.
         """
@@ -176,7 +182,7 @@ class Geometry:
             json.dump(data_dict, json_file, indent=4)
         return
 
-    def convert_json_to_bgi(output_jsonPath, output_bgiPath):
+    def convert_json_to_bgi(self, output_jsonPath, output_bgiPath):
         """
         Reads a JSON file and converts it into a .bji format
         that preserves specific formatting.
@@ -250,7 +256,7 @@ class Geometry:
 
             write_bji(json_data)
 
-    def convert_bgi_to_bgd(output_bgiPath, output_bgdPath, ANSYSfolderPath = "c:\\Program Files\\ANSYS Inc"):
+    def convert_bgi_to_bgd(self, output_bgiPath, output_bgdPath, ANSYSfolderPath = "c:\\Program Files\\ANSYS Inc"):
         '''
         Runs terminal's commands to execute BladeBatch from BladeGen in order to run
         the .bgi file and obtain a .bgd
@@ -280,11 +286,18 @@ class Geometry:
             print("An error occurred during the conversion bgi->bgd.")
             return None
 
-    def run_modifications_conversion(self):
-        DataList = self.readfile(self, filePath =  'defaultBGI\geometry00.bgi')
+    def create_modified_geometry(self):
+        DataList = self.readfile(filePath =  self.defaultfilePath)
         DataDict = self.convert_list_to_dict(DataList)
-        ModDataDict = self.modify_dict(self.object, self.definition, self.curves, DataDict)
+        ModDataDict = self.modify_dict(self.object, self.definition, self.curves.points, DataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
         self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
+        return
+    
+    def create_unmodified_json_geometry(self):
+        DataList = self.readfile(filePath = self.defaultfilePath)
+        print(DataList)
+        DataDict = self.convert_list_to_dict(DataList)
+        self.save_json(self.output_jsonPath, DataDict)
         return
