@@ -200,7 +200,7 @@ class Geometry:
                     # Iterate over key-value pairs in dictionaries
                     for key, value in data.items():
                         if isinstance(value, dict):
-                            if key in ["Case","PlusData"]:
+                            if key in ["Case","PlusData", "Model", "Equations", "Defaults", "Meridional", "HubCurve", "Data"]:
                                 # Handle nested sections (dictionaries)
                                 file.write(f"Begin {key}\n")
                                 write_bji(value, 0)

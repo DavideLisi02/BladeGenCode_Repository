@@ -228,7 +228,7 @@ def convert_json_to_bji(json_file, bji_file):
 
 if __name__ == "__main__":
     # Step 1: Read the .bgi file
-    bgi_file_path = 'defaultBGI\\default00.bgi'  # Change this to your actual file path
+    bgi_file_path = 'defaultBGI\\geometry02.bgi'  # Change this to your actual file path
     lines = read_bgi_file(bgi_file_path)
     
     # Step 2: Convert the list to dictionary
