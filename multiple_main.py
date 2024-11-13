@@ -67,7 +67,7 @@ for par in pars_list:
                         std_ANSYS_Folder = "c:\\Program Files\\ANSYS Inc")
 
     #Geometry_02.create_unmodified_json_geometry()
-    Geometry_i.create_modified_geometry() # Go to bgi-bgd conversion and uncomment the line needed oince AnsysiBatcher has been setup - go to stateFileModifier.create_modified_geometry
+    Geometry_i.create_modified_geometry() # TO BE MODIFIED : | 1 Setup Ansys Folder | 2: go to stateFileModifier.create_modified_geometry | 3: uncomment line saying self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
     #Geometry_02.create_unmodified_bgi_geometry()
 
 
