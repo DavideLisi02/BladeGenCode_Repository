@@ -2,7 +2,8 @@
 
 class ParametrizationSettings:
 
-    def __init__(self, **kwargs):
+    def __init__(self,
+                **kwargs):
         """
         Class containing all the settings and information about
         the parametrized model.
@@ -13,6 +14,8 @@ class ParametrizationSettings:
         self.definition = 'beta-M%' # Possible entries: 'beta-M%'
         
         self.index = 0 # Used for storing the index of the SImulation
+
+        self.print_conversion_output = False
 
         if self.object=='Blade' and self.definition=='beta-M%':
             self.beta_in = 40 # Beta value at the inlet

@@ -7,6 +7,14 @@ from stateFileModifier import *
 
 # SETTINGS OF THE SIMULATED DATASET
 
+# Print Results & Conversion Output | Y/n = True/False
+print_results = True
+print_conversion_output = False
+
+# Beta at inlet and outlet
+beta_in_settings = 40
+beta_out_settings = 60
+
 # Discrtization of the parameter tau_0
 tau_0_N = 3 
 tau_0_max = 1
@@ -35,13 +43,17 @@ std_ANSYS_Folder_settings = "c:\\Program Files\\ANSYS Inc"
 
 tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
-w1 = np.linspace(tau_1_min, tau_1_max, w1_N)
+w1 = np.linspace(w1_min, w1_max, w1_N)
 
 # Creatin
 pars_list = [ParametrizationSettings(
+    beta_in = beta_in_settings,
+    beta_out = beta_out_settings,
+    print_conversion_output = print_conversion_output,
     tau =  [tau_0_ijk, tau_1_ijk],
     w1 = w1_ijk,
-    index = ((i*tau_0_N+j)*tau_1_N)+k )
+    index = ((i*tau_0_N+j)*tau_1_N)+k,
+    par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")
                 for i,tau_0_ijk in enumerate(tau_0)
                 for j,tau_1_ijk in enumerate(tau_1)
                 for k,w1_ijk in enumerate(w1)
@@ -69,6 +81,8 @@ for par in pars_list:
     #Geometry_02.create_unmodified_json_geometry()
     Geometry_i.create_modified_geometry() # TO BE MODIFIED : | 1 Setup Ansys Folder | 2: go to stateFileModifier.create_modified_geometry | 3: uncomment line saying self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
     #Geometry_02.create_unmodified_bgi_geometry()
+    if print_results:
+        print(f"Geometry was created for  : tau = {par.tau} | w1 = {par.w1} | Name = {par.par_name}")
 
-
-print(f"Results Dictionary Initialized:\n{results_dict}\n")
+if print_results:
+    print(f"Results Dictionary Initialized:\n{results_dict}\n")

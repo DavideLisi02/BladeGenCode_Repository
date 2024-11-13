@@ -57,7 +57,8 @@ class Geometry:
 
         for line in list:
             line = line.strip()
-            print(f"Analyzed line = #{line}#")
+            if self.parameters.print_conversion_output:
+                print(f"Analyzed line = #{line}#")
 
             if line.startswith("Begin"):
                 section_name = line.split()[1]
@@ -268,8 +269,9 @@ class Geometry:
         result = subprocess.run(full_command, shell=True, capture_output=True, text=True)
 
         # Print the output and errors (if any)
-        print("STDOUT:", result.stdout)
-        print("STDERR:", result.stderr)
+        if self.parameters.print_conversion_output:
+            print("STDOUT:", result.stdout)
+            print("STDERR:", result.stderr)
 
         # Check if the command was successful
         if result.returncode == 0:
@@ -290,7 +292,8 @@ class Geometry:
     
     def create_unmodified_json_geometry(self):
         DataList = self.readfile(filePath = self.defaultfilePath)
-        print(DataList)
+        if self.parameters.print_conversion_output:
+            print(DataList)
         DataDict = self.convert_list_to_dict(DataList)
         self.save_json(self.output_jsonPath, DataDict)
         return
