@@ -11,7 +11,9 @@ class Geometry:
                  defaultfilePath ='defaultBGI\\geometry00.bgi', # Path of the starting bgi model to modify
                  output_jsonPath = 'modifiedJSON\\MODgeometry00.json',
                  output_bgiPath = 'modifiedBGI\\MODgeometry00.bgi',
+                 output_unmodified_bgiPath = 'unmodifiedBGI\\UNMODgeometry00.bgi',
                  output_bgdPath = 'modifiedBGD\\MODgeometry00.bgd',
+                 output_unmodified_bgdPath = 'unmodifiedBGD\\UNMODgeometry00.bgd',
                  std_ANSYS_Folder = "c:\\Program Files\\ANSYS Inc",
                 **kwargs):
         """
@@ -27,7 +29,9 @@ class Geometry:
         self.defaultfilePath = defaultfilePath
         self.output_jsonPath = output_jsonPath
         self.output_bgiPath = output_bgiPath
+        self.output_unmodified_bgiPath = output_unmodified_bgiPath
         self.output_bgdPath = output_bgdPath
+        self.output_unmodified_bgdPath = output_unmodified_bgdPath
 
         self.std_ANSYS_Folder = std_ANSYS_Folder
 
@@ -296,6 +300,6 @@ class Geometry:
         DataList = self.readfile(filePath =  self.defaultfilePath)
         UnModDataDict = self.convert_list_to_dict(DataList)
         self.save_json(self.output_jsonPath, UnModDataDict)
-        self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
-        self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
+        self.convert_json_to_bgi(self.output_jsonPath, self.output_unmodified_bgiPath)
+        self.convert_bgi_to_bgd(self.output_bgiPath, self.output_unmodified_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
         return
