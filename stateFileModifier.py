@@ -249,7 +249,6 @@ class Geometry:
 
             write_bji(json_data)
 
-
     def convert_bgi_to_bgd(self, output_bgiPath, output_bgdPath, ANSYSfolderPath = "c:\\Program Files\\ANSYS Inc"):
         '''
         Runs terminal's commands to execute BladeBatch from BladeGen in order to run
@@ -286,7 +285,7 @@ class Geometry:
         ModDataDict = self.modify_dict(self.object, self.definition, self.curves.points, DataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
-        self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
+        #self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
         return
     
     def create_unmodified_json_geometry(self):
