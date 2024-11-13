@@ -11,5 +11,5 @@ Geometry_02 = Geometry(Parameters,
                       output_jsonPath = 'modifiedJSON\\geometry02.json')
 
 #Geometry_02.create_unmodified_json_geometry()
-#Geometry_02.create_modified_geometry()
-Geometry_02.create_unmodified_bgi_geometry()
+Geometry_02.create_modified_geometry()
+#Geometry_02.create_unmodified_bgi_geometry()
