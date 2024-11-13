@@ -18,8 +18,8 @@ class ParametrizationSettings:
         self.print_conversion_output = False
 
         if self.object=='Blade' and self.definition=='beta-M%':
-            self.beta_in = 40 # Beta value at the inlet
-            self.beta_out = 60 # Beta value at the outlet
+            self.beta_in = 20 # Beta value at the inlet
+            self.beta_out = 30 # Beta value at the outlet
 
             self.spline_degree = 2 # Degree of the spline
             self.tau = [0.5, 0.5] # Adimensional parameters for varying the parametrization configuration. The first value affects the meridional position of the control point. The second value affects the beta value of the control point
