@@ -3,7 +3,7 @@ from Bezier import *
 from Parameters import *
 import numpy as np
 
-tau_N = 10 # Discrtization of the parameter tau
+tau_N = 3 # Discrtization of the parameter tau
 tau_0_max = 1
 tau_0_min = 0
 tau_1_max = 1.5

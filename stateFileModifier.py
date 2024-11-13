@@ -196,65 +196,55 @@ class Geometry:
         with open(output_bgiPath, 'w') as file:
             def write_bji(data, indent_level=0):
                 indent = '    ' * indent_level  # Use 4 spaces for indentation
+                data_indent = '    ' * (indent_level)  # One additional level for data points inside "Data"
+
                 if isinstance(data, dict):
-                    # Iterate over key-value pairs in dictionaries
                     for key, value in data.items():
                         if isinstance(value, dict):
-                            if key in ["Case","PlusData", "Model", "Equations", "Defaults", "Meridional", "HubCurve", "Data"]:
-                                # Handle nested sections (dictionaries)
-                                file.write(f"Begin {key}\n")
-                                write_bji(value, indent_level)
-                                file.write(f"End {key}\n\n")
-                            else:    
-                                # Handle nested sections (dictionaries)
+                            if key in ["Case", "PlusData", "Model", "Equations", "Defaults", "Meridional", "HubCurve", "Data"]:
+                                file.write(f"{indent}Begin {key}\n")
+                                write_bji(value, indent_level + 1)
+                                file.write(f"{indent}End {key}\n\n")
+                            else:
                                 if "Blade" in key:
                                     name_key = key[:-1]
                                 else:
                                     name_key = key
                                 file.write(f"{indent}New {name_key}\n")
                                 write_bji(value, indent_level + 1)
-                                if key == "Data":
-                                    file.write(f"{indent}End {name_key}\n")  # Add a blank line after the section
-                                else:
-                                    file.write(f"{indent}End {name_key}\n\n")
+                                file.write(f"{indent}End {name_key}\n\n")
 
-                                    
                         elif isinstance(value, list):
-                            # Handle lists of subsections or multiple entries like SpanLayer
                             for item in value:
                                 if isinstance(item, dict):
                                     if key.startswith("New"):
-                                        # Handle subsections like 'New Segment'
                                         file.write(f"{indent}{key}\n")
                                         write_bji(item, indent_level + 1)
-                                        file.write(f"{indent}End {key.split()[1]}\n")  # End <subsection>
+                                        file.write(f"{indent}End {key.split()[1]}\n")
                                     else:
-                                        # Handle regular sections in a list (e.g., SpanLayer1, SpanLayer2)
                                         file.write(f"{indent}Begin {key}\n")
                                         write_bji(item, indent_level + 1)
                                         file.write(f"{indent}End {key}\n")
                                 else:
-                                    # If item is not a dictionary, just write the list content
+                                    # Adjust indentation specifically for Data section points
                                     if key == 'data':
                                         item = tuple(item)
-                                        file.write(f"{indent}{item}\n")
+                                        file.write(f"{data_indent}{item}\n")  # Use data_indent (one additional level)
                                     else:
                                         file.write(f"{indent}{item}\n")
 
                         elif value is None:
-                            # If the value is None, just write the key without '=' or 'None'
                             file.write(f"{indent}{key}\n")
 
                         else:
-                            # Handle key-value pairs with normal values
                             file.write(f"{indent}{key}={value}\n")
 
                 elif isinstance(data, list):
-                    # If for some reason a raw list is passed, handle it (this should be rare)
                     for item in data:
                         file.write(f"{indent}{item}\n")
 
             write_bji(json_data)
+
 
     def convert_bgi_to_bgd(self, output_bgiPath, output_bgdPath, ANSYSfolderPath = "c:\\Program Files\\ANSYS Inc"):
         '''

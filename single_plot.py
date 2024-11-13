@@ -4,8 +4,7 @@ import numpy as np
 
 def plot_Bezier(curve, legend = None):
 
-    curve_points = curve.bezier
-
+    curve_points = curve.points
     # Plotting the curve and control points
     plt.plot(curve_points[:, 0], curve_points[:, 1], label=legend)
 
