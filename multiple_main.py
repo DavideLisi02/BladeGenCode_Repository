@@ -45,7 +45,7 @@ tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
 w1 = np.linspace(w1_min, w1_max, w1_N)
 
-# Creatin
+# Creating the parameters 
 pars_list = [ParametrizationSettings(
     beta_in = beta_in_settings,
     beta_out = beta_out_settings,

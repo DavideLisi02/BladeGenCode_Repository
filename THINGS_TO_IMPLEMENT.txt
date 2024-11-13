@@ -1,0 +1,3 @@
+Check if spline or Bezier curve in modified .bgi
+Implement code for modifying the Hub and Shroud
+Create Initial Dataset for testing
