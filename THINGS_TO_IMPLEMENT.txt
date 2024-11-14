@@ -1,3 +1,9 @@
 Check if spline or Bezier curve in modified .bgi
+Check inlet and outlet beta
 Implement code for modifying the Hub and Shroud
+
 Create Initial Dataset for testing
+
+See how the cluster works
+
+Choose spanwise definition for beta
