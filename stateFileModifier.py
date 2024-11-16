@@ -7,7 +7,6 @@ class Geometry:
 
     def __init__(self,
                  parameters, # Parameters object, see ParametrizationSettings in Parameters.py
-                 curves, # Curve object, see Bezier in Bezier.py
                  defaultfilePath ='defaultBGI\\geometry00.bgi', # Path of the starting bgi model to modify
                  output_jsonPath = 'modifiedJSON\\MODgeometry00.json',
                  output_bgiPath = 'modifiedBGI\\MODgeometry00.bgi',
@@ -21,10 +20,7 @@ class Geometry:
         """
         super(Geometry, self).__init__()
         
-        self.object = parameters.object
-        self.definition = parameters.definition
         self.parameters = parameters
-        self.curves = curves
         
         self.defaultfilePath = defaultfilePath
         self.output_jsonPath = output_jsonPath
@@ -167,30 +163,138 @@ class Geometry:
 
         return data_dict
 
-    def modify_dict_blade(self, object, definition, curve_points_list_blade, data_dict, fibers):
+    def modify_dict_blade(self, Blade_definition, curve_points_list_blade, data_dict, fibers):
         '''
         Modifies the default geometry, descripted in a json file, accordingly to
         the object and the definition of the parametrization by inserting the curve data points 
         in a new json file which is the output of the function.
         '''
         modified_Dict = data_dict
-        if object == "Blade" and definition == 'beta-M%' and fibers == 'General_only_at_Hub':
+        if Blade_definition == 'beta-M%' and fibers == 'General_only_at_Hub':
             layers = [0]
             modified_Dict["Blade0"]["AngleDefinition"]['SpanwiseDistribution'] = 'General'
             for layer in layers:
-                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["New Segment"][0]["Data"]["data"] = curve_points_list_blade #Blade0 (Layer1)
+                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["New Segment"][0]["Data"]["data"] = curve_points_list_blade
                 modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["DefinitionType"] = "BetaCurve"
+                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["HorizDim"] = "PercentMeridional"
         return modified_Dict
     
-    def modify_dict_HubShroud(self, object, definition, curve_points_list_Hub_Shroud, data_dict):
+    def modify_dict_HubShroud(self, HubShroud_definition, data_dict):
         '''
         Modifies the default geometry, descripted in a json file, accordingly to
         the object and the definition of the parametrization by inserting the curve data points 
         in a new json file which is the output of the function.
         '''
         modified_Dict = data_dict
-        if object == "HubShroud" and definition == 'xz':
-            pass
+        if HubShroud_definition == 'xz':
+            '''
+            HubShroud_1D_dimensions = self.parameters['HubShroud_1D_dimensions']
+            inducer_Hub_points = self.parameters['self.inducer_Hub_points']
+            inducer_Shroud_points = self.parameters['inducer_Shroud_points']
+            Hub_Shroud_curves_points = self.parameters['Hub_Shroud_curves_points']
+            diffuser_Hub_points = self.parameters['diffuser_Hub_points']
+            diffuser_Shroud_points = self.parameters['diffuser_Shroud_points']
+            '''
+            
+            # Modifying Hub profile
+            total_Hub_profile = self.parameters.total_Hub_profile
+
+            modified_Dict["Meridional"]["HubCurve"]["New Segment"] = []
+            
+            for element in total_Hub_profile:
+                if len(element) <= 10:
+                    i = 0
+                    while i in range(len(element)-1):
+                        modified_Dict["Meridional"]["HubCurve"]["New Segment"].append({
+                            "CurveType": "Spline",
+                            "UpstreamControl": "Free",
+                            "Data": {
+                                "data": [ element[i] , element[i+1] ]
+                            },
+                            "DownstreamControl": "Free"
+                        })
+                        i+=1
+                else:
+                    modified_Dict["Meridional"]["HubCurve"]["New Segment"].append({
+                        "CurveType": "Spline",
+                        "UpstreamControl": "Free",
+                        "Data": {
+                            "data": element 
+                        },
+                        "DownstreamControl": "Free"
+                    })
+
+            
+            # Modifying Shroud profile
+            total_Shroud_profile = self.parameters.total_Shroud_profile
+            
+            modified_Dict["Meridional"]["ShroudCurve"]["New Segment"] = []
+            
+            j=0
+            for element in total_Shroud_profile:
+                if len(element) <= 10:
+                    i = 0
+                    while i in range(len(element)-1):
+                        print(element)
+                        modified_Dict["Meridional"]["ShroudCurve"]["New Segment"].append({
+                            "CurveType": "Spline",
+                            "UpstreamControl": "Free",
+                            "Data": {
+                                "data": [ element[i] , element[i+1] ]
+                            },
+                            "DownstreamControl": "Free"
+                        })
+                        i+=1
+                        j+=1
+                else:
+                    modified_Dict["Meridional"]["ShroudCurve"]["New Segment"].append({
+                        "CurveType": "Spline",
+                        "UpstreamControl": "Free",
+                        "Data": {
+                            "data": element 
+                        },
+                        "DownstreamControl": "Free"
+                    })
+                j+=1
+
+            # Modifying inlet curve
+            inlet_curve = self.parameters.inlet_curve
+            modified_Dict["Meridional"]["InletCurve"]["New Segment"][0] = {
+                        "CurveType": "Linear",
+                        "Data": {
+                            "data": inlet_curve 
+                        },
+                    }
+            # Modifying exhaust curve
+            exhaust_curve = self.parameters.exhaust_curve
+            modified_Dict["Meridional"]["ExhaustCurve"]["New Segment"][0] = {
+                        "CurveType": "Linear",
+                        "Data": {
+                            "data": exhaust_curve 
+                        },
+                    }
+            
+            # Modifying Leading Edge
+            leading_edge_curve = self.parameters.leading_edge_curve
+            modified_Dict["Meridional"]["LeadingEdgeCurve"]["New Segment"][0] = {
+                        "CurveType": "Spline",
+                        "UpstreamControl": "Free",
+                        "Data": {
+                            "data": leading_edge_curve 
+                        },
+                        "DownstreamControl": "Free"
+                    }
+            # Modifying Trailing Edge
+            trailing_edge_curve = self.parameters.trailing_edge_curve
+            modified_Dict["Meridional"]["TrailingEdgeCurve"]["New Segment"][0] = {
+                        "CurveType": "Spline",
+                        "UpstreamControl": "Free",
+                        "Data": {
+                            "data": trailing_edge_curve 
+                        },
+                        "DownstreamControl": "Free"
+                    }
+
         return modified_Dict
     
     def save_json(self, output_jsonPath, data_dict):
@@ -298,7 +402,8 @@ class Geometry:
     def create_modified_geometry(self):
         DataList = self.readfile(filePath =  self.defaultfilePath)
         DataDict = self.convert_list_to_dict(DataList)
-        ModDataDict = self.modify_dict_blade(self.object, self.definition, self.curves.points, DataDict)
+        ModDataDict = self.modify_dict_blade(self.parameters.Beta_definition, self.parameters.Beta_M_bezier_curve_points, DataDict, self.parameters.fibers)
+        ModDataDict = self.modify_dict_HubShroud(self.parameters.HubShroud_definition, ModDataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
         #self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
