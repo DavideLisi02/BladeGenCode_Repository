@@ -16,13 +16,13 @@ beta_in_settings = 24.008 # (beta_2, beta in corrispondenza dell'hub all'inlet)
 beta_out_settings = 35.15 # (beta_4, beta in corrispondenza dell'hub all'outlet)
 
 # Geometrical Parameters from 1D
-L_ind = 30
-L_comp = 8
-r2s = 5.6
-r2h = 2
-r4  = 10
-b4  = 1
-r5  = 30
+L_ind = 30 #30
+L_comp = 8 #8
+r2s = 7 #5.6
+r2h = 2 #2
+r4  = 10 #10
+b4  = 1 #1
+r5  = 30 #30
 
 # Constant thickness settings
 thickness = 0.2
