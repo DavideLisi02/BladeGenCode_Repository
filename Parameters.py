@@ -5,6 +5,8 @@ from Bezier import *
 class ParametrizationSettings:
 
     def __init__(self,
+                 beta_in_settings = 35,
+                 beta_out_settings = 60,
                 **kwargs):
         """
         Class containing all the settings and information about
@@ -15,6 +17,7 @@ class ParametrizationSettings:
         #Settings for the Blade Parametrization
         self.modify_Blade = True
         self.Beta_definition = 'beta-M%' # Possible entries: 'beta-M%'
+        self.beta_bezier_N = 100
         
         #Settings for deciding the number of blades
         self.modify_numOfBlades = True
@@ -22,12 +25,13 @@ class ParametrizationSettings:
 
         #Settings for modifying the Hub and Shroud profiles accordingly to 1D    
         self.modify_HubShroud = True
-        self.HubShroud_1D_dimensions = {'object':'HubShroud', 'definition':'xz', 'spline_degree':2, 'L_ind':30,'L_comp':8, 'r2s':5.6, 'r2h':2, 'r4':10, 'b4':1, 'r5':30}
+        self.HubShr_bezier_N = 100
+        self.HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':self.HubShr_bezier_N,'definition':'xz', 'spline_degree':2, 'L_ind':30,'L_comp':8, 'r2s':5.6, 'r2h':2, 'r4':10, 'b4':1, 'r5':30}
         self.HubShroud_definition = self.HubShroud_1D_dimensions['definition']
 
         #Settings for deciding the thickness value
         self.modify_Thickness = True
-        self.Thickness = 0.2 
+        self.thickness = 0.2 
         
         self.index = 0 # Used for storing the index of the Simulation
 
@@ -35,8 +39,8 @@ class ParametrizationSettings:
 
         if self.modify_Blade: 
             if self.Beta_definition =='beta-M%':
-                self.beta_in = 40 # Beta value at the inlet
-                self.beta_out = 60 # Beta value at the outlet
+                self.beta_in = beta_in_settings # Beta value at the inlet
+                self.beta_out = beta_out_settings # Beta value at the outlet
 
                 self.spline_degree = 2 # Degree of the spline
                 self.tau = [0.5, 0.5] # Adimensional parameters for varying the parametrization configuration. The first value affects the meridional position of the control point. The second value affects the beta value of the control point
@@ -116,7 +120,7 @@ class ParametrizationSettings:
 
                 #LEADING AND TRAILING EDGE CALCULATIONS
                 #Leading Edge
-                (xl1, yl1), (xl2, yl2) = [self.Hub_Shroud_curves_points[0][2], self.Hub_Shroud_curves_points[1][2]]
+                (xl1, yl1), (xl2, yl2) = [self.Hub_Shroud_curves_points[0][1], self.Hub_Shroud_curves_points[1][1]]
                 num_points = 5  # total points including the start and end
                 self.leading_edge_curve = []
                 for i in range(num_points):
@@ -135,7 +139,14 @@ class ParametrizationSettings:
                     self.trailing_edge_curve.append((x, y))
                 
 
-                # NOTE: This overrides the previous declarations
-                self.__dict__.update(kwargs)
+            # NOTE: This overrides the previous declarations
+            self.__dict__.update(kwargs)
+
+        if self.modify_Thickness:
+            m_perc_values = np.linspace(0, 100, 5)
+            self.thickness_curve = [(m_perc, self.thickness) for m_perc in m_perc_values]
+
+            # NOTE: This overrides the previous declarations
+            self.__dict__.update(kwargs)
 
         return

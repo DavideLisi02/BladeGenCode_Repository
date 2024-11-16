@@ -163,6 +163,17 @@ class Geometry:
 
         return data_dict
 
+    def modify_dict_numOfBlades(self, numOfBlades, modify_numOfBlades, data_dict):
+        '''
+        Modifies the default geometry, descripted in a json file, accordingly to
+        the object and the definition of the parametrization by inserting the curve data points 
+        in a new json file which is the output of the function.
+        '''
+        modified_Dict = data_dict
+        if modify_numOfBlades:
+            modified_Dict["Model"]["NumMainBlades"] = str(numOfBlades)
+        return modified_Dict
+
     def modify_dict_blade(self, Blade_definition, curve_points_list_blade, data_dict, fibers):
         '''
         Modifies the default geometry, descripted in a json file, accordingly to
@@ -235,7 +246,6 @@ class Geometry:
                 if len(element) <= 10:
                     i = 0
                     while i in range(len(element)-1):
-                        print(element)
                         modified_Dict["Meridional"]["ShroudCurve"]["New Segment"].append({
                             "CurveType": "Spline",
                             "UpstreamControl": "Free",
@@ -297,6 +307,18 @@ class Geometry:
 
         return modified_Dict
     
+    def modify_dict_thickness(self, thickness_curve, modify_Thickness, data_dict):
+        '''
+        Modifies the default geometry, descripted in a json file, accordingly to
+        the object and the definition of the parametrization by inserting the curve data points 
+        in a new json file which is the output of the function.
+        '''
+        modified_Dict = data_dict
+        if modify_Thickness:
+            modified_Dict["Blade0"]["ThicknessDefinition"]["New ThicknessCurve"][0]["HorizDim"] = "PercentMeridional"
+            modified_Dict["Blade0"]["ThicknessDefinition"]["New ThicknessCurve"][0]["New Segment"][0]["Data"]["data"] = thickness_curve
+        return modified_Dict
+
     def save_json(self, output_jsonPath, data_dict):
         """
         Saves the dictionary into a JSON file.
@@ -304,7 +326,7 @@ class Geometry:
         with open(output_jsonPath, 'w') as json_file:
             json.dump(data_dict, json_file, indent=4)
         return
-
+        
     def convert_json_to_bgi(self, output_jsonPath, output_bgiPath):
         """
         Reads a JSON file and converts it into a .bji format
@@ -402,8 +424,10 @@ class Geometry:
     def create_modified_geometry(self):
         DataList = self.readfile(filePath =  self.defaultfilePath)
         DataDict = self.convert_list_to_dict(DataList)
+        ModDataDict = self.modify_dict_numOfBlades(self.parameters.numOfBlades, self.parameters.modify_numOfBlades, DataDict)
         ModDataDict = self.modify_dict_blade(self.parameters.Beta_definition, self.parameters.Beta_M_bezier_curve_points, DataDict, self.parameters.fibers)
         ModDataDict = self.modify_dict_HubShroud(self.parameters.HubShroud_definition, ModDataDict)
+        ModDataDict = self.modify_dict_thickness(self.parameters.thickness_curve, self.parameters.modify_Thickness, ModDataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
         #self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)

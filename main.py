@@ -16,28 +16,39 @@ r2h = 2
 r4  = 10
 b4  = 1
 r5  = 30
+numOfBlades = 9
 
 # Parametrization of blade settings
 tau =  [0.5, 1]
 w1 = 5
 
+# Constant thickness settings
+thickness = 0.2
+
+# Other settings
+HubShr_bezier_N = 100
+beta_bezier_N = 100
+
 ###############################################################################################
 ###############################################################################################
 
-HubShroud_1D_dimensions = {'object':'HubShroud', 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5}
+HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5}
 
 Parameters = ParametrizationSettings(
-        beta_in = beta_in_settings,
-        beta_out = beta_out_settings,
-        print_conversion_output = True,
+        beta_in_settings = beta_in_settings,
+        beta_out_settings = beta_out_settings,
+        beta_bezier_N = beta_bezier_N,
+        print_conversion_output = False,
         HubShroud_1D_dimensions = HubShroud_1D_dimensions,
+        numOfBlades = numOfBlades,
         tau =  tau,
         w1 = w1,
+        thickness = thickness,
         par_name = f"LUS")
 
 Geometry_01 = Geometry(Parameters,
                         defaultfilePath = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi', # Path of the starting bgi model to modify
-                        output_jsonPath = 'modifiedJSON\\LUS_General_OnlySpan0_Copy.json',
+                        output_jsonPath = 'modifiedJSON\\LUS_General_OnlySpan0_Copy_leadTrail.json',
                         output_bgiPath = 'modifiedBGI\\MODLUS_General_OnlySpan0_Copy_leadTrail.bgi',
                         output_unmodified_bgiPath = 'unmodifiedBGI\\UNMODLUS_General_OnlySpan0_Copy_leadTrail.bgi',
                         output_bgdPath = 'modifiedBGD\\MODLUS_General_OnlySpan0_Copy_leadTrail.bgd',

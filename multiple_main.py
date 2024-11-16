@@ -24,12 +24,15 @@ r4  = 10
 b4  = 1
 r5  = 30
 
+# Constant thickness settings
+thickness = 0.2
+
 # Decide how many points to compute for the Bezier curves
 beta_bezier_N = 100
 HubShr_bezier_N = 100
 
 # Discrtization of the parameter tau_0
-tau_0_N = 3 
+tau_0_N = 1 
 tau_0_max = 1
 tau_0_min = 0
 # Discrtization of the parameter tau_1
@@ -37,13 +40,12 @@ tau_1_N = 3
 tau_1_max = 1.5
 tau_1_min = -0.5
 # Discrtization of the parameter w1
-w1_N = 3 
+w1_N = 1 
 w1_min = 1
 w1_max = 10 
 
 # Folder Management Settings
-default_geometry_settings = '02'
-defaultfilefolder_settings ='defaultBGI\\'
+default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 output_jsonfolder_settings = 'modifiedJSON\\'
 output_bgifolder_settings = 'modifiedBGI\\'
 output_unmodified_bgifolder_settings = 'unmodifiedBGI\\'
@@ -57,17 +59,19 @@ std_ANSYS_Folder_settings = "c:\\Program Files\\ANSYS Inc"
 tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
 w1 = np.linspace(w1_min, w1_max, w1_N)
-HubShroud_1D_dimensions = {'object':'HubShroud', 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5}
+HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5}
 
 
 # Creating the parameters 
 pars_list = [ParametrizationSettings(
-    beta_in = beta_in_settings,
-    beta_out = beta_out_settings,
+    beta_in_settings = beta_in_settings,
+    beta_out_settings = beta_out_settings,
+    beta_bezier_N = beta_bezier_N,
     HubShroud_1D_dimensions = HubShroud_1D_dimensions,
     print_conversion_output = print_conversion_output,
     tau =  [tau_0_ijk, tau_1_ijk],
     w1 = w1_ijk,
+    thickness = thickness,
     index = ((i*tau_0_N+j)*tau_1_N)+k,
     par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")
                 for i,tau_0_ijk in enumerate(tau_0)
@@ -83,9 +87,9 @@ results_dict = { ((i*tau_0_N+j)*tau_1_N)+k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Re
 
 for par in pars_list:
     file_index = par.index # Index used for the name of the stored files
-    file_code = f"{default_geometry_settings}_{par.par_name}" # Code used for the name of the stored files
+    file_code = f"{par.par_name}" # Code used for the name of the stored files
     Geometry_i= Geometry(par,
-                        defaultfilePath = f"{defaultfilefolder_settings}geometry{default_geometry_settings}.bgi",
+                        defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi",
                         output_jsonPath = f"{output_jsonfolder_settings}MODgeometry_{file_index}_{file_code}.json",
                         output_bgiPath = f"{output_bgifolder_settings}MODgeometry_{file_index}_{file_code}.bgi",
                         output_unmodified_bgiPath = f"{output_unmodified_bgifolder_settings}UNMODgeometry_{file_index}_{file_code}.bgi",
