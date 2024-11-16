@@ -1,4 +1,4 @@
-from single_plot import plot_Bezier
+from SinglePlots_Beta import plot_Bezier
 from Bezier import *
 from Parameters import *
 import numpy as np

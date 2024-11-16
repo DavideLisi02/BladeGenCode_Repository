@@ -172,7 +172,7 @@ class Geometry:
         modified_Dict = data_dict
         if modify_numOfBlades:
             modified_Dict["Model"]["NumMainBlades"] = str(numOfBlades)
-        return modified_Dict
+            return modified_Dict
 
     def modify_dict_blade(self, Blade_definition, curve_points_list_blade, data_dict, fibers):
         '''
@@ -397,7 +397,7 @@ class Geometry:
         '''
 
         # Setting the path for the ANSYS folder
-        path_command = f'set path=%path%;{ANSYSfolderPath}\\v110\\AISOL\\BladeModeler\\BladeGen'
+        path_command = f'''set path=%path%;"{ANSYSfolderPath}\\v110\\AISOL\\BladeModeler\\BladeGen"'''
         
         # Prepare the command to run BladeBatch
         blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
