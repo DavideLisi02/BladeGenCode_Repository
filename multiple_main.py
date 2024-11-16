@@ -12,8 +12,12 @@ print_results = True
 print_conversion_output = False
 
 # Beta at inlet and outlet
-beta_in_settings = 40
-beta_out_settings = 60
+beta_in_settings = 24.008
+beta_out_settings = 35.15
+
+# Decide how many points to compute for the Bezier curves
+beta_bezier_N = 100
+HubShr_bezier_N = 100
 
 # Discrtization of the parameter tau_0
 tau_0_N = 3 
@@ -59,6 +63,7 @@ pars_list = [ParametrizationSettings(
                 for k,w1_ijk in enumerate(w1)
     ]
 
+# Creating the results dictionary 
 results_dict = { ((i*tau_0_N+j)*tau_1_N)+k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Results"] #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
                 for i,tau_0_ijk in enumerate(tau_0)
                 for j,tau_1_ijk in enumerate(tau_1)

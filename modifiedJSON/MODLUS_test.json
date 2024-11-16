@@ -1168,7 +1168,7 @@
                 },
                 {
                     "Layer": "\"Layer2\"",
-                    "DefinitionType": "ThetaCurve",
+                    "DefinitionType": "BetaCurve",
                     "HorizDim": "PercentMeridional",
                     "VertDim": "Degree",
                     "New Segment": [
@@ -1425,7 +1425,7 @@
                 },
                 {
                     "Layer": "\"Layer3\"",
-                    "DefinitionType": "ThetaCurve",
+                    "DefinitionType": "BetaCurve",
                     "HorizDim": "PercentMeridional",
                     "VertDim": "Degree",
                     "New Segment": [
@@ -1682,7 +1682,7 @@
                 },
                 {
                     "Layer": "\"Layer4\"",
-                    "DefinitionType": "ThetaCurve",
+                    "DefinitionType": "BetaCurve",
                     "HorizDim": "PercentMeridional",
                     "VertDim": "Degree",
                     "New Segment": [
@@ -1939,7 +1939,7 @@
                 },
                 {
                     "Layer": "\"Layer5\"",
-                    "DefinitionType": "ThetaCurve",
+                    "DefinitionType": "BetaCurve",
                     "HorizDim": "PercentMeridional",
                     "VertDim": "Degree",
                     "New Segment": [

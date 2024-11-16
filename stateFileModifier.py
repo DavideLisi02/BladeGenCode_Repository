@@ -167,16 +167,30 @@ class Geometry:
 
         return data_dict
 
-    def modify_dict(self, object, definition, curve_points_list, data_dict):
+    def modify_dict_blade(self, object, definition, curve_points_list_blade, data_dict, fibers):
         '''
         Modifies the default geometry, descripted in a json file, accordingly to
         the object and the definition of the parametrization by inserting the curve data points 
-        in a new json file which is the output of the function
+        in a new json file which is the output of the function.
         '''
         modified_Dict = data_dict
-        if object == "Blade" and definition == 'beta-M%':
-            for layer in range(0,5): #To implement later: modify more layers differently
-                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["New Segment"][0]["Data"]["data"] = curve_points_list #Blade0 (Layer1)
+        if object == "Blade" and definition == 'beta-M%' and fibers == 'General_only_at_Hub':
+            layers = [0]
+            modified_Dict["Blade0"]["AngleDefinition"]['SpanwiseDistribution'] = 'General'
+            for layer in layers:
+                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["New Segment"][0]["Data"]["data"] = curve_points_list_blade #Blade0 (Layer1)
+                modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["DefinitionType"] = "BetaCurve"
+        return modified_Dict
+    
+    def modify_dict_HubShroud(self, object, definition, curve_points_list_Hub_Shroud, data_dict):
+        '''
+        Modifies the default geometry, descripted in a json file, accordingly to
+        the object and the definition of the parametrization by inserting the curve data points 
+        in a new json file which is the output of the function.
+        '''
+        modified_Dict = data_dict
+        if object == "HubShroud" and definition == 'xz':
+            pass
         return modified_Dict
     
     def save_json(self, output_jsonPath, data_dict):
@@ -284,7 +298,7 @@ class Geometry:
     def create_modified_geometry(self):
         DataList = self.readfile(filePath =  self.defaultfilePath)
         DataDict = self.convert_list_to_dict(DataList)
-        ModDataDict = self.modify_dict(self.object, self.definition, self.curves.points, DataDict)
+        ModDataDict = self.modify_dict_blade(self.object, self.definition, self.curves.points, DataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
         #self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)

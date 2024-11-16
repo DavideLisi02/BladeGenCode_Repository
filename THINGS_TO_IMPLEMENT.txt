@@ -1,9 +1,10 @@
 Check if spline or Bezier curve in modified .bgi
 Check inlet and outlet beta
-Implement code for modifying the Hub and Shroud
+Choose spanwise definition for beta
+
+Implement code for modifying the Hub and Shroud - use bezier curve - check for tangency at inlet and outlet - see on samsung notes
 
 Create Initial Dataset for testing
 
 See how the cluster works
 
-Choose spanwise definition for beta
