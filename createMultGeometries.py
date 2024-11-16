@@ -51,7 +51,7 @@ output_bgifolder_settings = 'modifiedBGI\\'
 output_unmodified_bgifolder_settings = 'unmodifiedBGI\\'
 output_bgdfolder_settings = 'modifiedBGD\\'
 output_unmodified_bgdfolder_settings = 'unmodifiedBGD\\'
-std_ANSYS_Folder_settings = "c:\\Program Files\\ANSYS Inc"
+std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc" # Check also if inside this folder there is a folder called v242 otherwise correct with the right number you have in statFileModifier.py
 
 ###########################################################
 ###########################################################

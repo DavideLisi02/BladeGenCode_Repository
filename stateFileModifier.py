@@ -397,7 +397,7 @@ class Geometry:
         '''
 
         # Setting the path for the ANSYS folder
-        path_command = f'''set path=%path%;"{ANSYSfolderPath}\\v110\\AISOL\\BladeModeler\\BladeGen"'''
+        path_command = f'''set path=%path%;"{ANSYSfolderPath}\\v242\\aisol\\BladeModeler\\BladeGen"'''
         
         # Prepare the command to run BladeBatch
         blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
@@ -419,6 +419,7 @@ class Geometry:
             return True
         else:
             print("An error occurred during the conversion bgi->bgd.")
+            print(f"Error: result.retuncode = {result.returncode}")
             return None
 
     def create_modified_geometry(self):
@@ -430,7 +431,8 @@ class Geometry:
         ModDataDict = self.modify_dict_thickness(self.parameters.thickness_curve, self.parameters.modify_Thickness, ModDataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
-        #self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
+        
+        self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
         return
     
     def create_unmodified_json_geometry(self):
