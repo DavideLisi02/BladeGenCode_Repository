@@ -19,6 +19,9 @@ beta_out_settings = 35.15
 beta_bezier_N = 100
 HubShr_bezier_N = 100
 
+# Geometrical Parameters from 1D
+
+
 # Discrtization of the parameter tau_0
 tau_0_N = 3 
 tau_0_max = 1
