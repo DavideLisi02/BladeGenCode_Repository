@@ -15,6 +15,9 @@ print_conversion_output = False
 beta_in_settings = 40
 beta_out_settings = 60
 
+# Geometrical Parameters from 1D
+
+
 # Discrtization of the parameter tau_0
 tau_0_N = 3 
 tau_0_max = 1
