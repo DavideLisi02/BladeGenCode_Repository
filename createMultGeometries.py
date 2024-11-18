@@ -47,8 +47,8 @@ w1_min = 1
 w1_max = 10 
 
 # Folder Management Settings
-Project_Name = "Database Test 1"
-Project_Folder = "Davide"
+Project_Name = "Database_Test_1"
+Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc"
 
@@ -59,9 +59,9 @@ std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc"
 ###########################################################
 ###########################################################
 
-Folder_management.Create_Project_Folder(Project_Name = "Database Test 1",
-                      Project_Folder = "D:\Davide",
-                      default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi')
+Folder_management.Create_Project_Folder(Project_Name = Project_Name,
+                      Project_Folder = Project_Folder,
+                      default_geometry_path = default_geometry_path)
 
 tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
@@ -102,7 +102,7 @@ for par in pars_list:
                         file_name = file_name_settings,
                         Project_name = Project_Name,
                         Project_Folder = Project_Folder,
-                        std_BLADEGEN_Folder = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen")
+                        std_BLADEGEN_Folder = std_BLADEGEN_Folder_settings)
 
     #Geometry_i.create_unmodified_json_geometry()
     Geometry_i.create_modified_geometry() # TO BE MODIFIED : | 1 Setup Ansys Folder | 2: go to stateFileModifier.create_modified_geometry | 3: uncomment line saying self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
