@@ -71,6 +71,8 @@ def Create_Project_Folder(Project_Name = "Database_Test_1",
 
 def copy_bgd_for_simulation(starting_path, final_path):
     """Lists all files in starting_path and copies .bgd files to final_path using Copy_File."""
+    
+    filenames = []
 
     if not os.path.exists(starting_path):
         print(f"Error: Starting path '{starting_path}' does not exist.")
@@ -85,3 +87,9 @@ def copy_bgd_for_simulation(starting_path, final_path):
             destination_path = os.path.join(final_path, filename)
             if Copy_File(source_path, destination_path):
                 print(f"Copied '{filename}' to '{final_path}'")
+                filenames.append(filename)
+
+    names = [filename.removesuffix('.bgd') for filename in filenames]
+    
+    return names
+

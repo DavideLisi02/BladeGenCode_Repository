@@ -1,5 +1,3 @@
 Create Initial Dataset for testing - MERCOLEDì
 
 See how the cluster works - MERCOLEDì
-
-write code for running simulations - LUNEDì

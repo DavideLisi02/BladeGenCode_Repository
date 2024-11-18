@@ -20,13 +20,14 @@ std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242"
 ####################################################################################
 ####################################################################################
 
-Folder_management.copy_bgd_for_simulation(f"{Project_Folder}\\{Project_Name}\\{Folder_management.output_bgdfolder_settings}", f"{package_path}\\CFXsetup_files\\geometry_turbocompressor_database")
-'''
-simulation_definition = create_simulation_def(ansys_path = std_ANSYS_Folder_settings,
-                                            simulation_path = f"{Project_Folder}\\{Project_Name}\\{Folder_management.output_simulation_folder}",
-                                            case_name = 'LUS_1',
-                                            geometry_name = geometry_name,
-                                            n_channels = number_of_channels)
+names = Folder_management.copy_bgd_for_simulation(f"{Project_Folder}\\{Project_Name}\\{Folder_management.output_bgdfolder_settings}", f"{package_path}\\CFXsetup_files\\geometry_turbocompressor_database")
 
-CFXbatch.run_CFXbatch(simulation_definition)
-'''
+for name in names:
+
+    simulation_definition = create_simulation_def(ansys_path = std_ANSYS_Folder_settings,
+                                                simulation_path = f"{Project_Folder}\\{Project_Name}\\{Folder_management.output_simulation_folder}",
+                                                case_name = name,
+                                                geometry_name = name,
+                                                n_channels = number_of_channels)
+
+    CFXbatch.run_CFXbatch(simulation_definition)
