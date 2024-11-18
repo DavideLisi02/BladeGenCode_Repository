@@ -47,13 +47,10 @@ w1_min = 1
 w1_max = 10 
 
 # Folder Management Settings
-Project_Name = "Database_Test_1"
+Project_Name = "Database_Test_2"
 Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"
-
-
-
 
 
 ###########################################################
