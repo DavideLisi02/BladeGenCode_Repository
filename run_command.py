@@ -1,21 +1,29 @@
 import subprocess
+import os
+from pathlib import Path
 
-def run_command(full_command, show_cmd=False):
-    """Runs a command in the terminal, optionally showing the command prompt.
+def run_command(full_command, directory, show_cmd=False):
+    """Runs a command in the terminal in a specified directory, optionally showing the command prompt.
 
     Args:
         full_command: The command to run.
+        directory: The directory where the command should be executed.
         show_cmd: Whether to show the command prompt window (True/False). Defaults to False.
 
     Returns:
-        The return code of the command.
+        The return code of the command.  Returns 1 if the directory is invalid or other errors occur.
     """
+    dir_path = Path(directory)
+    if not dir_path.is_dir():
+        print(f"Error: Invalid directory path: {directory}")
+        return 1
+
     try:
         creationflags = 0  # Default: Don't show the window
         if show_cmd:
             creationflags = subprocess.CREATE_NEW_CONSOLE  # Show the window
 
-        process = subprocess.Popen(full_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=creationflags)
+        process = subprocess.Popen(full_command, shell=True, cwd=str(dir_path), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=creationflags)
         stdout, stderr = process.communicate()
         if stdout:
             print(f"Command output:\n{stdout}")
