@@ -399,19 +399,19 @@ class Geometry:
 
             write_bji(json_data)
 
-    def convert_bgi_to_bgd(self, output_bgi_name, output_abs_bgi_folder, output_bgd_name, output_abs_bgd_folder, BLADEGENfolderPath = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"):
+    def convert_bgi_to_bgd(self, output_bgiPath, output_bgdPath, BLADEGENfolderPath = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"):
         '''
         Runs terminal's commands to execute BladeBatch from BladeGen in order to run
         the .bgi file and obtain a .bgd
         '''
 
         # Command for Opening the Blade Batch folder
-        folder_command = f'''cd C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen'''
+        folder_command = f'''cd {BLADEGENfolderPath}'''
         print(f"Opening the .bgi folder: {folder_command}")
         run_command(folder_command)
 
         # Command to run BladeBatch
-        blade_batch_command = f'BladeBatch {output_abs_bgi_folder}\\{output_bgi_name} {output_abs_bgd_folder}\\{output_bgd_name}'
+        blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
         print(f"Converting using Blade Batch: {blade_batch_command}")
         run_command(blade_batch_command)
 
@@ -431,10 +431,8 @@ class Geometry:
         ModDataDict = self.modify_dict_thickness(self.parameters.thickness_curve, self.parameters.modify_Thickness, ModDataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)     
-        self.convert_bgi_to_bgd(self.output_bgi_name,
-                                self.output_abs_bgi_folder,
-                                self.output_bgd_name,
-                                self.output_bgd_folder,
+        self.convert_bgi_to_bgd(self.output_bgiPath,
+                                self.output_bgdPath,
                                 BLADEGENfolderPath = self.std_BLADEGEN_Folder)        
         return
     
