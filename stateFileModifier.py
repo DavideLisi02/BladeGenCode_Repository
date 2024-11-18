@@ -390,21 +390,21 @@ class Geometry:
 
             write_bji(json_data)
 
-    def convert_bgi_to_bgd(self, output_bgiPath, output_bgdPath, ANSYSfolderPath = "c:\\Program Files\\ANSYS Inc"):
+    def convert_bgi_to_bgd(self, output_bgiPath, output_bgdPath, ANSYSfolderPath = "C:\\Program Files\\ANSYS Inc"):
         '''
         Runs terminal's commands to execute BladeBatch from BladeGen in order to run
         the .bgi file and obtain a .bgd
         '''
 
-        # Setting the path for the ANSYS folder
-        path_command = f'''set path=%path%;"{ANSYSfolderPath}\\v242\\aisol\\BladeModeler\\BladeGen"'''
-        
+        # Setting the path for the BLADE GEN folder
+        path_command = f'''set path=%path%;C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen'''
+
         # Prepare the command to run BladeBatch
         blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
-        
+
         # Combine commands into a single command string for the terminal
-        full_command = f'cmd /c "{path_command} && {blade_batch_command}"'
-        
+        full_command = f'cmd /c "{path_command} && cd /d D:\\Davide\\BladeGenCode_Repository\\modifiedBGI && {blade_batch_command}"'
+
         # Run the command in the terminal
         result = subprocess.run(full_command, shell=True, capture_output=True, text=True)
 
@@ -419,9 +419,9 @@ class Geometry:
             return True
         else:
             print("An error occurred during the conversion bgi->bgd.")
-            print(f"Error: result.retuncode = {result.returncode}")
+            print(f"Error: result.returncode = {result.returncode}")
             return None
-
+        
     def create_modified_geometry(self):
         DataList = self.readfile(filePath =  self.defaultfilePath)
         DataDict = self.convert_list_to_dict(DataList)
@@ -430,8 +430,7 @@ class Geometry:
         ModDataDict = self.modify_dict_HubShroud(self.parameters.HubShroud_definition, ModDataDict)
         ModDataDict = self.modify_dict_thickness(self.parameters.thickness_curve, self.parameters.modify_Thickness, ModDataDict)
         self.save_json(self.output_jsonPath, ModDataDict)
-        self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)
-        
+        self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)     
         self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
         return
     
