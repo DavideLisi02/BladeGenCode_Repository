@@ -331,6 +331,7 @@ class Geometry:
         """
         Saves the dictionary into a JSON file.
         """
+        os.chdir("D:\\")
         with open(output_jsonPath, 'w') as json_file:
             json.dump(data_dict, json_file, indent=4)
         return
