@@ -97,7 +97,7 @@ for par in pars_list:
     Geometry_i= Geometry(par,
                         defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi",
                         file_name = file_name_settings,
-                        Project_name = Project_Name,
+                        Project_Name = Project_Name,
                         Project_Folder = Project_Folder,
                         std_BLADEGEN_Folder = std_BLADEGEN_Folder_settings)
 
