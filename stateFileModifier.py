@@ -2,18 +2,24 @@ import os
 import json
 import subprocess
 import re
+from run_command import run_command
+import Folder_management
+
 
 class Geometry:
 
     def __init__(self,
                  parameters, # Parameters object, see ParametrizationSettings in Parameters.py
-                 defaultfilePath ='defaultBGI\\geometry00.bgi', # Path of the starting bgi model to modify
-                 output_jsonPath = 'modifiedJSON\\MODgeometry00.json',
-                 output_bgiPath = 'modifiedBGI\\MODgeometry00.bgi',
-                 output_unmodified_bgiPath = 'unmodifiedBGI\\UNMODgeometry00.bgi',
-                 output_bgdPath = 'modifiedBGD\\MODgeometry00.bgd',
-                 output_unmodified_bgdPath = 'unmodifiedBGD\\UNMODgeometry00.bgd',
-                 std_ANSYS_Folder = "c:\\Program Files\\ANSYS Inc",
+                 file_name = 'SingleGeometry00',
+                 Project_Name = 'Database_Test_1',
+                 Project_Folder = "D:\Davide",
+                 defaultfilePath ='defaultBGI\\LUS_General_OnlySpan0_Copy.bgi',
+                 output_jsonFolder = Folder_management.output_jsonfolder_settings,
+                 output_bgiFolder = Folder_management.output_bgifolder_settings,
+                 output_unmodified_bgiFolder = Folder_management.output_unmodified_bgifolder_settings,
+                 output_bgdFolder = Folder_management.output_bgdfolder_settings,
+                 output_unmodified_bgdFolder = Folder_management.output_unmodified_bgdfolder_settings,
+                 std_BLADEGEN_Folder = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen",
                 **kwargs):
         """
         Class containing all functions and data about a specific .bgi file
@@ -23,13 +29,15 @@ class Geometry:
         self.parameters = parameters
         
         self.defaultfilePath = defaultfilePath
-        self.output_jsonPath = output_jsonPath
-        self.output_bgiPath = output_bgiPath
-        self.output_unmodified_bgiPath = output_unmodified_bgiPath
-        self.output_bgdPath = output_bgdPath
-        self.output_unmodified_bgdPath = output_unmodified_bgdPath
+        
+        self.output_project_path = f"{Project_Folder}\\{Project_Name}"
+        self.output_jsonPath = f"{self.output_project_path}\\{output_jsonFolder}\\MOD{file_name}.josn"
+        self.output_bgiPath = f"{self.output_project_path}\\{output_bgiFolder}\\MOD{file_name}.bgi"
+        self.output_unmodified_bgiPath = f"{self.output_project_path}\\{output_unmodified_bgiFolder}\\UNMOD{file_name}.bgi"
+        self.output_bgdPath = f"{self.output_project_path}\\{output_bgdFolder}\\UNMOD{file_name}.bgd"
+        self.output_unmodified_bgdPath = f"{self.output_project_path}\\{output_unmodified_bgdFolder}\\UNMOD{file_name}.bgd"
 
-        self.std_ANSYS_Folder = std_ANSYS_Folder
+        self.std_BLADEGEN_Folder = std_BLADEGEN_Folder
 
         return
 
@@ -399,6 +407,7 @@ class Geometry:
         # Setting the path for the BLADE GEN folder
         path_command = f'''set path=%path%;C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen'''
 
+        
         # Prepare the command to run BladeBatch
         blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
 
