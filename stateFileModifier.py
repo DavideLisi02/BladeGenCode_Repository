@@ -42,6 +42,7 @@ class Geometry:
         return
 
     def readfile(self, filePath = 'defaultBGI\geometry00.bgi'):
+        os.chdir(os.path.dirname(__file__))
         with open(filePath, 'r') as file:
             DataList = file.readlines()
         return DataList
