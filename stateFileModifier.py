@@ -3,18 +3,13 @@ import json
 import subprocess
 import re
 from run_command import run_command
-<<<<<<< HEAD
 import Folder_management
 
-=======
-import time
->>>>>>> ee932f351b304f1595ae6af6498e06f2020c00bd
 
 class Geometry:
 
     def __init__(self,
                  parameters, # Parameters object, see ParametrizationSettings in Parameters.py
-<<<<<<< HEAD
                  file_name = 'SingleGeometry00',
                  Project_Name = 'Database_Test_1',
                  Project_Folder = "D:\Davide",
@@ -24,18 +19,6 @@ class Geometry:
                  output_unmodified_bgiFolder = Folder_management.output_unmodified_bgifolder_settings,
                  output_bgdFolder = Folder_management.output_bgdfolder_settings,
                  output_unmodified_bgdFolder = Folder_management.output_unmodified_bgdfolder_settings,
-=======
-                 defaultfilePath ='defaultBGI\\geometry00.bgi', # Path of the starting bgi model to modify
-                 output_jsonPath = 'modifiedJSON\\MODgeometry00.json',
-                 output_bgiPath = 'modifiedBGI\\MODgeometry00.bgi',
-                 output_unmodified_bgiPath = 'unmodifiedBGI\\UNMODgeometry00.bgi',
-                 output_bgi_name = 'MODgeometry00.bgi',
-                 output_bgd_name = 'MODgeometry00.bgd',
-                 output_abs_bgi_folder = 'D:\\Davide\\BladeGenCode_Repository\\modifiedBGI',
-                 output_bgd_folder = 'BladeGenCode_Repository\\modifiedBGI',
-                 output_bgdPath = 'modifiedBGD\\MODgeometry00.bgd',
-                 output_unmodified_bgdPath = 'unmodifiedBGD\\UNMODgeometry00.bgd',
->>>>>>> ee932f351b304f1595ae6af6498e06f2020c00bd
                  std_BLADEGEN_Folder = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen",
                 **kwargs):
         """
@@ -55,15 +38,6 @@ class Geometry:
         self.output_unmodified_bgdPath = f"{self.output_project_path}\\{output_unmodified_bgdFolder}\\UNMOD{file_name}.bgd"
 
         self.std_BLADEGEN_Folder = std_BLADEGEN_Folder
-<<<<<<< HEAD
-=======
-
-        self.output_bgi_name = output_bgi_name
-        self.output_bgd_name = output_bgd_name
-
-        self.output_abs_bgi_folder = output_abs_bgi_folder
-        self.output_bgd_folder = output_bgd_folder
->>>>>>> ee932f351b304f1595ae6af6498e06f2020c00bd
 
         return
 
@@ -435,18 +409,12 @@ class Geometry:
         print(f"Opening the .bgi folder: {folder_command}")
         run_command(folder_command)
 
-<<<<<<< HEAD
-        
-        # Prepare the command to run BladeBatch
-        blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
-=======
         # Command to run BladeBatch
         blade_batch_command = f'BladeBatch {output_abs_bgi_folder}\\{output_bgi_name} {output_abs_bgd_folder}\\{output_bgd_name}'
         print(f"Converting using Blade Batch: {blade_batch_command}")
         run_command(blade_batch_command)
 
         # full_command = f"{folder_command} && {blade_batch_command}"
->>>>>>> ee932f351b304f1595ae6af6498e06f2020c00bd
 
         # Combine commands into a single command string for the terminal
         #full_command = f'cmd /c {path_command} && {folder_command} && {blade_batch_command}'
