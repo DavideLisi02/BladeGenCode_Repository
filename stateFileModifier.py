@@ -407,7 +407,7 @@ class Geometry:
 
         # Command for Opening the Blade Batch folder
         folder_command = f'''cd {BLADEGENfolderPath}'''
-        print(f"Opening the .bgi folder: {folder_command}")
+        print(f"Opening the bladegen folder: {folder_command}")
         run_command(folder_command)
 
         # Command to run BladeBatch
