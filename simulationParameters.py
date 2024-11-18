@@ -1,59 +1,58 @@
-import os
+def create_simulation_def(ansys_path = r"C:\Program Files\ANSYS Inc\v242",
+                          simulation_path = r'C:\Users\soukhman\Desktop\LUS_test',
+                          case_name = 'simulation1',
+                          geometry_name = "LUS",
+                          n_channels = 9):
+    
+    simulation_definition = {
 
-abspath = os.path.abspath(__file__)
-package_path = os.path.dirname(abspath)
-os.chdir(package_path)
+        #! Ansys local address 
 
+        "ansys_path" : ansys_path,
 
-import CFXbatch
+        #! project/case name definition
 
-simulation_definition = {
+        "project_path" : simulation_path,
+        "case_name" : case_name,
 
-    #! Ansys local address 
+        #! geometry definition
 
-    "ansys_path" : r"C:\Program Files\ANSYS Inc\v242",
+        "geometry type" : "from database", # "from database --> retrieve existing geometry"
+        "geometry name" : geometry_name,
 
-    #! project/case name definition
+        "tip clearance" : 50, #[micron]
+        "n channels" : n_channels,
+        "roughness" : 10, #[micron]
 
-    "project_path" : r'C:\Users\soukhman\Desktop\LUS_test',
-    "case_name" : 'simulation1',
+        #! fluid definition 
 
-    #! geometry definition
+        "fluid name" : "r134a",
+        "RGP address" : None,           # keep None if you want to create an RGP table from scratch
+        "RGP Pmin" : 10000,
+        "RGP Pmax" : 3000000,
+        "RGP Tmin" : 180,
+        "RGP Tmax" : 450,
+        "RGP Tsatmin" : 180,
+        "RGP Tsatmax" : 350,
+        "RGP nP" : 366,                 # number pressure points
+        "RGP nT" : 251,                 # number temperature points
+        "RGP nPsat" : 155,              # number pressure points on saturation line
 
-    "geometry type" : "from database", # "from database --> retrieve existing geometry"
-    "geometry name" : "LUS",
+        #! operating condition definition
 
-    "tip clearance" : 50, #[micron]
-    "n channels" : 9,
-    "roughness" : 10, #[micron]
+        "Pin" : 175000, #[Pa]
+        "Tin" : 270, #[K]
+        "mass flow" : 0.03, #[kg s^-1]
+        "rotational speed" : 160000, #[rev min^-1]
 
-    #! fluid definition 
+        #! mesh and solver definition 
+        "mesh size factor" : 1,
+        "n partitions" : 5,
+        "n iterations" : 2, 
+        "target residual" : 1e-5 
+    }
 
-    "fluid name" : "r134a",
-    "RGP address" : None,           # keep None if you want to create an RGP table from scratch
-    "RGP Pmin" : 10000,
-    "RGP Pmax" : 3000000,
-    "RGP Tmin" : 180,
-    "RGP Tmax" : 450,
-    "RGP Tsatmin" : 180,
-    "RGP Tsatmax" : 350,
-    "RGP nP" : 366,                 # number pressure points
-    "RGP nT" : 251,                 # number temperature points
-    "RGP nPsat" : 155,              # number pressure points on saturation line
-
-    #! operating condition definition
-
-    "Pin" : 175000, #[Pa]
-    "Tin" : 270, #[K]
-    "mass flow" : 0.03, #[kg s^-1]
-    "rotational speed" : 160000, #[rev min^-1]
-
-    #! mesh and solver definition 
-    "mesh size factor" : 1,
-    "n partitions" : 5,
-    "n iterations" : 2, 
-    "target residual" : 1e-5 
-}
+    return simulation_definition
 
 ##############################################################################################################################
 ##############################################################################################################################
@@ -90,7 +89,7 @@ simulation_definition = {
 ##############################################################################################################################
 #! SINGLE SIMULATION LAUNCHER
 
-CFXbatch.run_CFXbatch(simulation_definition)
+# CFXbatch.run_CFXbatch(simulation_definition)
 
 ##############################################################################################################################
 ##############################################################################################################################
