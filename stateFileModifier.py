@@ -409,12 +409,13 @@ class Geometry:
         # Command for Opening the Blade Batch folder
         folder_command = f'''cd {BLADEGENfolderPath}'''
         print(f"Opening the bladegen folder: {folder_command}")
-        run_command(folder_command)
 
         # Command to run BladeBatch
         blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
         print(f"Converting using Blade Batch: {blade_batch_command}")
-        run_command(blade_batch_command)
+        
+        #running full command
+        run_command(f"{folder_command} && {blade_batch_command}")
 
         # full_command = f"{folder_command} && {blade_batch_command}"
 
