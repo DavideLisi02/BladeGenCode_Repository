@@ -1,7 +1,5 @@
-Create Initial Dataset for testing
+Create Initial Dataset for testing - MERCOLEDì
 
-See how the cluster works
+See how the cluster works - MERCOLEDì
 
-make bgi bgd conversion work
-
-write code for running simulations
+write code for running simulations - LUNEDì
