@@ -26,13 +26,13 @@ def run_command(full_command, directory, show_cmd=False):
         process = subprocess.Popen(full_command, shell=True, cwd=str(dir_path), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=creationflags)
         stdout, stderr = process.communicate()
         if stdout:
-            print(f"Command output:\n{stdout}")
+            print(f"Command output:\n{stdout}\n------------------------------------------")
         if stderr:
-            print(f"Command error:\n{stderr}")
+            print(f"Command error:\n{stderr}\n------------------------------------------")
         return process.returncode
     except FileNotFoundError:
-        print("Command not found. Please check the command and your system's PATH environment variable.")
+        print("Command not found. Please check the command and your system's PATH environment variable.\n---------------------------------------------")
         return 1
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred: {e}\n------------------------------------------")
         return 1
