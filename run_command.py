@@ -6,8 +6,8 @@ def run_command(full_command, directory, show_cmd=False):
     """Runs a command in the terminal in a specified directory, optionally showing the command prompt.
 
     Args:
-        full_command: The command to run.
-        directory: The directory where the command should be executed.
+        full_command: The command to run. String
+        directory: The directory where the command should be executed. String
         show_cmd: Whether to show the command prompt window (True/False). Defaults to False.
 
     Returns:
@@ -21,7 +21,7 @@ def run_command(full_command, directory, show_cmd=False):
     try:
         creationflags = 0  # Default: Don't show the window
         if show_cmd:
-            creationflags = subprocess.CREATE_NEW_CONSOLE  # Show the window
+            creationflags = subprocess.CREATE_NEW_CONSOLE  # Show the window. This functionality right now does not work.
 
         process = subprocess.Popen(full_command, shell=True, cwd=str(dir_path), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=creationflags)
         stdout, stderr = process.communicate()
