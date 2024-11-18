@@ -68,3 +68,20 @@ def Create_Project_Folder(Project_Name = "Database_Test_1",
     Create_Folder(f"{Projec_Folder_path}\\{output_simulation_folder}")
 
     return Projec_Folder_path
+
+def copy_bgd_for_simulation(starting_path, final_path):
+    """Lists all files in starting_path and copies .bgd files to final_path using Copy_File."""
+
+    if not os.path.exists(starting_path):
+        print(f"Error: Starting path '{starting_path}' does not exist.")
+        return
+
+    if not os.path.exists(final_path):
+        os.makedirs(final_path)
+
+    for filename in os.listdir(starting_path):
+        if filename.endswith(".bgd"):
+            source_path = os.path.join(starting_path, filename)
+            destination_path = os.path.join(final_path, filename)
+            if Copy_File(source_path, destination_path):
+                print(f"Copied '{filename}' to '{final_path}'")
