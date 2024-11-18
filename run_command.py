@@ -1,5 +1,4 @@
 import subprocess
-import os
 from pathlib import Path
 
 def run_command(full_command, directory, show_cmd=False):

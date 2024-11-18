@@ -1,6 +1,5 @@
 import os
 import json
-import subprocess
 import re
 from run_command import run_command
 import Folder_management
@@ -29,9 +28,8 @@ class Geometry:
         self.parameters = parameters
         
         self.defaultfilePath = defaultfilePath
-        
         self.output_project_path = f"{Project_Folder}\\{Project_Name}"
-        self.output_jsonPath = f"{self.output_project_path}\\{output_jsonFolder}\\MOD{file_name}.josn"
+        self.output_jsonPath = f"{self.output_project_path}\\{output_jsonFolder}\\MOD{file_name}.json"
         self.output_bgiPath = f"{self.output_project_path}\\{output_bgiFolder}\\MOD{file_name}.bgi"
         self.output_unmodified_bgiPath = f"{self.output_project_path}\\{output_unmodified_bgiFolder}\\UNMOD{file_name}.bgi"
         self.output_bgdPath = f"{self.output_project_path}\\{output_bgdFolder}\\UNMOD{file_name}.bgd"

@@ -14,7 +14,6 @@ from simulationParameters import *
 #! Folder Management Settings
 Project_Name = "Database_Test_2"
 Project_Folder = "D:\\Davide"
-geometry_name = "LUS"
 number_of_channels = 9
 std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242"
 

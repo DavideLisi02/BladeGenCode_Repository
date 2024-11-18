@@ -6,6 +6,7 @@ output_bgifolder_settings = 'modifiedBGI'
 output_unmodified_bgifolder_settings = 'unmodifiedBGI'
 output_bgdfolder_settings = 'modifiedBGD'
 output_unmodified_bgdfolder_settings = 'unmodifiedBGD'
+output_simulation_folder = 'Simulations'
 
 def Create_Folder(Path):
     """Creates a new folder at the specified path.
@@ -64,6 +65,7 @@ def Create_Project_Folder(Project_Name = "Database_Test_1",
     Create_Folder(f"{Projec_Folder_path}\\{output_unmodified_bgifolder}")
     Create_Folder(f"{Projec_Folder_path}\\{output_bgdfolder}")
     Create_Folder(f"{Projec_Folder_path}\\{output_unmodified_bgdfolder}")
+    Create_Folder(f"{Projec_Folder_path}\\{output_simulation_folder}")
 
     return Projec_Folder_path
 
