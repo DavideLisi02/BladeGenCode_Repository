@@ -2,6 +2,7 @@ from Bezier import *
 from Parameters import *
 from stateFileModifier import *
 
+
 ###########################################################
 ###########################################################
 
@@ -46,11 +47,11 @@ w1_max = 10
 
 # Folder Management Settings
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
-output_jsonfolder_settings = 'modifiedJSON\\'
-output_bgifolder_settings = 'modifiedBGI\\'
-output_unmodified_bgifolder_settings = 'unmodifiedBGI\\'
-output_bgdfolder_settings = 'modifiedBGD\\'
-output_unmodified_bgdfolder_settings = 'unmodifiedBGD\\'
+output_jsonfolder_settings = 'modifiedJSON'
+output_bgifolder_settings = 'modifiedBGI'
+output_unmodified_bgifolder_settings = 'unmodifiedBGI'
+output_bgdfolder_settings = 'modifiedBGD'
+output_unmodified_bgdfolder_settings = 'unmodifiedBGD'
 std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc" # Check also if inside this folder there is a folder called v242 otherwise correct with the right number you have in statFileModifier.py
 
 ###########################################################
@@ -90,12 +91,16 @@ for par in pars_list:
     file_code = f"{par.par_name}" # Code used for the name of the stored files
     Geometry_i= Geometry(par,
                         defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi",
-                        output_jsonPath = f"{output_jsonfolder_settings}MODgeometry_{file_index}_{file_code}.json",
-                        output_bgiPath = f"{output_bgifolder_settings}MODgeometry_{file_index}_{file_code}.bgi",
-                        output_unmodified_bgiPath = f"{output_unmodified_bgifolder_settings}UNMODgeometry_{file_index}_{file_code}.bgi",
-                        output_bgdPath = f"{output_bgdfolder_settings}MODgeometry_{file_index}_{file_code}.bgd",
-                        output_unmodified_bgdPath = f"{output_unmodified_bgdfolder_settings}UNMODgeometry_{file_index}_{file_code}.bgd",
-                        std_ANSYS_Folder = "c:\\Program Files\\ANSYS Inc")
+                        output_jsonPath = f"{output_jsonfolder_settings}\\MODgeometry_{file_index}_{file_code}.json",
+                        output_bgiPath = f"{output_bgifolder_settings}\\MODgeometry_{file_index}_{file_code}.bgi",
+                        output_unmodified_bgiPath = f"{output_unmodified_bgifolder_settings}\\UNMODgeometry_{file_index}_{file_code}.bgi",
+                        output_bgi_name = f'MODgeometry_{file_index}_{file_code}.bgi',
+                        output_bgd_name = f'MODgeometry_{file_index}_{file_code}.bgd',
+                        output_abs_bgi_folder = f'D:\\Davide\\BladeGenCode_Repository\\{output_bgifolder_settings}',
+                        output_bgd_folder = f'BladeGenCode_Repository\\{output_bgdfolder_settings}',
+                        output_bgdPath = f"{output_bgdfolder_settings}\\MODgeometry_{file_index}_{file_code}.bgd",
+                        output_unmodified_bgdPath = f"{output_unmodified_bgdfolder_settings}\\UNMODgeometry_{file_index}_{file_code}.bgd",
+                        std_BLADEGEN_Folder = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen")
 
     #Geometry_i.create_unmodified_json_geometry()
     Geometry_i.create_modified_geometry() # TO BE MODIFIED : | 1 Setup Ansys Folder | 2: go to stateFileModifier.create_modified_geometry | 3: uncomment line saying self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
