@@ -36,7 +36,7 @@ tau_0_N = 1
 tau_0_max = 1
 tau_0_min = 0
 # Discrtization of the parameter tau_1
-tau_1_N = 3 
+tau_1_N = 4 
 tau_1_max = 1.5
 tau_1_min = -0.5
 # Discrtization of the parameter w1
