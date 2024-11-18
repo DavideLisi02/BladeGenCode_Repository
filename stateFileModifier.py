@@ -414,6 +414,8 @@ class Geometry:
         blade_batch_command = f'BladeBatch {output_bgiPath} {output_bgdPath}'
         print(f"Converting using Blade Batch: {blade_batch_command}")
         
+        print("\n------------------------------------------")
+
         full_command = f"{folder_command} && dir && {blade_batch_command}"
         print(f"Full command: {full_command}")
 
