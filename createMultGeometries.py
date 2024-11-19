@@ -1,4 +1,4 @@
-from Bezier import *
+from Bezier import * # maybe to be removed from here
 from Parameters import *
 from stateFileModifier import *
 import Folder_management
@@ -20,7 +20,7 @@ beta_out_settings = 35.15 # (beta_4, beta in corrispondenza dell'hub all'outlet)
 # Geometrical Parameters from 1D
 L_ind = 30 #30
 L_comp = 8 #8
-r2s = 7 #5.6
+r2s = 5.6 #5.6
 r2h = 2 #2
 r4  = 10 #10
 b4  = 1 #1
@@ -34,20 +34,20 @@ beta_bezier_N = 100
 HubShr_bezier_N = 100
 
 # Discrtization of the parameter tau_0
-tau_0_N = 1 
+tau_0_N = 10 
 tau_0_max = 1
 tau_0_min = 0
 # Discrtization of the parameter tau_1
-tau_1_N = 4 
+tau_1_N = 10 
 tau_1_max = 1.5
 tau_1_min = -0.5
 # Discrtization of the parameter w1
-w1_N = 1 
+w1_N = 3 
 w1_min = 1
 w1_max = 10 
 
 # Folder Management Settings
-Project_Name = "Database_Test_2"
+Project_Name = "Database_Test_3"
 Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"
@@ -76,36 +76,50 @@ pars_list = [ParametrizationSettings(
     tau =  [tau_0_ijk, tau_1_ijk],
     w1 = w1_ijk,
     thickness = thickness,
-    index = ((i*tau_0_N+j)*tau_1_N)+k,
+    index = (i * tau_1_N * w1_N) + (j * w1_N) + k,
     par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")
                 for i,tau_0_ijk in enumerate(tau_0)
                 for j,tau_1_ijk in enumerate(tau_1)
                 for k,w1_ijk in enumerate(w1)
     ]
 
-# Creating the results dictionary 
-results_dict = { ((i*tau_0_N+j)*tau_1_N)+k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Results"] #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
-                for i,tau_0_ijk in enumerate(tau_0)
-                for j,tau_1_ijk in enumerate(tau_1)
-                for k,w1_ijk in enumerate(w1) }
+print(f"-----------------------------------------\nCreating {len(pars_list)} geometries")
+Go_on = input("Are you sure you want to procede? Y/n > ")
+print(f"-----------------------------------------")
+print("Starting process")
 
+if Go_on in ["y","Y"]:
+    # Creating the results dictionary 
+    results_dict = { ((i*tau_0_N+j)*tau_1_N)+k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Results"] #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
+                    for i,tau_0_ijk in enumerate(tau_0)
+                    for j,tau_1_ijk in enumerate(tau_1)
+                    for k,w1_ijk in enumerate(w1) }
 
-for par in pars_list:
-    file_index = par.index # Index used for the name of the stored files
-    file_code = f"{par.par_name}" # Code used for the name of the stored files
-    file_name_settings = f"geometry_{file_index}_{file_code}"
-    Geometry_i= Geometry(par,
-                        defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi",
-                        file_name = file_name_settings,
-                        Project_Name = Project_Name,
-                        Project_Folder = Project_Folder,
-                        std_BLADEGEN_Folder = std_BLADEGEN_Folder_settings)
+    i = 1
+    for par in pars_list:
+        print(f"\n######################## > Creating Geometry {i}/{len(pars_list)} < ########################")
+        file_index = par.index # Index used for the name of the stored files
+        file_code = f"{par.par_name}" # Code used for the name of the stored files
+        file_name_settings = f"geometry_{file_index}_{file_code}"
+        Geometry_i= Geometry(par,
+                            defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi",
+                            file_name = file_name_settings,
+                            Project_Name = Project_Name,
+                            Project_Folder = Project_Folder,
+                            std_BLADEGEN_Folder = std_BLADEGEN_Folder_settings)
 
-    #Geometry_i.create_unmodified_json_geometry()
-    Geometry_i.create_modified_geometry() # TO BE MODIFIED : | 1 Setup Ansys Folder | 2: go to stateFileModifier.create_modified_geometry | 3: uncomment line saying self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
-    #Geometry_i.create_unmodified_bgi_geometry()
+        #Geometry_i.create_unmodified_json_geometry()
+        Geometry_i.create_modified_geometry() # TO BE MODIFIED : | 1 Setup Ansys Folder | 2: go to stateFileModifier.create_modified_geometry | 3: uncomment line saying self.convert_bgi_to_bgd(self.output_bgiPath, self.output_bgdPath, ANSYSfolderPath = self.std_ANSYS_Folder)
+        #Geometry_i.create_unmodified_bgi_geometry()
+        if print_results:
+            print(f"Geometry was created for  : tau = {par.tau} | w1 = {par.w1} | Name = {par.par_name}")
+
+        i+=1
+
     if print_results:
-        print(f"Geometry was created for  : tau = {par.tau} | w1 = {par.w1} | Name = {par.par_name}")
+        print(f"Results Dictionary Initialized:\n{results_dict}\n")
+    
+    
 
-if print_results:
-    print(f"Results Dictionary Initialized:\n{results_dict}\n")
+else:
+    print("No geometry has been created\n-------------------------------------")
