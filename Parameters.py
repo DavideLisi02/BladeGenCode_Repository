@@ -7,6 +7,12 @@ class ParametrizationSettings:
     def __init__(self,
                  beta_in_settings = 35,
                  beta_out_settings = 60,
+                 spline_degree_settings = 2, # Degree of the spline,
+                 tau_settings = [0.5, 0.5], # Adimensional parameters for varying the parametrization configuration. The first value affects the meridional position of the control point. The second value affects the beta value of the control point
+                 beta_bezier_N_settings = 60, # Number of points for Meridional length's discretisation
+                 fibers_settings = 'General_only_at_Hub', #Set True if the .bgi file has Radial Fiber definition
+                 type_of_parametrization_settings = 'Bezier', # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
+                 w1_settings = 1,# Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
                 **kwargs):
         """
         Class containing all the settings and information about
@@ -17,7 +23,7 @@ class ParametrizationSettings:
         #Settings for the Blade Parametrization
         self.modify_Blade = True
         self.Beta_definition = 'beta-M%' # Possible entries: 'beta-M%'
-        self.beta_bezier_N = 100
+        self.beta_bezier_N = beta_bezier_N_settings
         
         #Settings for deciding the number of blades
         self.modify_numOfBlades = True
@@ -42,26 +48,27 @@ class ParametrizationSettings:
                 self.beta_in = beta_in_settings # Beta value at the inlet
                 self.beta_out = beta_out_settings # Beta value at the outlet
 
-                self.spline_degree = 2 # Degree of the spline
-                self.tau = [0.5, 0.5] # Adimensional parameters for varying the parametrization configuration. The first value affects the meridional position of the control point. The second value affects the beta value of the control point
-                self.beta_bezier_N = 60 # Number of points for Meridional length's discretisation
+                self.spline_degree = spline_degree_settings # Degree of the spline
+                self.tau = tau_settings # Adimensional parameters for varying the parametrization configuration. The first value affects the meridional position of the control point. The second value affects the beta value of the control point
+                self.beta_bezier_N = beta_bezier_N_settings # Number of points for Meridional length's discretisation
 
-                self.fibers = 'General_only_at_Hub' #Set True if the .bgi file has Radial Fiber definition
-                self.type_of_parametrization = 'Bezier' # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
-                self.w1 = 1# Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
+                self.fibers = fibers_settings #Set True if the .bgi file has Radial Fiber definition
+                self.type_of_parametrization = type_of_parametrization_settings # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
+                self.w1 = w1_settings# Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
 
                 self.par_name = f"{str(self.tau[0]).replace('.', '')}_{str(self.tau[1]).replace('.', '')}_{str(self.w1).replace('.', '')}" # String used for the name of the output file
 
-                if self.type_of_parametrization == 'Bezier':
-                    beta_curve_parameters = {'definition':self.Beta_definition,
-                                        'object':'Blade',
-                                        'beta_in':self.beta_in,
-                                        'beta_out':self.beta_out,
-                                        'tau':self.tau,
-                                        'w1':self.w1,
-                                        'spline_degree':self.spline_degree,
-                                        'beta_bezier_N':self.beta_bezier_N}
-                    self.Beta_M_bezier_curve_points = Bezier(beta_curve_parameters).points
+                print(f"\nComputing bezier curve for beta/m curve: tau = {self.tau} | w1 = {self.w1}\n")
+
+                beta_curve_parameters = {'definition':self.Beta_definition,
+                                    'object':'Blade',
+                                    'beta_in':self.beta_in,
+                                    'beta_out':self.beta_out,
+                                    'tau':self.tau,
+                                    'w1':self.w1,
+                                    'spline_degree':self.spline_degree,
+                                    'beta_bezier_N':self.beta_bezier_N}
+                self.Beta_M_bezier_curve_points = Bezier(beta_curve_parameters).points
 
 
             # NOTE: This overrides the previous declarations

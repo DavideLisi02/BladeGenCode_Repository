@@ -2,6 +2,7 @@ from Bezier import * # maybe to be removed from here
 from Parameters import *
 from stateFileModifier import *
 import Folder_management
+import matplotlib.pyplot as plt
 
 
 ###########################################################
@@ -34,20 +35,20 @@ beta_bezier_N = 100
 HubShr_bezier_N = 100
 
 # Discrtization of the parameter tau_0
-tau_0_N = 10 
+tau_0_N = 2 
 tau_0_max = 1
 tau_0_min = 0
 # Discrtization of the parameter tau_1
-tau_1_N = 10 
-tau_1_max = 1.5
-tau_1_min = -0.5
+tau_1_N = 2 
+tau_1_max = 2
+tau_1_min = 0
 # Discrtization of the parameter w1
-w1_N = 3 
+w1_N = 4 
 w1_min = 1
 w1_max = 10 
 
 # Folder Management Settings
-Project_Name = "Database_Test_3"
+Project_Name = "Database_Test_5"
 Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"
@@ -70,11 +71,11 @@ HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier
 pars_list = [ParametrizationSettings(
     beta_in_settings = beta_in_settings,
     beta_out_settings = beta_out_settings,
-    beta_bezier_N = beta_bezier_N,
+    beta_bezier_N_settings = beta_bezier_N,
     HubShroud_1D_dimensions = HubShroud_1D_dimensions,
     print_conversion_output = print_conversion_output,
-    tau =  [tau_0_ijk, tau_1_ijk],
-    w1 = w1_ijk,
+    tau_settings =  [tau_0_ijk, tau_1_ijk],
+    w1_settings = w1_ijk,
     thickness = thickness,
     index = (i * tau_1_N * w1_N) + (j * w1_N) + k,
     par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")
@@ -82,8 +83,20 @@ pars_list = [ParametrizationSettings(
                 for j,tau_1_ijk in enumerate(tau_1)
                 for k,w1_ijk in enumerate(w1)
     ]
+print(f"-----------------------------------------\nCreated {len(pars_list)} geometries")
+'''
+# Plotting a preview of the whole design space
+plt.figure(figsize=(10, 6))
+for par in pars_list:
+    plt.plot(par.Beta_M_bezier_curve_points, label=f"Par {par.par_name}")  # Customize label as needed
 
-print(f"-----------------------------------------\nCreating {len(pars_list)} geometries")
+# Add labels, legend, and grid
+plt.title("Design space _ check Terminal to go on")
+plt.xlabel("beta")  # Replace with a meaningful label
+plt.ylabel("m%")  # Replace with a meaningful label
+plt.grid(True)
+plt.show()
+'''
 Go_on = input("Are you sure you want to procede? Y/n > ")
 print(f"-----------------------------------------")
 print("Starting process")

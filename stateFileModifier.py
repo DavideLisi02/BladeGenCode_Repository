@@ -429,11 +429,11 @@ class Geometry:
     def create_modified_geometry(self):
         DataList = self.readfile(filePath =  self.defaultfilePath)
         DataDict = self.convert_list_to_dict(DataList)
-        ModDataDict = self.modify_dict_numOfBlades(self.parameters.numOfBlades, self.parameters.modify_numOfBlades, DataDict)
-        ModDataDict = self.modify_dict_blade(self.parameters.Beta_definition, self.parameters.Beta_M_bezier_curve_points, DataDict, self.parameters.fibers)
-        ModDataDict = self.modify_dict_HubShroud(self.parameters.HubShroud_definition, ModDataDict)
-        ModDataDict = self.modify_dict_thickness(self.parameters.thickness_curve, self.parameters.modify_Thickness, ModDataDict)
-        self.save_json(self.output_jsonPath, ModDataDict)
+        ModDataDict_numofblades = self.modify_dict_numOfBlades(self.parameters.numOfBlades, self.parameters.modify_numOfBlades, DataDict)
+        ModDataDict_blade = self.modify_dict_blade(self.parameters.Beta_definition, self.parameters.Beta_M_bezier_curve_points, ModDataDict_numofblades, self.parameters.fibers)
+        ModDataDict_hs = self.modify_dict_HubShroud(self.parameters.HubShroud_definition, ModDataDict_blade)
+        ModDataDict_final = self.modify_dict_thickness(self.parameters.thickness_curve, self.parameters.modify_Thickness, ModDataDict_hs)
+        self.save_json(self.output_jsonPath, ModDataDict_final)
         self.convert_json_to_bgi(self.output_jsonPath, self.output_bgiPath)     
         self.convert_bgi_to_bgd(self.output_bgiPath,
                                 self.output_bgdPath,
