@@ -70,7 +70,6 @@ class ParametrizationSettings:
                                     'beta_bezier_N':self.beta_bezier_N}
                 self.Beta_M_bezier_curve_points = Bezier(beta_curve_parameters).points
 
-
             # NOTE: This overrides the previous declarations
             self.__dict__.update(kwargs)
 
