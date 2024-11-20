@@ -40,8 +40,8 @@ tau_0_max = 1
 tau_0_min = 0
 # Discrtization of the parameter tau_1
 tau_1_N = 2 
-tau_1_max = 1.5
-tau_1_min = -1
+tau_1_max = 1.5  # 2 to have P1 at beta_ou + delta
+tau_1_min = -1  # - 1 to have P1 at bet_in - delta
 # Discrtization of the parameter w1
 w1_N = 2 
 w1_min = 1
