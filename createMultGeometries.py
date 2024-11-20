@@ -43,7 +43,7 @@ tau_1_N = 2
 tau_1_max = 1.5
 tau_1_min = -1
 # Discrtization of the parameter w1
-w1_N = 4 
+w1_N = 2 
 w1_min = 1
 w1_max = 10 
 # Hub ans Shroud
@@ -86,19 +86,20 @@ pars_list = [ParametrizationSettings(
                 for k,w1_ijk in enumerate(w1)
     ]
 print(f"-----------------------------------------\nCreated {len(pars_list)} geometries")
-'''
+
 # Plotting a preview of the whole design space
 plt.figure(figsize=(10, 6))
 for par in pars_list:
+    print(par.Beta_M_bezier_curve_points[-1])
     plt.plot(par.Beta_M_bezier_curve_points, label=f"Par {par.par_name}")  # Customize label as needed
-
 # Add labels, legend, and grid
-plt.title("Design space _ check Terminal to go on")
-plt.xlabel("beta")  # Replace with a meaningful label
-plt.ylabel("m%")  # Replace with a meaningful label
+plt.title("Design space - > Close to go on")
+plt.xlabel("m%")  # Replace with a meaningful label
+plt.ylabel("beta")  # Replace with a meaningful label
+plt.legend()
 plt.grid(True)
 plt.show()
-'''
+
 Go_on = input("Are you sure you want to procede? Y/n > ")
 print(f"-----------------------------------------")
 print("Starting process")
