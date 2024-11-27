@@ -1,5 +1,9 @@
-Create Initial Dataset for testing - MERCOLEDì
 
-Modify splitter
+Create database
+    Parametrize beta/M tau_x, tau_y, beta
 
 Run simulations
+    500 n_itterations
+    1.3 oppure 1.5 mesh size factor
+
+Obtain results

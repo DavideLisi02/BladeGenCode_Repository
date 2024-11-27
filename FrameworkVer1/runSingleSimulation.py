@@ -23,7 +23,7 @@ std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242"
 
 simulation_definition = create_simulation_def(ansys_path = std_ANSYS_Folder_settings,
                                             simulation_path = f"{Project_Folder}\\{Project_Name}\\{Folder_management.output_simulation_folder}",
-                                            case_name = 'LUS_1',
+                                            case_name = geometry_name,
                                             geometry_name = geometry_name,
                                             n_channels = number_of_channels)
 

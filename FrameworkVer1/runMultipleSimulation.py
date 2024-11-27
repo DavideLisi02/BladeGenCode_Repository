@@ -13,7 +13,7 @@ from simulationParameters import *
 ####################################################################################
 
 #! Parallel running?
-parallel = False
+parallel = True
 #! Number of parallel simulations
 batch_size = 5
 
@@ -55,14 +55,15 @@ if Go_on.lower() == 'y':
         while i < len(names):
             # Create threads for the next batch of 5 simulations
             for j in range(i, min(i + batch_size, len(names))):
-                print(f"############## > Simulation {j} < ##############")
-                thread = threading.Thread(target=run_simulation, args=(names[j],))
-                threads.append(thread)
-                thread.start()
+                #print(f"############## > Simulation {j} < ##############")
+                #thread = threading.Thread(target=run_simulation, args=(names[j],))
+                #threads.append(thread)
+                #thread.start()
+                print(f"Running Simulation for this geometry: {names[j]}")
             
             # Wait for the batch of threads to finish before starting the next batch
-            for thread in threads[i:min(i + batch_size, len(names))]:
-                thread.join()
+            #for thread in threads[i:min(i + batch_size, len(names))]:
+            #    thread.join()
             
             # Move to the next batch
             i += batch_size

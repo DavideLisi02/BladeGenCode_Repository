@@ -47,9 +47,9 @@ def create_simulation_def(ansys_path = r"C:\Program Files\ANSYS Inc\v242",
         "rotational speed" : 160000, #[rev min^-1]
 
         #! mesh and solver definition 
-        "mesh size factor" : 1,  # 1
+        "mesh size factor" : 1.3,  # 1
         "n partitions" : 5, # number of processes
-        "n iterations" : 2, # 500
+        "n iterations" : 500, # 500
         "target residual" : 1e-5, # threshold
 
         "queue_name" : "Helvetios Standard"

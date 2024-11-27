@@ -71,8 +71,8 @@ Folder_management.Create_Project_Folder(Project_Name = Project_Name,
 tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
 w1 = np.linspace(w1_min, w1_max, w1_N)
-HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5, 'w1_hb':w1_hb, 'w1_sh':w1_sh}
 
+HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5, 'w1_hb':w1_hb, 'w1_sh':w1_sh}
 
 # Creating the parameters 
 pars_list = [ParametrizationSettings(

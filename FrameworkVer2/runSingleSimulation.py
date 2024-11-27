@@ -25,7 +25,9 @@ simulation_definition = create_simulation_def(ansys_path = std_ANSYS_Folder_sett
                                             simulation_path = f"{Project_Folder}\\{Project_Name}\\{Folder_management.output_simulation_folder}",
                                             case_name = geometry_name,
                                             geometry_name = geometry_name,
-                                            n_partitions = 20, # number of processes
+                                            n_partitions = 20, # number of cores
                                             n_channels = number_of_channels)
 
 CFXbatch.run_CFXbatch(simulation_definition)
+
+print("Simulazione terminata")
