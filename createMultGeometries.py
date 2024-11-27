@@ -40,12 +40,14 @@ tau_0_max = 1
 tau_0_min = 0
 # Discrtization of the parameter tau_1
 tau_1_N = 2 
-tau_1_max = 1.5
-tau_1_min = 0.5
+tau_1_max = 1.5  # 2 to have P1 at beta_ou + delta
+tau_1_min = -1  # - 1 to have P1 at bet_in - delta
 # Discrtization of the parameter w1
 w1_N = 2 
 w1_min = 1
 w1_max = 10 
+# Hub ans Shroud
+# w2 hu and shroud
 
 # Folder Management Settings
 Project_Name = "Database_Test_5"
@@ -78,7 +80,7 @@ pars_list = [ParametrizationSettings(
     w1_settings = w1_ijk,
     thickness = thickness,
     index = (i * tau_1_N * w1_N) + (j * w1_N) + k,
-    par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")
+    par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")  # NAME OF THE SAVED FILE
                 for i,tau_0_ijk in enumerate(tau_0)
                 for j,tau_1_ijk in enumerate(tau_1)
                 for k,w1_ijk in enumerate(w1)
