@@ -13,6 +13,7 @@ class ParametrizationSettings:
                  fibers_settings = 'General_only_at_Hub', #Set True if the .bgi file has Radial Fiber definition
                  type_of_parametrization_settings = 'Bezier', # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
                  w1_settings = 1,# Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
+                 w1_hb_sh_settings = 1,
                 **kwargs):
         """
         Class containing all the settings and information about
@@ -32,7 +33,8 @@ class ParametrizationSettings:
         #Settings for modifying the Hub and Shroud profiles accordingly to 1D    
         self.modify_HubShroud = True
         self.HubShr_bezier_N = 100
-        self.HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':self.HubShr_bezier_N,'definition':'xz', 'spline_degree':2, 'L_ind':30,'L_comp':8, 'r2s':5.6, 'r2h':2, 'r4':10, 'b4':1, 'r5':30}
+        self.w1_hb_sh = w1_hb_sh_settings
+        self.HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':self.HubShr_bezier_N,'definition':'xz', 'spline_degree':2, 'L_ind':30,'L_comp':8, 'r2s':5.6, 'r2h':2, 'r4':10, 'b4':1, 'r5':30, 'w1_hb':self.w1_hb_sh, 'w1_sh':self.w1_hb_sh}
         self.HubShroud_definition = self.HubShroud_1D_dimensions['definition']
 
         #Settings for deciding the thickness value

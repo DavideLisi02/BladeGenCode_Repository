@@ -2,8 +2,7 @@ from Bezier import * # maybe to be removed from here
 from Parameters import *
 from stateFileModifier import *
 import Folder_management
-import matplotlib.pyplot as plt
-
+import plotly.graph_objects as go
 
 ###########################################################
 ###########################################################
@@ -11,7 +10,7 @@ import matplotlib.pyplot as plt
 # SETTINGS OF THE SIMULATED DATASET
 
 # Print Results & Conversion Output | Y/n = True/False
-print_results = True
+print_results = False
 print_conversion_output = False
 
 # Beta at inlet and outlet from 1D
@@ -36,21 +35,21 @@ HubShr_bezier_N = 100
 
 # Discrtization of the parameter tau_0
 tau_0_N = 2 
-tau_0_max = 1
-tau_0_min = 0
+tau_0_max = 0.6
+tau_0_min = 0.5
 # Discrtization of the parameter tau_1
-tau_1_N = 2 
-tau_1_max = 1.5  # 2 to have P1 at beta_ou + delta
-tau_1_min = -1  # - 1 to have P1 at bet_in - delta
+tau_1_N = 2
+tau_1_max = -0.5  # 2 to have P1 at beta_ou + delta
+tau_1_min = -0.6  # - 1 to have P1 at bet_in - delta
 # Discrtization of the parameter w1
 w1_N = 2 
 w1_min = 1
 w1_max = 10 
 # Hub ans Shroud
-# w2 hu and shroud
+w1_hb_sh = 1
 
 # Folder Management Settings
-Project_Name = "Database_Test_5"
+Project_Name = "Database_Test_11"
 Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"
@@ -66,7 +65,7 @@ Folder_management.Create_Project_Folder(Project_Name = Project_Name,
 tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
 w1 = np.linspace(w1_min, w1_max, w1_N)
-HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5}
+HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5, 'w1_hb':w1_hb_sh, 'w1_sh':w1_hb_sh}
 
 
 # Creating the parameters 
@@ -79,6 +78,7 @@ pars_list = [ParametrizationSettings(
     tau_settings =  [tau_0_ijk, tau_1_ijk],
     w1_settings = w1_ijk,
     thickness = thickness,
+    w1_hb_sh_settings = w1_hb_sh,
     index = (i * tau_1_N * w1_N) + (j * w1_N) + k,
     par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")  # NAME OF THE SAVED FILE
                 for i,tau_0_ijk in enumerate(tau_0)
@@ -87,24 +87,40 @@ pars_list = [ParametrizationSettings(
     ]
 print(f"-----------------------------------------\nCreated {len(pars_list)} geometries")
 
-# Plotting a preview of the whole design space
-plt.figure(figsize=(10, 6))
+# Create a figure
+fig = go.Figure()
+# Iterate through `pars_list` and add each curve to the figure
 for par in pars_list:
-    print(par.Beta_M_bezier_curve_points[-1])
-    plt.plot(par.Beta_M_bezier_curve_points, label=f"Par {par.par_name}")  # Customize label as needed
-# Add labels, legend, and grid
-plt.title("Design space - > Close to go on")
-plt.xlabel("m%")  # Replace with a meaningful label
-plt.ylabel("beta")  # Replace with a meaningful label
-plt.legend()
-plt.grid(True)
-plt.show()
+    if hasattr(par, 'Beta_M_bezier_curve_points') and par.Beta_M_bezier_curve_points is not None:
+        # Extract x and y values from the 2D points
+        x_values = [point[0] for point in par.Beta_M_bezier_curve_points]
+        y_values = [point[1] for point in par.Beta_M_bezier_curve_points]
+        
+        # Add the curve to the figure
+        fig.add_trace(go.Scatter(
+            x=x_values,  # Use the first element of each pair as x-values
+            y=y_values,  # Use the second element of each pair as y-values
+            mode='lines',  # Line plot
+            name=f"Par {par.par_name}"  # Legend label
+        ))
 
+# Customize layout
+fig.update_layout(
+    title="Design space - > See Terminal to go on",
+    xaxis_title="m%",  # Meaningful label for x-axis
+    yaxis_title="beta",  # Meaningful label for y-axis
+    legend_title="Parameters",
+    showlegend=True,
+)
+
+# Display the figure
+fig.show()
 Go_on = input("Are you sure you want to procede? Y/n > ")
 print(f"-----------------------------------------")
-print("Starting process")
+
 
 if Go_on in ["y","Y"]:
+    print("Starting process")
     # Creating the results dictionary 
     results_dict = { ((i*tau_0_N+j)*tau_1_N)+k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Results"] #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
                     for i,tau_0_ijk in enumerate(tau_0)
