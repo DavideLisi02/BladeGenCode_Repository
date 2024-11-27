@@ -101,6 +101,7 @@ class ParametrizationSettings:
                 
                 self.Hub_Shroud_curves_points = Bezier(self.HubShroud_1D_dimensions).points # Format of this varaible: [HubProfile_points, ShrProfile_points]
                 
+
                 self.diffuser_Hub_points = [
                     (L_ind+L_comp, r4),       # Point E
                     (L_ind+L_comp, r5),       # Point F
@@ -113,6 +114,36 @@ class ParametrizationSettings:
 
                 self.total_Hub_profile = [self.inducer_Hub_points] + [self.Hub_Shroud_curves_points[0]] + [self.diffuser_Hub_points]    
                 self.total_Shroud_profile = [self.inducer_Shroud_points] + [self.Hub_Shroud_curves_points[1]] + [self.diffuser_Shroud_points]    
+
+                #SPLITTER BLADE
+
+                #Splliter point leading edge point at hub
+                hub_meridional_target = 0.3
+                hub_profile = np.array(self.Hub_Shroud_curves_points[0])                
+                ds_hub = np.sum((hub_profile[1:,:] - hub_profile[:-1,:])**2,axis=1)**0.5
+                meridional_hub = np.zeros(ds_hub.shape[0]+1)
+                for i in range(ds_hub.shape[0]):
+                    meridional_hub[i+1]=ds_hub[i]+meridional_hub[i]
+                meridional_norm_hub = meridional_hub/np.max(meridional_hub)
+                idx_hub = np.argmin(np.abs(hub_meridional_target-meridional_norm_hub))
+                coords_splitter_hub = hub_profile[idx_hub,:]
+
+                #Splliter point leading edge point at shroud
+                sh_meridional_target = 0.3
+                sh_profile = np.array(self.Hub_Shroud_curves_points[1])
+                ds_sh = np.sum((sh_profile[1:,:] - sh_profile[:-1,:])**2,axis=1)**0.5
+                meridional_sh = np.zeros(ds_sh.shape[0]+1)
+                for i in range(ds_sh.shape[0]):
+                    meridional_sh[i+1]=ds_sh[i]+meridional_sh[i]
+                meridional_norm_sh = meridional_sh/np.max(meridional_sh)
+                idx_sh = np.argmin(np.abs(sh_meridional_target-meridional_norm_sh))
+                coords_splitter_sh = sh_profile[idx_sh,:]
+
+                #Splitter Leading Edge
+                self.splitter_LE = [
+                    coords_splitter_hub.tolist(), 
+                    coords_splitter_sh.tolist()
+                ]
 
                 #INLET CURVE AND EXHAUST CURVE CALCULATIONS
                 self.inlet_curve = [

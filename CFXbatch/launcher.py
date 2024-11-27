@@ -49,10 +49,10 @@ simulation_definition = {
     "rotational speed" : 160000, #[rev min^-1]
 
     #! mesh and solver definition 
-    "mesh size factor" : 1,
-    "n partitions" : 5,
-    "n iterations" : 2, 
-    "target residual" : 1e-5 
+    "mesh size factor" : 1,  # 1
+    "n partitions" : 5, # number of processes
+    "n iterations" : 2, # 500
+    "target residual" : 1e-5 # threshold
 }
 
 ##############################################################################################################################
