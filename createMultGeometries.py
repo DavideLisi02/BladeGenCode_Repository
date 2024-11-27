@@ -43,12 +43,12 @@ HubShr_bezier_N = 300 # Number of points for the hub and shroud bezier
 # DISCRETIZATION OF THE BETA/M% CURVE'S PARAMETERS
 # Discrtization of the parameter tau_0
 tau_0_N = 4 
-tau_0_max = 1 #   0 < tau_0_max < 1      and     tau_0_max > tau_0_min
-tau_0_min = 0 #   0 < tau_0_min < 1      and     tau_0_min < tau_0_min
+tau_0_max = 0.7 #   0 < tau_0_max < 1      and     tau_0_max > tau_0_min
+tau_0_min = 0.3 #   0 < tau_0_min < 1      and     tau_0_min < tau_0_min
 # Discrtization of the parameter tau_1
 tau_1_N = 4
-tau_1_max = 2  # 2 to have P1 at beta_ou + delta
-tau_1_min = -1  # - 1 to have P1 at bet_in - delta
+tau_1_max = -0.3  # 2 to have P1 at beta_ou + delta
+tau_1_min = -0.7  # - 1 to have P1 at bet_in - delta
 # Discrtization of the parameter w1
 w1_N = 3 
 w1_min = 1
@@ -122,7 +122,7 @@ fig.update_layout(
 
 # Display the figure
 fig.show()
-print(f"\nExpected time to create gemoteries: {3.5*tau_0_N*tau_1_N*w1_N/60} min\n")
+print(f"\nExpected time to create BladeGen files: {3.5*tau_0_N*tau_1_N*w1_N/60} min\n")
 Go_on = input("Are you sure you want to procede? Y/n > ")
 print(f"-----------------------------------------")
 
