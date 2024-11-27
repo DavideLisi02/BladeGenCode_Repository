@@ -1,0 +1,78 @@
+rotational speed
+BBB mfr in
+BBB mfr out
+BBB T0 in
+BBB P0 in
+AAA blade momentum
+AAA shroud momentum
+BBB A S1
+BBB A S2
+BBB A S4
+BBB A S5
+BBB P S1
+BBB P S2
+BBB P S4
+BBB P S5
+BBB P0 S1
+BBB P0 S2
+BBB P0 S4
+BBB P0 S5
+BBB h S1
+BBB h S2
+BBB h S4
+BBB h S5
+BBB h0 S1
+BBB h0 S2
+BBB h0 S4
+BBB h0 S5
+BBB rho S1
+BBB rho S2
+BBB rho S4
+BBB rho S5
+BBB entropy S1
+BBB entropy S2
+BBB entropy S4
+BBB entropy S5
+BBB L S1
+BBB L S2
+BBB L S4
+BBB L S5
+BBB K S1
+BBB K S2
+BBB K S4
+BBB K S5
+BBB backflow ratio S1
+BBB backflow ratio S2
+BBB backflow ratio S4
+BBB backflow ratio S5
+EEE ep Inducer
+EEE ep Impeller
+EEE ep Impeller LE
+EEE ep Impeller TE
+EEE ep Impeller Diffuser interaction
+EEE ep Diffuser
+EEE ep unresolved Inducer
+EEE ep unresolved Impeller
+EEE ep unresolved Impeller LE
+EEE ep unresolved Impeller TE
+EEE ep unresolved boundary layer Impeller Diffuser interaction
+EEE ep unresolved Diffuser
+EEE y viscous sublayer Inducer
+EEE y viscous sublayer Impeller
+EEE y viscous sublayer Diffuser
+ZZZ ep viscous sublayer Impeller
+ZZZ ep skin
+ZZZ ep core
+ZZZ ep tip gap
+BBB P std S4
+BBB P meanA S4
+BBB P meanM S4
+BBB P0 std S4
+BBB P0 meanA S4
+BBB P0 meanM S4
+BBB cm std S4
+BBB cm meanA S4
+BBB cm meanM S4
+BBB ct std S4
+BBB ct meanA S4
+BBB ct meanM S4
