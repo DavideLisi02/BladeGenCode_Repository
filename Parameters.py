@@ -13,6 +13,8 @@ class ParametrizationSettings:
                  fibers_settings = 'General_only_at_Hub', #Set True if the .bgi file has Radial Fiber definition
                  type_of_parametrization_settings = 'Bezier', # String containing th name of the method used for parametrization. Possible methods: 'Bezier'
                  w1_settings = 1,# Weight on the second control point of the spline (set it = 1 for no-rational Bezier curve)
+                 splitter_LE_meridional_target_hub_settings = 0.3,
+                 splitter_LE_meridional_target_sh_settings = 0.3,
                 **kwargs):
         """
         Class containing all the settings and information about
@@ -29,11 +31,15 @@ class ParametrizationSettings:
         self.modify_numOfBlades = True
         self.numOfBlades = 9
 
-        #Settings for modifying the Hub and Shroud profiles accordingly to 1D    
+        #Settings for modifying the Hub and Shroud profiles accordingly to 1D | Defaults values
         self.modify_HubShroud = True
         self.HubShr_bezier_N = 100
-        self.HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':self.HubShr_bezier_N,'definition':'xz', 'spline_degree':2, 'L_ind':30,'L_comp':8, 'r2s':5.6, 'r2h':2, 'r4':10, 'b4':1, 'r5':30}
+        self.HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':self.HubShr_bezier_N,'definition':'xz', 'spline_degree':2, 'w1_hb':2, 'w1_sh':2, 'L_ind':30,'L_comp':8, 'r2s':5.6, 'r2h':2, 'r4':10, 'b4':1, 'r5':30}
         self.HubShroud_definition = self.HubShroud_1D_dimensions['definition']
+        
+        #Settings for LE cut of splitter blade
+        self.splitter_LE_meridional_target_hub = splitter_LE_meridional_target_hub_settings
+        self.splitter_LE_meridional_target_sh = splitter_LE_meridional_target_sh_settings
 
         #Settings for deciding the thickness value
         self.modify_Thickness = True
@@ -75,7 +81,7 @@ class ParametrizationSettings:
 
         if self.modify_HubShroud:
             if self.HubShroud_definition == 'xz': 
-                self.spline_degree = self.HubShroud_1D_dimensions['spline_degree']
+                self.spline_degree_hub_sh = self.HubShroud_1D_dimensions['spline_degree']
                 L_ind = self.HubShroud_1D_dimensions['L_ind']
                 r2h = self.HubShroud_1D_dimensions['r2h']
                 r2s = self.HubShroud_1D_dimensions['r2s']
@@ -118,7 +124,7 @@ class ParametrizationSettings:
                 #SPLITTER BLADE
 
                 #Splliter point leading edge point at hub
-                hub_meridional_target = 0.3
+                hub_meridional_target = self.splitter_LE_meridional_target_hub
                 hub_profile = np.array(self.Hub_Shroud_curves_points[0])                
                 ds_hub = np.sum((hub_profile[1:,:] - hub_profile[:-1,:])**2,axis=1)**0.5
                 meridional_hub = np.zeros(ds_hub.shape[0]+1)
@@ -129,7 +135,7 @@ class ParametrizationSettings:
                 coords_splitter_hub = hub_profile[idx_hub,:]
 
                 #Splliter point leading edge point at shroud
-                sh_meridional_target = 0.3
+                sh_meridional_target = self.splitter_LE_meridional_target_sh
                 sh_profile = np.array(self.Hub_Shroud_curves_points[1])
                 ds_sh = np.sum((sh_profile[1:,:] - sh_profile[:-1,:])**2,axis=1)**0.5
                 meridional_sh = np.zeros(ds_sh.shape[0]+1)

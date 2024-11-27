@@ -53,8 +53,8 @@ class Bezier:
             self.b4 = curve_parameters['b4']
             self.r5 = curve_parameters['r5']
             self.spline_degree = curve_parameters['spline_degree']
-            self.w1_hb = 2
-            self.w1_sh = 2
+            self.w1_hb = curve_parameters['w1_hb']
+            self.w1_sh = curve_parameters['w1_sh']
 
             if self.spline_degree == 2:
                 # Control points for Hub Profile
