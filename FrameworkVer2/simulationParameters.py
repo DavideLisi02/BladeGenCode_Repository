@@ -2,6 +2,7 @@ def create_simulation_def(ansys_path = r"C:\Program Files\ANSYS Inc\v242",
                           simulation_path = r'C:\Users\soukhman\Desktop\LUS_test',
                           case_name = 'simulation1',
                           geometry_name = "LUS",
+                          n_partitions = 5,
                           n_channels = 9):
     
     simulation_definition = {
@@ -49,7 +50,9 @@ def create_simulation_def(ansys_path = r"C:\Program Files\ANSYS Inc\v242",
         "mesh size factor" : 1,  # 1
         "n partitions" : 5, # number of processes
         "n iterations" : 2, # 500
-        "target residual" : 1e-5 # threshold
+        "target residual" : 1e-5, # threshold
+
+        "queue_name" : "Helvetios Standard"
     }
 
     return simulation_definition

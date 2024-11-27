@@ -16,7 +16,7 @@ from simulationParameters import *
 batch_size = 5
 
 #! Folder Management Settings
-Project_Name = "Database_Test_10"
+Project_Name = "Database_Test_14"
 Project_Folder = "D:\\Davide" # Absolute path of the project folder created for the geometries
 number_of_channels = 9
 std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242"
@@ -49,12 +49,14 @@ if Go_on.lower() == 'y':
     while i < len(names):
         # Create threads for the next batch of 5 simulations
         for j in range(i, min(i + batch_size, len(names))):
+            print(f"############## >      Simulation {i+j}    < ##############")
             thread = threading.Thread(target=run_simulation, args=(names[j],))
             threads.append(thread)
             thread.start()
         
         # Wait for the batch of threads to finish before starting the next batch
         for thread in threads[i:min(i + batch_size, len(names))]:
+            print(f"############## >   Simulation Completed   < ##############")
             thread.join()
         
         # Move to the next batch
