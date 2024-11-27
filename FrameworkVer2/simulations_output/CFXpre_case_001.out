@@ -1,0 +1,2384 @@
+ This run of the CFX 2024 R2 Solver started at 16:36:25 on 18 Nov 2024
+ by user lisi on LAMDPC51 (intel_xeon64.sse2_winnt) using the command:
+ 
+  "C:\Program Files\ANSYS Inc\v242\CFX\bin\perllib\cfx5solve.pl" -batch
+    -ccl runInput.ccl -fullname CFXpre_case_001
+ 
+ 2024 R2
+ 
+  Point Releases and Patches installed:
+  Ansys, Inc. License Manager 2024 R2
+  Viewer 2024 R2
+  Discovery 2024 R2
+  Core WB Files 2024 R2
+  SpaceClaim 2024 R2
+  Ansys Dynamic Reporting 2024 R2
+  CFD-Post only 2024 R2
+  CFX (includes CFD-Post) 2024 R2
+  Chemkin 2024 R2
+  EnSight 2024 R2
+  FENSAP-ICE 2024 R2
+  Fluent (includes CFD-Post) 2024 R2
+  Polyflow (includes CFD-Post) 2024 R2
+  Forte (includes EnSight) 2024 R2
+  ICEM CFD 2024 R2
+  TurboGrid 2024 R2
+  optiSLang 2024 R2
+  Remote Solve Manager Standalone Services 2024 R2
+  Additive 2024 R2
+  Aqwa 2024 R2
+  Autodyn 2024 R2
+  Customization Files for User Programmable Features 2024 R2
+  LS-DYNA 2024 R2
+  Material Calibration App 2024 R2
+  Mechanical Products 2024 R2
+  Motion 2024 R2
+  Sherlock 2024 R2
+  Sound - SAS 2024 R2
+  ACIS Geometry Interface 2024 R2
+  AutoCAD Geometry Interface 2024 R2
+  Catia, Version 4 Geometry Interface 2024 R2
+  Catia, Version 5 Geometry Interface 2024 R2
+  Catia, Version 6 Geometry Interface 2024 R2
+  Creo Elements/Direct Modeling Geometry Interface 2024 R2
+  Creo Parametric Geometry Interface 2024 R2
+  Inventor Geometry Interface 2024 R2
+  JTOpen Geometry Interface 2024 R2
+  NX Geometry Interface 2024 R2
+  Parasolid Geometry Interface  2024 R2
+  Solid Edge Geometry Interface 2024 R2
+  SOLIDWORKS Geometry Interface 2024 R2
+ 
+ Setting up CFX Solver run ...
+ 
+ 
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ |                    CFX Command Language Upgrade                    |
+ |                                                                    |
+ +--------------------------------------------------------------------+
+ 
+ Added /SIMULATION CONTROL/EXECUTION CONTROL/PARTITIONER STEP
+ CONTROL/Option = Spatial Partitioning.
+ 
+ Added /SIMULATION CONTROL/EXECUTION CONTROL/PARTITIONER STEP
+ CONTROL/SPATIAL PARTITIONING/Option = Automatic.
+ 
+ Deleted /SIMULATION CONTROL/EXECUTION CONTROL/SOLVER STEP
+ CONTROL/PARALLEL ENVIRONMENT/Number of Processes.
+ 
+ Added /SIMULATION CONTROL/EXECUTION CONTROL/SOLVER STEP
+ CONTROL/PARALLEL ENVIRONMENT/Maximum Number of Processes = 5.
+ 
+ Added /SIMULATION CONTROL/EXECUTION CONTROL/PARTITIONER STEP
+ CONTROL/Option = Spatial Partitioning.
+ 
+ Added /SIMULATION CONTROL/EXECUTION CONTROL/PARTITIONER STEP
+ CONTROL/SPATIAL PARTITIONING/Option = Automatic.
+ 
+ Deleted /SIMULATION CONTROL/EXECUTION CONTROL/SOLVER STEP
+ CONTROL/PARALLEL ENVIRONMENT/Number of Processes.
+ 
+ Added /SIMULATION CONTROL/EXECUTION CONTROL/SOLVER STEP
+ CONTROL/PARALLEL ENVIRONMENT/Maximum Number of Processes = 5.
+ 
+ 
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ |                    CFX Command Language for Run                    |
+ |                                                                    |
+ +--------------------------------------------------------------------+
+ 
+ LIBRARY:
+   CEL:
+     EXPRESSIONS:
+       count = if(ctstep <10 , 0, flag instantaneous convergence*(ave(count \
+         old)@Inducer Inlet + flag instantaneous convergence))
+       efficiency = ave(Isentropic Compression Efficiency)@Diffuser Outlet
+       efficiency prev = ave(efficiency old)@Inducer Inlet
+       efficiency prev1 = ave(efficiency old1)@Inducer Inlet
+       efficiency prev2 = ave(efficiency old2)@Inducer Inlet
+       efficiency prev3 = ave(efficiency old3)@Inducer Inlet
+       flag instantaneous convergence = if(moving window mean amplitude \
+         efficiency < 0.0001,1,0)
+       global size factor = 0.67
+       mass flow = 0.03 [kg s^-1]
+       max P = maxVal(Absolute Pressure)@REGION:Passage
+       mfr in = abs(massFlow()@Inducer Inlet)
+       mfr out = abs(massFlow()@Diffuser Outlet)
+       mfr ratio = mfr out/mfr in
+       min P = minVal(Absolute Pressure)@REGION:Passage
+       moving window mean amplitude efficiency = (abs(moving window mean \
+         efficiency - efficiency) + abs(moving window mean efficiency - \
+         efficiency prev) + abs(moving window mean efficiency - efficiency \
+         prev1) + abs(moving window mean efficiency - efficiency prev2) + \
+         abs(moving window mean efficiency - efficiency prev3))
+       moving window mean efficiency = (efficiency + efficiency prev + \
+         efficiency prev1 +efficiency prev2 + efficiency prev3)/5
+       n channels = 9
+       n max iterations = 2
+       old pressure ratio = 1
+       pressure ratio = (massFlowAve(Total Pressure)@Diffuser \
+         Outlet+reference pressure)/(massFlowAve(Total Pressure)@Inducer \
+         Inlet+reference pressure)
+       pressure ratio prev = ave(pressure ratio old)@Inducer Inlet
+       pressure ratio prev1 = ave(pressure ratio old1)@Inducer Inlet
+       pressure ratio prev2 = ave(pressure ratio old2)@Inducer Inlet
+       pressure ratio prev3 = ave(pressure ratio old3)@Inducer Inlet
+       reference pressure = total inlet pressure
+       residual target = 1E-05
+       rotational speed = 160000 [rev min^-1]
+       roughness = 10 [micron]
+       tip clearance = 5E-05 [m]
+       total inlet pressure = 175000 [Pa]
+       total inlet temperature = 270 [K]
+     END
+   END
+   ADDITIONAL VARIABLE: efficiency old
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: efficiency old1
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: efficiency old2
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: efficiency old3
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: pressure ratio old
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: pressure ratio old1
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: pressure ratio old2
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   ADDITIONAL VARIABLE: pressure ratio old3
+     Option = Definition
+     Tensor Type = SCALAR
+     Units = [ ]
+     Update Loop = TRANS_LOOP
+     Variable Type = Unspecified
+   END
+   MATERIAL: fluid
+     Material Group = User
+     Option = Pure Substance
+     Thermodynamic State = Gas
+     PROPERTIES:
+       Component Name = r134a
+       Option = Table
+       Table Format = TASCflow RGP
+       Table Name = \
+         D:\Davide\Database_Test_2\LUS_1\LUS_1_pending\dp0_CFX_Solution\r134a.\
+         rgp
+     END
+   END
+ END
+ FLOW: Flow Analysis 1
+   SOLUTION UNITS:
+     Angle Units = [rad]
+     Length Units = [m]
+     Mass Units = [kg]
+     Solid Angle Units = [sr]
+     Temperature Units = [K]
+     Time Units = [s]
+   END
+   ANALYSIS TYPE:
+     Option = Steady State
+     EXTERNAL SOLVER COUPLING:
+       Option = None
+     END
+   END
+   DOMAIN: Diffuser
+     Coord Frame = Coord 0
+     Domain Type = Fluid
+     Location = Outlet
+     BOUNDARY: Diffuser Hub
+       Boundary Type = WALL
+       Coord Frame = Coord 0
+       Location = OUTBlock HUB
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = No Slip Wall
+         END
+         WALL ROUGHNESS:
+           Option = Rough Wall
+           Sand Grain Roughness Height = roughness
+         END
+       END
+     END
+     BOUNDARY: Diffuser Outlet
+       Boundary Type = OUTLET
+       Coord Frame = Coord 0
+       Location = OUTBlock OUTFLOW
+       BOUNDARY CONDITIONS:
+         FLOW REGIME:
+           Option = Subsonic
+         END
+         MASS AND MOMENTUM:
+           Mass Flow Rate = mass flow/n channels
+           Mass Flow Rate Area = As Specified
+           Option = Mass Flow Rate
+         END
+       END
+     END
+     BOUNDARY: Diffuser Shroud
+       Boundary Type = WALL
+       Coord Frame = Coord 0
+       Location = OUTBlock SHROUD
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = No Slip Wall
+         END
+         WALL ROUGHNESS:
+           Option = Rough Wall
+           Sand Grain Roughness Height = roughness
+         END
+       END
+     END
+     BOUNDARY: Diffuser to Diffuser Periodic 1 Side 1
+       Boundary Type = INTERFACE
+       Location = OUTBlock PER1
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Diffuser to Diffuser Periodic 1 Side 2
+       Boundary Type = INTERFACE
+       Location = OUTBlock PER2
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Diffuser to Impeller Side 1
+       Boundary Type = INTERFACE
+       Location = OUTBlock INFLOW
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     DOMAIN MODELS:
+       BUOYANCY MODEL:
+         Option = Non Buoyant
+       END
+       DOMAIN MOTION:
+         Option = Stationary
+       END
+       MESH DEFORMATION:
+         Option = None
+       END
+       REFERENCE PRESSURE:
+         Reference Pressure = reference pressure
+       END
+     END
+     FLUID DEFINITION: fluid
+       Material = fluid
+       Option = Material Library
+       MORPHOLOGY:
+         Option = Continuous Fluid
+       END
+     END
+     FLUID MODELS:
+       COMBUSTION MODEL:
+         Option = None
+       END
+       HEAT TRANSFER MODEL:
+         Include Viscous Work Term = True
+         Option = Total Energy
+       END
+       THERMAL RADIATION MODEL:
+         Option = None
+       END
+       TURBULENCE MODEL:
+         Option = SST
+       END
+       TURBULENT WALL FUNCTIONS:
+         High Speed Model = Off
+         Option = Automatic
+       END
+     END
+   END
+   DOMAIN: Impeller
+     Coord Frame = Coord 0
+     Domain Type = Fluid
+     Location = Passage Main
+     BOUNDARY: Diffuser to Impeller Side 2
+       Boundary Type = INTERFACE
+       Location = Passage OUTFLOW
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller Blade
+       Boundary Type = WALL
+       Frame Type = Rotating
+       Location = Main Blade,Splitter Blade 1
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = No Slip Wall
+         END
+         WALL ROUGHNESS:
+           Option = Rough Wall
+           Sand Grain Roughness Height = roughness
+         END
+       END
+     END
+     BOUNDARY: Impeller Hub
+       Boundary Type = WALL
+       Coord Frame = Coord 0
+       Frame Type = Rotating
+       Location = Passage HUB
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = No Slip Wall
+         END
+         WALL ROUGHNESS:
+           Option = Rough Wall
+           Sand Grain Roughness Height = roughness
+         END
+       END
+     END
+     BOUNDARY: Impeller Shroud
+       Boundary Type = WALL
+       Coord Frame = Coord 0
+       Frame Type = Rotating
+       Location = Passage SHROUD
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = No Slip Wall
+           WALL VELOCITY:
+             Option = Counter Rotating Wall
+           END
+         END
+         WALL ROUGHNESS:
+           Option = Rough Wall
+           Sand Grain Roughness Height = roughness
+         END
+       END
+     END
+     BOUNDARY: Impeller to Impeller Internal 2 Side 1
+       Boundary Type = INTERFACE
+       Location = Splitter Blade 1 SHROUD TIP GGI SIDE 1
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller to Impeller Internal 2 Side 2
+       Boundary Type = INTERFACE
+       Location = Splitter Blade 1 SHROUD TIP GGI SIDE 2
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller to Impeller Internal Side 1
+       Boundary Type = INTERFACE
+       Location = Main Blade SHROUD TIP GGI SIDE 1
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller to Impeller Internal Side 2
+       Boundary Type = INTERFACE
+       Location = Main Blade SHROUD TIP GGI SIDE 2
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller to Impeller Periodic 1 Side 1
+       Boundary Type = INTERFACE
+       Location = Passage PER1
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller to Impeller Periodic 1 Side 2
+       Boundary Type = INTERFACE
+       Location = Passage PER2
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Impeller to Inducer Side 1
+       Boundary Type = INTERFACE
+       Location = Passage INFLOW
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     DOMAIN MODELS:
+       BUOYANCY MODEL:
+         Option = Non Buoyant
+       END
+       DOMAIN MOTION:
+         Alternate Rotation Model = true
+         Angular Velocity = rotational speed
+         Option = Rotating
+         AXIS DEFINITION:
+           Option = Coordinate Axis
+           Rotation Axis = Coord 0.3
+         END
+       END
+       MESH DEFORMATION:
+         Option = None
+       END
+       REFERENCE PRESSURE:
+         Reference Pressure = reference pressure
+       END
+     END
+     FLUID DEFINITION: fluid
+       Material = fluid
+       Option = Material Library
+       MORPHOLOGY:
+         Option = Continuous Fluid
+       END
+     END
+     FLUID MODELS:
+       COMBUSTION MODEL:
+         Option = None
+       END
+       HEAT TRANSFER MODEL:
+         Include Viscous Work Term = True
+         Option = Total Energy
+       END
+       THERMAL RADIATION MODEL:
+         Option = None
+       END
+       TURBULENCE MODEL:
+         Option = SST
+       END
+       TURBULENT WALL FUNCTIONS:
+         High Speed Model = Off
+         Option = Automatic
+       END
+     END
+   END
+   DOMAIN: Inducer
+     Coord Frame = Coord 0
+     Domain Type = Fluid
+     Location = Inlet
+     BOUNDARY: Impeller to Inducer Side 2
+       Boundary Type = INTERFACE
+       Location = INBlock OUTFLOW
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Inducer Hub
+       Boundary Type = WALL
+       Location = INBlock HUB
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = Free Slip Wall
+         END
+       END
+     END
+     BOUNDARY: Inducer Inlet
+       Boundary Type = INLET
+       Location = INBlock INFLOW
+       BOUNDARY CONDITIONS:
+         FLOW DIRECTION:
+           Option = Normal to Boundary Condition
+         END
+         FLOW REGIME:
+           Option = Subsonic
+         END
+         HEAT TRANSFER:
+           Option = Total Temperature
+           Total Temperature = total inlet temperature
+         END
+         MASS AND MOMENTUM:
+           Option = Total Pressure
+           Relative Pressure = 0 [Pa]
+         END
+         TURBULENCE:
+           Option = Medium Intensity and Eddy Viscosity Ratio
+         END
+       END
+     END
+     BOUNDARY: Inducer Shroud
+       Boundary Type = WALL
+       Location = INBlock SHROUD
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Adiabatic
+         END
+         MASS AND MOMENTUM:
+           Option = No Slip Wall
+         END
+         WALL ROUGHNESS:
+           Option = Rough Wall
+           Sand Grain Roughness Height = roughness
+         END
+       END
+     END
+     BOUNDARY: Inducer to Inducer Periodic 1 Side 1
+       Boundary Type = INTERFACE
+       Location = INBlock PER1
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     BOUNDARY: Inducer to Inducer Periodic 1 Side 2
+       Boundary Type = INTERFACE
+       Location = INBlock PER2
+       BOUNDARY CONDITIONS:
+         HEAT TRANSFER:
+           Option = Conservative Interface Flux
+         END
+         MASS AND MOMENTUM:
+           Option = Conservative Interface Flux
+         END
+         TURBULENCE:
+           Option = Conservative Interface Flux
+         END
+       END
+     END
+     DOMAIN MODELS:
+       BUOYANCY MODEL:
+         Option = Non Buoyant
+       END
+       DOMAIN MOTION:
+         Option = Stationary
+       END
+       MESH DEFORMATION:
+         Option = None
+       END
+       REFERENCE PRESSURE:
+         Reference Pressure = reference pressure
+       END
+     END
+     FLUID DEFINITION: fluid
+       Material = fluid
+       Option = Material Library
+       MORPHOLOGY:
+         Option = Continuous Fluid
+       END
+     END
+     FLUID MODELS:
+       ADDITIONAL VARIABLE: efficiency old
+         Additional Variable Value = efficiency
+         Option = Algebraic Equation
+       END
+       ADDITIONAL VARIABLE: efficiency old1
+         Additional Variable Value = efficiency prev
+         Option = Algebraic Equation
+       END
+       ADDITIONAL VARIABLE: efficiency old2
+         Additional Variable Value = efficiency prev1
+         Option = Algebraic Equation
+       END
+       ADDITIONAL VARIABLE: efficiency old3
+         Additional Variable Value = efficiency prev2
+         Option = Algebraic Equation
+       END
+       COMBUSTION MODEL:
+         Option = None
+       END
+       HEAT TRANSFER MODEL:
+         Include Viscous Work Term = True
+         Option = Total Energy
+       END
+       THERMAL RADIATION MODEL:
+         Option = None
+       END
+       TURBULENCE MODEL:
+         Option = SST
+       END
+       TURBULENT WALL FUNCTIONS:
+         High Speed Model = Off
+         Option = Automatic
+       END
+     END
+   END
+   DOMAIN INTERFACE: Diffuser to Diffuser Periodic 1
+     Boundary List1 = Diffuser to Diffuser Periodic 1 Side 1
+     Boundary List2 = Diffuser to Diffuser Periodic 1 Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = Rotational Periodicity
+       AXIS DEFINITION:
+         Option = Coordinate Axis
+         Rotation Axis = Coord 0.3
+       END
+     END
+     MESH CONNECTION:
+       Option = Automatic
+     END
+   END
+   DOMAIN INTERFACE: Diffuser to Impeller
+     Boundary List1 = Diffuser to Impeller Side 1
+     Boundary List2 = Diffuser to Impeller Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = General Connection
+       FRAME CHANGE:
+         Option = Frozen Rotor
+       END
+       MASS AND MOMENTUM:
+         Option = Conservative Interface Flux
+         MOMENTUM INTERFACE MODEL:
+           Option = None
+         END
+       END
+       PITCH CHANGE:
+         Option = Automatic
+       END
+     END
+     MESH CONNECTION:
+       Option = GGI
+     END
+   END
+   DOMAIN INTERFACE: Impeller to Impeller Internal
+     Boundary List1 = Impeller to Impeller Internal Side 1
+     Boundary List2 = Impeller to Impeller Internal Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = General Connection
+       FRAME CHANGE:
+         Option = None
+       END
+       MASS AND MOMENTUM:
+         Option = Conservative Interface Flux
+         MOMENTUM INTERFACE MODEL:
+           Option = None
+         END
+       END
+       PITCH CHANGE:
+         Option = None
+       END
+     END
+     MESH CONNECTION:
+       Option = GGI
+     END
+   END
+   DOMAIN INTERFACE: Impeller to Impeller Internal 2
+     Boundary List1 = Impeller to Impeller Internal 2 Side 1
+     Boundary List2 = Impeller to Impeller Internal 2 Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = General Connection
+       FRAME CHANGE:
+         Option = None
+       END
+       MASS AND MOMENTUM:
+         Option = Conservative Interface Flux
+         MOMENTUM INTERFACE MODEL:
+           Option = None
+         END
+       END
+       PITCH CHANGE:
+         Option = None
+       END
+     END
+     MESH CONNECTION:
+       Option = GGI
+     END
+   END
+   DOMAIN INTERFACE: Impeller to Impeller Periodic 1
+     Boundary List1 = Impeller to Impeller Periodic 1 Side 1
+     Boundary List2 = Impeller to Impeller Periodic 1 Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = Rotational Periodicity
+       AXIS DEFINITION:
+         Option = Coordinate Axis
+         Rotation Axis = Coord 0.3
+       END
+     END
+     MESH CONNECTION:
+       Option = Automatic
+     END
+   END
+   DOMAIN INTERFACE: Impeller to Inducer
+     Boundary List1 = Impeller to Inducer Side 1
+     Boundary List2 = Impeller to Inducer Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = General Connection
+       FRAME CHANGE:
+         Option = Frozen Rotor
+       END
+       MASS AND MOMENTUM:
+         Option = Conservative Interface Flux
+         MOMENTUM INTERFACE MODEL:
+           Option = None
+         END
+       END
+       PITCH CHANGE:
+         Option = Automatic
+       END
+     END
+     MESH CONNECTION:
+       Option = GGI
+     END
+   END
+   DOMAIN INTERFACE: Inducer to Inducer Periodic 1
+     Boundary List1 = Inducer to Inducer Periodic 1 Side 1
+     Boundary List2 = Inducer to Inducer Periodic 1 Side 2
+     Interface Type = Fluid Fluid
+     INTERFACE MODELS:
+       Option = Rotational Periodicity
+       AXIS DEFINITION:
+         Option = Coordinate Axis
+         Rotation Axis = Coord 0.3
+       END
+     END
+     MESH CONNECTION:
+       Option = GGI
+     END
+   END
+   OUTPUT CONTROL:
+     MONITOR OBJECTS:
+       EFFICIENCY OUTPUT:
+         Efficiency Calculation Method = Total to Total
+         Efficiency Type = Compression
+         Inflow Boundary = Inducer Inlet
+         Option = Output To Solver Monitor
+         Outflow Boundary = Diffuser Outlet
+       END
+       MONITOR BALANCES:
+         Option = Full
+       END
+       MONITOR FORCES:
+         Option = Full
+       END
+       MONITOR PARTICLES:
+         Option = Full
+       END
+       MONITOR POINT: eff
+         Coord Frame = Coord 0
+         Expression Value = efficiency
+         Option = Expression
+       END
+       MONITOR POINT: eff prev
+         Coord Frame = Coord 0
+         Expression Value = efficiency prev
+         Option = Expression
+       END
+       MONITOR POINT: eff prev1
+         Coord Frame = Coord 0
+         Expression Value = efficiency prev1
+         Option = Expression
+       END
+       MONITOR POINT: eff prev2
+         Coord Frame = Coord 0
+         Expression Value = efficiency prev2
+         Option = Expression
+       END
+       MONITOR POINT: eff prev3
+         Coord Frame = Coord 0
+         Expression Value = efficiency prev3
+         Option = Expression
+       END
+       MONITOR POINT: maxP
+         Coord Frame = Coord 0
+         Expression Value = max P
+         Option = Expression
+       END
+       MONITOR POINT: mean amplitude
+         Coord Frame = Coord 0
+         Expression Value = moving window mean amplitude efficiency
+         Option = Expression
+       END
+       MONITOR POINT: mean efficiency
+         Coord Frame = Coord 0
+         Expression Value = moving window mean efficiency
+         Option = Expression
+       END
+       MONITOR POINT: mfr inlet
+         Coord Frame = Coord 0
+         Expression Value = mfr in
+         Option = Expression
+       END
+       MONITOR POINT: mfr outlet
+         Coord Frame = Coord 0
+         Expression Value = mfr out
+         Option = Expression
+       END
+       MONITOR POINT: minP
+         Coord Frame = Coord 0
+         Expression Value = min P
+         Option = Expression
+       END
+       MONITOR POINT: total pressure ratio
+         Coord Frame = Coord 0
+         Expression Value = pressure ratio
+         Option = Expression
+       END
+       MONITOR RESIDUALS:
+         Option = Full
+       END
+       MONITOR TOTALS:
+         Option = Full
+       END
+     END
+     RESULTS:
+       File Compression Level = Default
+       Option = Standard
+       Output Equation Residuals = All
+     END
+   END
+   SOLVER CONTROL:
+     Turbulence Numerics = High Resolution
+     ADVECTION SCHEME:
+       Option = High Resolution
+     END
+     CONVERGENCE CONTROL:
+       Length Scale Option = Aggressive
+       Maximum Number of Iterations = 2
+       Minimum Number of Iterations = 1
+       Timescale Control = Auto Timescale
+       Timescale Factor = 15
+     END
+     CONVERGENCE CRITERIA:
+       Residual Target = residual target
+       Residual Type = RMS
+     END
+     DYNAMIC MODEL CONTROL:
+       Global Dynamic Model Control = On
+     END
+     INTERRUPT CONTROL:
+       Option = Any Interrupt
+       CONVERGENCE CONDITIONS:
+         Option = Default Conditions
+       END
+       INTERRUPT CONDITION: Interrupt Condition 1
+         Logical Expression = if(moving window mean amplitude efficiency < \
+           0.0001,1,0)*if(ctstep > 20,1,0)*if(moving window mean \
+           efficiency<0.95,1,0)
+         Option = Logical Expression
+       END
+     END
+   END
+ END
+ COMMAND FILE:
+   Version = 24.2
+   Results Version = 24.2
+ END
+ PARAMETERIZATION:
+   INPUT FIELD: mass flow
+     Expression Name = mass flow
+     Method = Expression
+   END
+   INPUT FIELD: n max iterations
+     Method = Parameter
+     Parameter Path = /FLOW:Flow Analysis 1/SOLVER CONTROL/CONVERGENCE \
+       CONTROL/Maximum Number of Iterations, /FLOW:Flow Analysis 1/SOLVER \
+       CONTROL/CONVERGENCE CONTROL/Maximum Number of Iterations
+   END
+   INPUT FIELD: residual target
+     Expression Name = residual target
+     Method = Expression
+   END
+   INPUT FIELD: rotational speed
+     Expression Name = rotational speed
+     Method = Expression
+   END
+   INPUT FIELD: roughness
+     Expression Name = roughness
+     Method = Expression
+   END
+   INPUT FIELD: total inlet pressure
+     Expression Name = total inlet pressure
+     Method = Expression
+   END
+   INPUT FIELD: total inlet temperature
+     Expression Name = total inlet temperature
+     Method = Expression
+   END
+ END
+ SIMULATION CONTROL:
+   EXECUTION CONTROL:
+     EXECUTABLE SELECTION:
+       Double Precision = No
+       Large Problem = No
+     END
+     INTERPOLATOR STEP CONTROL:
+       Runtime Priority = Standard
+       MEMORY CONTROL:
+         Memory Allocation Factor = 1.0
+         Option = Model Based
+       END
+     END
+     PARALLEL HOST LIBRARY:
+       HOST DEFINITION: lamdpc51
+         Installation Root = C:\Program Files\ANSYS Inc\v%v\CFX
+         Host Architecture String = winnt-amd64
+       END
+     END
+     PARTITIONER STEP CONTROL:
+       Multidomain Option = Automatic
+       Runtime Priority = Standard
+       Option = Spatial Partitioning
+       MEMORY CONTROL:
+         Memory Allocation Factor = 1.0
+         Option = Model Based
+       END
+       PARTITION SMOOTHING:
+         Maximum Partition Smoothing Sweeps = 100
+         Option = Smooth
+       END
+       PARTITIONING TYPE:
+         MeTiS Type = k-way
+         Option = MeTiS
+         Partition Size Rule = Automatic
+         Partition Weight Factors = 0.20000, 0.20000, 0.20000, 0.20000, 0.20000
+       END
+       SPATIAL PARTITIONING:
+         Option = Automatic
+       END
+     END
+     RUN DEFINITION:
+       Run Mode = Full
+       Solver Input File = CFXpre_case.def
+       Solver Results File = \
+         D:/Davide/Database_Test_2/LUS_1/LUS_1_pending/dp0_CFX_Solution/CFXpre\
+         _case_001.res
+     END
+     SOLVER STEP CONTROL:
+       Runtime Priority = Standard
+       MEMORY CONTROL:
+         Memory Allocation Factor = 1.0
+         Option = Model Based
+       END
+       PARALLEL ENVIRONMENT:
+         Start Method = Intel MPI Local Parallel
+         Maximum Number of Processes = 5
+         Parallel Host List = lamdpc51*5
+       END
+     END
+   END
+ END
+ 
+ 
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ |                            Partitioning                            |
+ |                                                                    |
+ +--------------------------------------------------------------------+
+ 
+
+
+
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ |                     ANSYS(R) CFX(R) Partitioner                    |
+ |                                                                    |
+ | 2024 R2                                                            |
+ | Build 24.2 2024-05-13T11:42:54.771873                              |
+ | Mon May 13 12:20:03 PDT 2024                                       |
+ |                                                                    |
+ |                        Executable Attributes                       |
+ |                                                                    |
+ |           single-64bit-int32-archfort-optimised-std-lcomp          |
+ |                                                                    |
+ | (C) 1996-2024 ANSYS, Inc.                                          |
+ |                                                                    |
+ | All rights reserved. Unauthorized use, distribution or duplication |
+ | is prohibited. This product is subject to U.S. laws governing      |
+ | export and re-export. For full Legal Notice, see documentation.    |
+ +--------------------------------------------------------------------+
+
+
+
+
+ +--------------------------------------------------------------------+
+ |                  Job Information at Start of Run                   |
+ +--------------------------------------------------------------------+
+
+ Run mode:       partitioning run
+
+ Host computer:  LAMDPC51 (PID:6496)
+
+ Job started:    Mon Nov 18 16:36:33 2024
+
+ +--------------------------------------------------------------------+
+ |                        License Information                         |
+ +--------------------------------------------------------------------+
+ 
+ License Cap:    ANSYS CFD Solver
+ License ID:     lamdpc51_intranet_epfl_ch-lisi-4016-000734
+ 
+ License Cap:    ANSYS HPC Parallel
+ License ID:     lamdpc51_intranet_epfl_ch-lisi-4016-000737
+
+ INFO: You are using an academic license.
+
+
+ +--------------------------------------------------------------------+
+ |         Initial Memory Allocation  (Actual usage may vary)         |
+ +--------------------------------------------------------------------+
+
+           | Real       | Integer    | Character | Logical  | Double
+ ----------+------------+------------+-----------+----------+----------
+ Mwords    |       7.00 |      44.64 |      9.67 |     0.12 |     1.20
+ Mbytes    |      26.70 |     170.28 |      9.22 |     0.46 |     9.16
+ ----------+------------+------------+-----------+----------+----------
+
+
+ +--------------------------------------------------------------------+
+ |            Host Memory Information (Mbytes): Partitioner           |
+ +--------------------------------------------------------------------+
+ |          Host           |     System     |   Allocated    |   %    |
+ +-------------------------+----------------+----------------+--------+
+ | LAMDPC51                |     65480.08   |       215.82   |   0.33 |
+ +-------------------------+----------------+----------------+--------+
+
+ +--------------------------------------------------------------------+
+ | The MeTiS partitioning method allocates additional memory.         |
+ | Total memory usage will therefore exceed the values shown above.   |
+ +--------------------------------------------------------------------+
+
+ +--------------------------------------------------------------------+
+ |                      Topology Simplification                       |
+ +--------------------------------------------------------------------+
+
+ +--------------------------------------------------------------------+
+ |                       ****** Warning ******                        |
+ |                                                                    |
+ | Topology simplification is activated with the following            |
+ | restrictions:                                                      |
+ |                                                                    |
+ | - Mesh regions referenced only within User Fortran and NOT         |
+ |   in the command file will cause the solver to stop.               |
+ | - The solver will stop during any "Edit Run in Progress" step      |
+ |   if new 2D regions are referenced.                                |
+ +--------------------------------------------------------------------+
+
+ +--------------------------------------------------------------------+
+ |                          Mesh Statistics                           |
+ +--------------------------------------------------------------------+
+
+ Domain Name : Diffuser
+
+     Total Number of Nodes                                =      317020
+
+     Total Number of Elements                             =      301860
+         Total Number of Hexahedrons                      =      301860
+
+     Total Number of Faces                                =       29864
+
+ Domain Name : Impeller
+
+     Total Number of Nodes                                =      456226
+
+     Total Number of Elements                             =      417638
+         Total Number of Hexahedrons                      =      417638
+
+     Total Number of Faces                                =       76226
+
+ Domain Name : Inducer
+
+     Total Number of Nodes                                =      106260
+
+     Total Number of Elements                             =       99416
+         Total Number of Hexahedrons                      =       99416
+
+     Total Number of Faces                                =       13396
+ 
+ Global Statistics :
+
+     Global Number of Nodes                               =      879506
+
+     Global Number of Elements                            =      818914
+         Total Number of Hexahedrons                      =      818914
+
+     Global Number of Faces                               =      119486
+
+ Domain Interface Name : Diffuser to Diffuser Periodic 1
+
+     Discretization type                                  =         1:1
+
+ Domain Interface Name : Diffuser to Impeller
+
+     Discretization type                                  =         GGI
+     Intersection type                                    =      Direct
+     Non-overlap area fraction on side 1                  =    0.00E+00
+     Non-overlap area fraction on side 2                  =    2.85E-08
+     Pitch ratio ( area side 1 / area side 2 )            =       1.000
+     Pitch angle for side 1 [degrees]                     =      40.000
+     Pitch angle for side 2 [degrees]                     =      40.000
+
+ Domain Interface Name : Impeller to Impeller Internal
+
+     Discretization type                                  =         GGI
+     Intersection type                                    =      Direct
+     Non-overlap area fraction on side 1                  =    2.26E-03
+     Non-overlap area fraction on side 2                  =    2.15E-03
+
+ Domain Interface Name : Impeller to Impeller Internal 2
+
+     Discretization type                                  =         GGI
+     Intersection type                                    =      Direct
+     Non-overlap area fraction on side 1                  =    1.87E-03
+     Non-overlap area fraction on side 2                  =    1.75E-03
+
+ Domain Interface Name : Impeller to Impeller Periodic 1
+
+     Discretization type                                  =         1:1
+
+ Domain Interface Name : Impeller to Inducer
+
+     Discretization type                                  =         GGI
+     Intersection type                                    =      Direct
+     Non-overlap area fraction on side 1                  =    0.00E+00
+     Non-overlap area fraction on side 2                  =    0.00E+00
+     Pitch ratio ( area side 1 / area side 2 )            =       1.000
+     Pitch angle for side 1 [degrees]                     =      40.000
+     Pitch angle for side 2 [degrees]                     =      40.000
+
+ Domain Interface Name : Inducer to Inducer Periodic 1
+
+     Discretization type                                  =         GGI
+     Intersection type                                    = Topological
+
+ +--------------------------------------------------------------------+
+ |                     Vertex Based Partitioning                      |
+ +--------------------------------------------------------------------+
+
+ Coupled partitioning of domains:  
+   Diffuser
+   Impeller
+   Inducer
+
+ - Partitioning tool:       MeTiS multilevel k-way algorithm
+ - Number of partitions:             5
+ - Number of graph-nodes:       869562
+ - Number of graph-edges:      5272718
+
+ +--------------------------------------------------------------------+
+ |                 Iso-Partition Connection Statistics                |
+ +--------------------------------------------------------------------+
+ | Domains in Group          |        |           Vertices            |
+ |                           | Smooth +---------+----------+----------+
+ |                           | Sweeps |  Moves  |   <25%   |   <50%   |
+ +---------------------------+--------+---------+----------+----------+
+ | Diffuser,Impeller,        |     3  |      84 |       0  |       2  |
+ +---------------------------+--------+---------+----------+----------+
+
+ +--------------------------------------------------------------------+
+ |                      Partitioning Information                      |
+ +--------------------------------------------------------------------+
+
+ Partitioning information for domains:  
+   Diffuser
+   Impeller
+   Inducer
+
+        +------------------+------------------------+-----------------+
+        |     Elements     |        Vertices        |     Faces       |
+ +------+------------------+------------------------+-----------------+
+ | Part |   Number     %   |   Number     %   %Ovlp |  Number     %   |
+ +------+------------------+------------------------+-----------------+
+ | Full |    818914        |    879506              |   119486        |
+ +------+------------------+------------------------+-----------------+
+ |    1 |    168311   20.1 |    185636   20.2   3.7 |    27591   22.5 |
+ |    2 |    159819   19.1 |    174365   19.0   1.7 |    25595   20.9 |
+ |    3 |    166885   19.9 |    186955   20.4   5.5 |    29740   24.3 |
+ |    4 |    173509   20.7 |    186890   20.3   5.1 |    17199   14.0 |
+ |    5 |    168701   20.2 |    184722   20.1   5.1 |    22443   18.3 |
+ +------+------------------+------------------------+-----------------+
+ | Min  |    159819   19.1 |    174365   19.0   1.7 |    17199   14.0 |
+ |(part)|           (    2)|           (    2     2)|          (    4)|
+ +------+------------------+------------------------+-----------------+
+ | Max  |    173509   20.7 |    186955   20.4   5.5 |    29740   24.3 |
+ |(part)|           (    4)|           (    3     3)|          (    3)|
+ +------+------------------+------------------------+-----------------+
+ | Ave  |    167445   20.0 |    183714   20.0   4.2 |    24514   20.0 |
+ +------+------------------+------------------------+-----------------+
+ | Sum  |    837225  100.0 |    918568  100.0       |   122568  100.0 |
+ +------+------------------+------------------------+-----------------+
+
+
+ +--------------------------------------------------------------------+
+ |            Host Memory Information (Mbytes): Partitioner           |
+ +--------------------------------------------------------------------+
+ |          Host           |     System     |      Peak      |   %    |
+ +-------------------------+----------------+----------------+--------+
+ | LAMDPC51                |     65480.08   |       384.71   |   0.59 |
+ +-------------------------+----------------+----------------+--------+
+
+ +--------------------------------------------------------------------+
+ |                CPU Time Requirements of Partitioner                |
+ +--------------------------------------------------------------------+
+ 
+ GGI Intersection               8.43E-01    9.4 %
+ Preparations                   6.77E-01    7.5 %
+ Low-level Mesh Partitioning    6.89E-01    7.7 %
+ File Reading                   2.29E+00   25.6 %
+ Partition Smoothing            5.12E-01    5.7 %
+ Topology - Domain Interface    3.80E-02    0.4 %
+ Topology - Global              4.00E-02    0.4 %
+ Topology - Element/Face/Patch  1.16E-01    1.3 %
+ Topology - Vertex              2.00E-02    0.2 %
+ Data Compression               2.00E-03    0.0 %
+ Variable Updates               4.00E-03    0.0 %
+ File Writing                   1.39E-01    1.5 %
+ Miscellaneous                  3.60E+00   40.1 %
+                                --------
+ Total                          8.97E+00
+
+ +--------------------------------------------------------------------+
+ |                   Job Information at End of Run                    |
+ +--------------------------------------------------------------------+
+
+ Host computer:  LAMDPC51 (PID:6496)
+
+ Job finished:   Mon Nov 18 16:36:40 2024
+
+ Total wall clock time: 7.903E+00 seconds
+             or: (          0:         0:         0:     7.903 )
+                 (       Days:     Hours:   Minutes:   Seconds )
+
+ 
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ |                               Solver                               |
+ |                                                                    |
+ +--------------------------------------------------------------------+
+ 
+
+
+
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ |                       ANSYS(R) CFX(R) Solver                       |
+ |                                                                    |
+ | 2024 R2                                                            |
+ | Build 24.2 2024-05-13T11:42:54.771873                              |
+ | Mon May 13 12:20:03 PDT 2024                                       |
+ |                                                                    |
+ |                        Executable Attributes                       |
+ |                                                                    |
+ |           single-64bit-int32-archfort-optimised-std-lcomp          |
+ |                                                                    |
+ | (C) 1996-2024 ANSYS, Inc.                                          |
+ |                                                                    |
+ | All rights reserved. Unauthorized use, distribution or duplication |
+ | is prohibited. This product is subject to U.S. laws governing      |
+ | export and re-export. For full Legal Notice, see documentation.    |
+ +--------------------------------------------------------------------+
+
+
+
+
+ +--------------------------------------------------------------------+
+ |                  Job Information at Start of Run                   |
+ +--------------------------------------------------------------------+
+
+ Run mode:       parallel run (Intel(R) MPI Library 2021.8)
+
+ Job started:    Mon Nov 18 16:36:43 2024
+
+ +--------------------------------------------------------------------+
+ |                        License Information                         |
+ +--------------------------------------------------------------------+
+ 
+ License Cap:    ANSYS CFD Solver
+ License ID:     lamdpc51_intranet_epfl_ch-lisi-4016-000779
+ 
+ License Cap:    ANSYS HPC Parallel
+ License ID:     lamdpc51_intranet_epfl_ch-lisi-4016-000782
+
+ INFO: You are using an academic license.
+
+
+ +--------------------------------------------------------------------+
+ |         Initial Memory Allocation  (Actual usage may vary)         |
+ +--------------------------------------------------------------------+
+
+ Allocated storage in:    Mwords
+                          Mbytes
+
+ Process   | Real       | Integer    | Character | Logical  | Double
+ ----------+------------+------------+-----------+----------+----------
+   Minimum |      56.11 |      13.96 |     10.12 |     0.12 |     1.21
+  (     1) |     214.04 |      53.25 |      9.65 |     0.46 |     9.22
+ ----------+------------+------------+-----------+----------+----------
+   Maximum |      71.86 |      15.48 |     10.12 |     0.12 |     1.21
+  (     4) |     274.13 |      59.06 |      9.65 |     0.46 |     9.22
+ ----------+------------+------------+-----------+----------+----------
+   Average |      66.96 |      14.81 |     10.12 |     0.12 |     1.21
+           |     255.45 |      56.49 |      9.65 |     0.46 |     9.22
+ ----------+------------+------------+-----------+----------+----------
+     Total |     334.82 |      74.05 |     50.59 |     0.60 |     6.04
+           |    1277.25 |     282.47 |     48.24 |     2.29 |    46.09
+ ----------+------------+------------+-----------+----------+----------
+
+
+ +--------------------------------------------------------------------+
+ |            Host Memory Information (Mbytes): Solver                |
+ +--------------------------------------------------------------------+
+ |           Host         | Nproc |   System    |  Allocated  |   %   |
+ +------------------------+-------+-------------+-------------+-------+
+ | LAMDPC51               |    5  |    65480.08 |     1656.34 |  2.53 |
+ +------------------------+-------+-------------+-------------+-------+
+
+
+ +--------------------------------------------------------------------+
+ |                     ****** Notice ******                           |
+ | The Wall Heat Transfer Coefficient written to the results file for |
+ | any turbulent phase with heat transfer is based on the turbulent   |
+ | wall function coefficient. It is consistent with the Wall Heat Flux|
+ | the wall temperature, and the Wall Adjacent Temperature            |
+ | (near-wall temperature).  If you would like it to be based on a    |
+ | user-specified bulk temperature instead, please set the expert     |
+ | parameter "tbulk for htc = <value>".                               |
+ +--------------------------------------------------------------------+
+
+ +--------------------------------------------------------------------+
+ |                      Topology Simplification                       |
+ +--------------------------------------------------------------------+
+
+ +--------------------------------------------------------------------+
+ |                       ****** Warning ******                        |
+ |                                                                    |
+ | Topology simplification is activated with the following            |
+ | restrictions:                                                      |
+ |                                                                    |
+ | - Mesh regions referenced only within User Fortran and NOT         |
+ |   in the command file will cause the solver to stop.               |
+ | - The solver will stop during any "Edit Run in Progress" step      |
+ |   if new 2D regions are referenced.                                |
+ +--------------------------------------------------------------------+
+
+ +--------------------------------------------------------------------+
+ |                          Mesh Statistics                           |
+ +--------------------------------------------------------------------+
+ | Domain Name          | Orthog. Angle | Exp. Factor  | Aspect Ratio |
+ +----------------------+---------------+--------------+--------------+
+ |                      | Minimum [deg] |   Maximum    |    Maximum   |
+ +----------------------+---------------+--------------+--------------+
+ | Diffuser             |       32.3 ok |         6 ok |       409 ok |
+ | Impeller             |       36.7 ok |         9 ok |       132 ok |
+ | Inducer              |       76.1 OK |         2 OK |       217 ok |
+ | Global               |       32.3 ok |         9 ok |       409 ok |
+ +----------------------+---------------+--------------+--------------+
+ |                      |  %!  %ok  %OK | %!  %ok  %OK | %!  %ok  %OK |
+ +----------------------+---------------+--------------+--------------+
+ | Diffuser             |   0    3   97 |  0   <1  100 |  0   12   88 |
+ | Impeller             |   0    1   99 |  0   <1  100 |  0   <1  100 |
+ | Inducer              |   0    0  100 |  0    0  100 |  0    6   94 |
+ | Global               |   0    2   98 |  0   <1  100 |  0    5   95 |
+ +----------------------+---------------+--------------+--------------+
+
+ Domain Name : Diffuser
+
+     Total Number of Nodes                                =      317020
+
+     Total Number of Elements                             =      301860
+         Total Number of Hexahedrons                      =      301860
+
+     Total Number of Faces                                =       29864
+
+ Domain Name : Impeller
+
+     Total Number of Nodes                                =      456226
+
+     Total Number of Elements                             =      417638
+         Total Number of Hexahedrons                      =      417638
+
+     Total Number of Faces                                =       76226
+
+ Domain Name : Inducer
+
+     Total Number of Nodes                                =      106260
+
+     Total Number of Elements                             =       99416
+         Total Number of Hexahedrons                      =       99416
+
+     Total Number of Faces                                =       13396
+ 
+ Global Statistics :
+
+     Global Number of Nodes                               =      879506
+
+     Global Number of Elements                            =      818914
+         Total Number of Hexahedrons                      =      818914
+
+     Global Number of Faces                               =      119486
+
+ Domain Interface Name : Diffuser to Diffuser Periodic 1
+
+     Discretization type                                  =         1:1
+
+ Domain Interface Name : Diffuser to Impeller
+
+     Discretization type                                  =         GGI
+     Intersection type                                    = Partitioner
+     Non-overlap area fraction on side 1                  =    0.00E+00
+     Non-overlap area fraction on side 2                  =    2.85E-08
+     Pitch ratio ( area side 1 / area side 2 )            =       1.000
+     Pitch angle for side 1 [degrees]                     =      40.000
+     Pitch angle for side 2 [degrees]                     =      40.000
+
+ Domain Interface Name : Impeller to Impeller Internal
+
+     Discretization type                                  =         GGI
+     Intersection type                                    = Partitioner
+     Non-overlap area fraction on side 1                  =    2.26E-03
+     Non-overlap area fraction on side 2                  =    2.15E-03
+
+ Domain Interface Name : Impeller to Impeller Internal 2
+
+     Discretization type                                  =         GGI
+     Intersection type                                    = Partitioner
+     Non-overlap area fraction on side 1                  =    1.87E-03
+     Non-overlap area fraction on side 2                  =    1.75E-03
+
+ Domain Interface Name : Impeller to Impeller Periodic 1
+
+     Discretization type                                  =         1:1
+
+ Domain Interface Name : Impeller to Inducer
+
+     Discretization type                                  =         GGI
+     Intersection type                                    = Partitioner
+     Non-overlap area fraction on side 1                  =    0.00E+00
+     Non-overlap area fraction on side 2                  =    0.00E+00
+     Pitch ratio ( area side 1 / area side 2 )            =       1.000
+     Pitch angle for side 1 [degrees]                     =      40.000
+     Pitch angle for side 2 [degrees]                     =      40.000
+
+ Domain Interface Name : Inducer to Inducer Periodic 1
+
+     Discretization type                                  =         GGI
+     Intersection type                                    = Partitioner
+     Non-overlap area fraction on side 1                  =    0.00E+00
+     Non-overlap area fraction on side 2                  =    0.00E+00
+
+ +--------------------------------------------------------------------+
+ |                  User Defined Monitor Information                  |
+ +--------------------------------------------------------------------+
+
+ Monitor Point: total pressure ratio
+
+ Monitor Point: minP
+
+ Monitor Point: mfr outlet
+
+ Monitor Point: mfr inlet
+
+ Monitor Point: mean efficiency
+
+ Monitor Point: mean amplitude
+
+ Monitor Point: maxP
+
+ Monitor Point: eff prev3
+
+ Monitor Point: eff prev2
+
+ Monitor Point: eff prev1
+
+ Monitor Point: eff prev
+
+ Monitor Point: eff
+
+ +--------------------------------------------------------------------+
+ |                     Average Scale Information                      |
+ +--------------------------------------------------------------------+
+
+ Domain Name : Diffuser
+     Global Length                                         = 6.5024E-03
+     Minimum Extent                                        = 1.0011E-03
+     Maximum Extent                                        = 2.1330E-02
+     Density                                               = 8.3989E+00
+     Dynamic Viscosity                                     = 1.0661E-05
+     Velocity                                              = 1.6444E+01
+     Advection Time                                        = 3.9543E-04
+     Reynolds Number                                       = 8.4234E+04
+     Speed of Sound                                        = 1.5043E+02
+     Mach Number                                           = 1.0931E-01
+     Thermal Conductivity                                  = 1.1180E-02
+     Specific Heat Capacity at Constant Pressure           = 8.3930E+02
+     Specific Heat Capacity at Constant Volume             = 7.2945E+02
+     Specific Heat Ratio                                   = 1.1506E+00
+     Prandtl Number                                        = 8.0034E-01
+     Property Residual                                     = 4.2782E-04
+
+ Domain Name : Impeller
+     Global Length                                         = 4.3969E-03
+     Minimum Extent                                        = 8.0516E-03
+     Maximum Extent                                        = 1.0842E-02
+     Density                                               = 8.3989E+00
+     Dynamic Viscosity                                     = 1.0661E-05
+     Velocity                                              = 1.1670E+02
+     Advection Time                                        = 3.7678E-05
+     Reynolds Number                                       = 4.0422E+05
+     Speed of Sound                                        = 1.5043E+02
+     Mach Number                                           = 7.7575E-01
+     Thermal Conductivity                                  = 1.1180E-02
+     Specific Heat Capacity at Constant Pressure           = 8.3930E+02
+     Specific Heat Capacity at Constant Volume             = 7.2945E+02
+     Specific Heat Ratio                                   = 1.1506E+00
+     Prandtl Number                                        = 8.0034E-01
+     Property Residual                                     = 4.2782E-04
+
+ Domain Name : Inducer
+     Global Length                                         = 6.8219E-03
+     Minimum Extent                                        = 3.7279E-03
+     Maximum Extent                                        = 3.3274E-02
+     Density                                               = 8.3989E+00
+     Dynamic Viscosity                                     = 1.0661E-05
+     Velocity                                              = 1.4293E+01
+     Advection Time                                        = 4.7729E-04
+     Reynolds Number                                       = 7.6813E+04
+     Speed of Sound                                        = 1.5043E+02
+     Mach Number                                           = 9.5013E-02
+     Thermal Conductivity                                  = 1.1180E-02
+     Specific Heat Capacity at Constant Pressure           = 8.3930E+02
+     Specific Heat Capacity at Constant Volume             = 7.2945E+02
+     Specific Heat Ratio                                   = 1.1506E+00
+     Prandtl Number                                        = 8.0034E-01
+     Property Residual                                     = 4.2782E-04
+
+ +--------------------------------------------------------------------+
+ |                Checking for Isolated Fluid Regions                 |
+ +--------------------------------------------------------------------+
+ 
+ No isolated fluid regions were found.
+
+ +--------------------------------------------------------------------+
+ |              The Equations Solved in This Calculation              |
+ +--------------------------------------------------------------------+
+ 
+ Equations are given two labels: the individual name and a combined 
+ name used for combining residuals together.  Residuals for multidomain 
+ problems are combined provided the domains are connected together and 
+ have the same domain type (solid or fluid/porous).  If there are 
+ multiple groups of the same domain type, then the group residual is 
+ identified by the name of the first domain in the connected group. 
+ 
+ The individual and combined equation names are given below.
+
+ Subsystem : Wall Scale
+
+   Wallscale-Diffuser                        --> Wallscale
+   Wallscale-Impeller                        --> Wallscale
+   Wallscale-Inducer                         --> Wallscale
+
+ Subsystem : Momentum and Mass
+
+   U-Mom-Diffuser                            --> U-Mom
+   V-Mom-Diffuser                            --> V-Mom
+   W-Mom-Diffuser                            --> W-Mom
+   P-Mass-Diffuser                           --> P-Mass
+   U-Mom-Impeller                            --> U-Mom
+   V-Mom-Impeller                            --> V-Mom
+   W-Mom-Impeller                            --> W-Mom
+   P-Mass-Impeller                           --> P-Mass
+   U-Mom-Inducer                             --> U-Mom
+   V-Mom-Inducer                             --> V-Mom
+   W-Mom-Inducer                             --> W-Mom
+   P-Mass-Inducer                            --> P-Mass
+
+ Subsystem : Heat Transfer
+
+   H-Energy-Diffuser                         --> H-Energy
+   H-Energy-Impeller                         --> H-Energy
+   H-Energy-Inducer                          --> H-Energy
+
+ Subsystem : TurbKE and TurbFreq
+
+   K-TurbKE-Diffuser                         --> K-TurbKE
+   O-TurbFreq-Diffuser                       --> O-TurbFreq
+   K-TurbKE-Impeller                         --> K-TurbKE
+   O-TurbFreq-Impeller                       --> O-TurbFreq
+   K-TurbKE-Inducer                          --> K-TurbKE
+   O-TurbFreq-Inducer                        --> O-TurbFreq
+                   
+ CFD Solver started: Mon Nov 18 16:36:54 2024
+
+
+ +--------------------------------------------------------------------+
+ |                       Convergence History                          |
+ +--------------------------------------------------------------------+
+
+ ======================================================================
+ |                        Timescale Information                       |
+ ----------------------------------------------------------------------
+ |       Equation       |         Type          |      Timescale      |
+ +----------------------+-----------------------+---------------------+
+ | U-Mom-Diffuser       | Auto Timescale        |     8.95246E-05     |
+ | V-Mom-Diffuser       | Auto Timescale        |     8.95246E-05     |
+ | W-Mom-Diffuser       | Auto Timescale        |     8.95246E-05     |
+ | P-Mass-Diffuser      | Auto Timescale        |     8.95246E-05     |
+ | U-Mom-Impeller       | Auto Timescale        |     8.95246E-05     |
+ | V-Mom-Impeller       | Auto Timescale        |     8.95246E-05     |
+ | W-Mom-Impeller       | Auto Timescale        |     8.95246E-05     |
+ | P-Mass-Impeller      | Auto Timescale        |     8.95246E-05     |
+ | U-Mom-Inducer        | Auto Timescale        |     8.95246E-05     |
+ | V-Mom-Inducer        | Auto Timescale        |     8.95246E-05     |
+ | W-Mom-Inducer        | Auto Timescale        |     8.95246E-05     |
+ | P-Mass-Inducer       | Auto Timescale        |     8.95246E-05     |
+ +----------------------+-----------------------+---------------------+
+ | H-Energy-Diffuser    | Auto Timescale        |     8.95246E-05     |
+ | H-Energy-Impeller    | Auto Timescale        |     8.95246E-05     |
+ | H-Energy-Inducer     | Auto Timescale        |     8.95246E-05     |
+ +----------------------+-----------------------+---------------------+
+ | K-TurbKE-Diffuser    | Auto Timescale        |     8.95246E-05     |
+ | O-TurbFreq-Diffuser  | Auto Timescale        |     8.95246E-05     |
+ | K-TurbKE-Impeller    | Auto Timescale        |     8.95246E-05     |
+ | O-TurbFreq-Impeller  | Auto Timescale        |     8.95246E-05     |
+ | K-TurbKE-Inducer     | Auto Timescale        |     8.95246E-05     |
+ | O-TurbFreq-Inducer   | Auto Timescale        |     8.95246E-05     |
+ +----------------------+-----------------------+---------------------+
+
+ ======================================================================
+ OUTER LOOP ITERATION =    1                    CPU SECONDS = 6.213E+01
+ ----------------------------------------------------------------------
+ |       Equation       | Rate | RMS Res | Max Res |  Linear Solution |
+ +----------------------+------+---------+---------+------------------+
+ | Wallscale            | 0.00 | 2.3E-03 | 1.6E-02 | 44.8  8.5E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+ | U-Mom                | 0.00 | 3.4E-03 | 4.7E-02 |       4.1E-01  ok|
+ | V-Mom                | 0.00 | 6.0E-03 | 1.3E-01 |       3.2E-01  ok|
+ | W-Mom                | 0.00 | 5.4E-03 | 2.1E-01 |       8.5E-01  ok|
+ | P-Mass               | 0.00 | 2.3E-02 | 3.0E-01 |  9.6  2.1E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+ | H-Energy             | 0.00 | 1.7E-02 | 6.5E-01 |  5.8  4.1E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+ | K-TurbKE             | 0.00 | 2.3E-02 | 2.0E-01 |  5.8  1.7E-02  OK|
+ | O-TurbFreq           | 0.00 | 1.4E-01 | 9.7E-01 | 12.2  1.8E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+
+ ======================================================================
+ OUTER LOOP ITERATION =    2                    CPU SECONDS = 1.104E+02
+ ----------------------------------------------------------------------
+ |       Equation       | Rate | RMS Res | Max Res |  Linear Solution |
+ +----------------------+------+---------+---------+------------------+
+ | Wallscale            | 0.08 | 1.8E-04 | 5.0E-03 | 20.4  8.5E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+ | U-Mom                | 1.54 | 5.2E-03 | 8.3E-02 |       2.1E-01  ok|
+ | V-Mom                | 1.27 | 7.6E-03 | 6.6E-02 |       1.7E-01  ok|
+ | W-Mom                | 1.08 | 5.8E-03 | 5.7E-02 |       2.2E-01  ok|
+ | P-Mass               | 0.55 | 1.3E-02 | 3.2E-01 |  5.3  7.0E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+ | H-Energy             | 0.78 | 1.3E-02 | 4.6E-01 |  5.8  1.6E-02  OK|
+ +----------------------+------+---------+---------+------------------+
+ | K-TurbKE             | 0.57 | 1.3E-02 | 2.4E-01 |  5.8  3.5E-02  OK|
+ | O-TurbFreq           | 0.16 | 2.2E-02 | 2.3E-01 | 12.2  8.9E-04  OK|
+ +----------------------+------+---------+---------+------------------+
+                   
+ CFD Solver finished: Mon Nov 18 16:37:12 2024
+ CFD Solver wall clock seconds: 1.8787E+01
+
+ ======================================================================
+              Termination and Interrupt Condition Summary
+ ======================================================================
+    
+ CFD Solver: Run duration reached
+   (Maximum number of outer iterations)
+
+ ======================================================================
+              Boundary Flow and Total Source Term Summary
+ ======================================================================
+
+ +--------------------------------------------------------------------+
+ |                           U-Mom-Diffuser                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Diffuser Hub                           -1.8068E-02
+ Boundary         : Diffuser Outlet                         1.5673E-01
+ Boundary         : Diffuser Shroud                        -1.1897E-02
+ Boundary         : Periodic                               -1.2735E-01
+ Domain Interface : Diffuser to Impeller (Side 1)           1.5861E-02
+                                                           -----------
+ Domain Imbalance :                                         1.5283E-02
+
+ +--------------------------------------------------------------------+
+ |                           V-Mom-Diffuser                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Diffuser Hub                           -7.2512E-04
+ Boundary         : Diffuser Outlet                        -3.5006E-03
+ Boundary         : Diffuser Shroud                         2.9913E-04
+ Boundary         : Periodic                               -7.6886E-04
+ Domain Interface : Diffuser to Impeller (Side 1)           4.6342E-02
+                                                           -----------
+ Domain Imbalance :                                         4.1647E-02
+
+ +--------------------------------------------------------------------+
+ |                           W-Mom-Diffuser                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Diffuser Hub                            2.4640E+00
+ Boundary         : Diffuser Outlet                         3.1350E-04
+ Boundary         : Diffuser Shroud                        -2.5300E+00
+ Boundary         : Periodic                               -3.7253E-08
+ Domain Interface : Diffuser to Impeller (Side 1)          -2.5442E-04
+                                                           -----------
+ Domain Imbalance :                                        -6.5935E-02
+
+ +--------------------------------------------------------------------+
+ |                          P-Mass-Diffuser                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Diffuser Outlet                        -3.3333E-03
+ Domain Interface : Diffuser to Impeller (Side 1)           2.7870E-03
+                                                           -----------
+ Domain Imbalance :                                        -5.4638E-04
+
+ +--------------------------------------------------------------------+
+ |                           U-Mom-Impeller                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Impeller Blade                         -6.2204E-02
+ Boundary         : Impeller Hub                           -1.5674E-01
+ Boundary         : Impeller Shroud                         3.2090E-01
+ Boundary         : Periodic                               -4.0082E-01
+ Domain Src (Neg) : Impeller                               -3.5995E-04
+ Domain Src (Pos) : Impeller                                4.6864E-01
+ Domain Interface : Diffuser to Impeller (Side 2)          -1.5833E-02
+ Domain Interface : Impeller to Impeller Internal 2 (Side  -3.3423E-03
+ Domain Interface : Impeller to Impeller Internal 2 (Side   4.4706E-03
+ Domain Interface : Impeller to Impeller Internal (Side 1)  1.5944E-03
+ Domain Interface : Impeller to Impeller Internal (Side 2) -9.1845E-04
+ Domain Interface : Impeller to Inducer (Side 1)            2.0245E-02
+                                                           -----------
+ Domain Imbalance :                                         1.7564E-01
+
+ +--------------------------------------------------------------------+
+ |                           V-Mom-Impeller                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Impeller Blade                          5.9687E-01
+ Boundary         : Impeller Hub                           -7.7658E-02
+ Boundary         : Impeller Shroud                         2.1892E-01
+ Boundary         : Periodic                               -3.9925E-02
+ Domain Src (Neg) : Impeller                               -1.6629E-01
+ Domain Src (Pos) : Impeller                                8.1976E-02
+ Domain Interface : Diffuser to Impeller (Side 2)          -4.6343E-02
+ Domain Interface : Impeller to Impeller Internal 2 (Side  -6.1437E-03
+ Domain Interface : Impeller to Impeller Internal 2 (Side   7.6479E-03
+ Domain Interface : Impeller to Impeller Internal (Side 1) -9.0380E-03
+ Domain Interface : Impeller to Impeller Internal (Side 2)  1.0665E-02
+ Domain Interface : Impeller to Inducer (Side 1)            3.8758E-03
+                                                           -----------
+ Domain Imbalance :                                         5.7456E-01
+
+ +--------------------------------------------------------------------+
+ |                           W-Mom-Impeller                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Impeller Blade                          3.5146E-01
+ Boundary         : Impeller Hub                            2.5781E-01
+ Boundary         : Impeller Shroud                        -3.0531E-01
+ Boundary         : Periodic                                4.9174E-07
+ Domain Interface : Diffuser to Impeller (Side 2)           2.5369E-04
+ Domain Interface : Impeller to Impeller Internal 2 (Side  -3.7182E-03
+ Domain Interface : Impeller to Impeller Internal 2 (Side   5.0414E-03
+ Domain Interface : Impeller to Impeller Internal (Side 1) -9.5137E-03
+ Domain Interface : Impeller to Impeller Internal (Side 2)  1.1188E-02
+ Domain Interface : Impeller to Inducer (Side 1)           -1.0875E-01
+                                                           -----------
+ Domain Imbalance :                                         1.9846E-01
+
+ +--------------------------------------------------------------------+
+ |                          P-Mass-Impeller                           |
+ +--------------------------------------------------------------------+
+ Domain Interface : Diffuser to Impeller (Side 2)          -2.7870E-03
+ Domain Interface : Impeller to Impeller Internal 2 (Side  -1.4650E-04
+ Domain Interface : Impeller to Impeller Internal 2 (Side   1.8327E-04
+ Domain Interface : Impeller to Impeller Internal (Side 1) -2.5432E-04
+ Domain Interface : Impeller to Impeller Internal (Side 2)  2.9495E-04
+ Domain Interface : Impeller to Inducer (Side 1)            2.2816E-03
+                                                           -----------
+ Domain Imbalance :                                        -4.2792E-04
+
+ +--------------------------------------------------------------------+
+ |                           U-Mom-Inducer                            |
+ +--------------------------------------------------------------------+
+ Boundary         : Inducer Hub                            -5.3376E-02
+ Boundary         : Inducer Inlet                          -2.2324E-07
+ Boundary         : Inducer Shroud                          1.7279E-01
+ Domain Interface : Impeller to Inducer (Side 2)           -1.3117E-02
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 1) -5.2702E-01
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 2)  3.9070E-01
+                                                           -----------
+ Domain Imbalance :                                        -3.0026E-02
+
+ +--------------------------------------------------------------------+
+ |                           V-Mom-Inducer                            |
+ +--------------------------------------------------------------------+
+ Boundary         : Inducer Hub                            -2.1702E-01
+ Boundary         : Inducer Inlet                          -7.2394E-07
+ Boundary         : Inducer Shroud                          5.1963E-01
+ Domain Interface : Impeller to Inducer (Side 2)           -3.6977E-03
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 1)  2.2614E-02
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 2) -3.5654E-01
+                                                           -----------
+ Domain Imbalance :                                        -3.5009E-02
+
+ +--------------------------------------------------------------------+
+ |                           W-Mom-Inducer                            |
+ +--------------------------------------------------------------------+
+ Boundary         : Inducer Hub                            -4.0586E-06
+ Boundary         : Inducer Inlet                           1.1210E-02
+ Boundary         : Inducer Shroud                         -5.8425E-03
+ Domain Interface : Impeller to Inducer (Side 2)            1.2891E-01
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 1)  8.5575E-02
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 2) -8.0880E-02
+                                                           -----------
+ Domain Imbalance :                                         1.3897E-01
+
+ +--------------------------------------------------------------------+
+ |                           P-Mass-Inducer                           |
+ +--------------------------------------------------------------------+
+ Boundary         : Inducer Inlet                           1.5290E-03
+ Domain Interface : Impeller to Inducer (Side 2)           -2.1235E-03
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 1)  3.8689E-03
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 2) -3.8127E-03
+                                                           -----------
+ Domain Imbalance :                                        -5.3829E-04
+
+ +--------------------------------------------------------------------+
+ |                         H-Energy-Diffuser                          |
+ +--------------------------------------------------------------------+
+ Boundary         : Diffuser Outlet                        -1.3313E+03
+ Bnd Src/Visc Work: Diffuser Outlet                        -5.7992E-06
+ Bnd Src/Visc Work: Diffuser to Impeller Side 1            -1.7707E-02
+ Domain Src (Neg) : Diffuser                               -1.6589E+00
+ Domain Src (Pos) : Diffuser                                1.6589E+00
+ Domain Interface : Diffuser to Impeller (Side 1)           1.1506E+03
+                                                           -----------
+ Domain Imbalance :                                        -1.8065E+02
+
+ +--------------------------------------------------------------------+
+ |                         H-Energy-Impeller                          |
+ +--------------------------------------------------------------------+
+ Bnd Src/Visc Work: Diffuser to Impeller Side 2             3.8286E-02
+ Bnd Src/Visc Work: Impeller Shroud                         3.9994E-01
+ Bnd Src/Visc Work: Impeller to Impeller Internal 2 Side 1  1.0675E-03
+ Bnd Src/Visc Work: Impeller to Impeller Internal 2 Side 2  7.7468E-04
+ Bnd Src/Visc Work: Impeller to Impeller Internal Side 1    8.7561E-04
+ Bnd Src/Visc Work: Impeller to Impeller Internal Side 2    6.8165E-04
+ Bnd Src/Visc Work: Impeller to Inducer Side 1             -3.0079E-03
+ Domain Src (Neg) : Impeller                               -2.2429E+00
+ Domain Src (Pos) : Impeller                                2.2429E+00
+ Domain Interface : Diffuser to Impeller (Side 2)          -1.1130E+03
+ Domain Interface : Impeller to Impeller Internal 2 (Side  -5.8595E+01
+ Domain Interface : Impeller to Impeller Internal 2 (Side   7.3295E+01
+ Domain Interface : Impeller to Impeller Internal (Side 1) -1.0175E+02
+ Domain Interface : Impeller to Impeller Internal (Side 2)  1.1799E+02
+ Domain Interface : Impeller to Inducer (Side 1)            9.1245E+02
+                                                           -----------
+ Domain Imbalance :                                        -1.6916E+02
+
+ +--------------------------------------------------------------------+
+ |                          H-Energy-Inducer                          |
+ +--------------------------------------------------------------------+
+ Bnd Src/Visc Work: Impeller to Inducer Side 2             -2.5267E-03
+ Boundary         : Inducer Inlet                           6.1039E+02
+ Bnd Src/Visc Work: Inducer Inlet                          -6.0350E-07
+ Bnd Src/Visc Work: Inducer to Inducer Periodic 1 Side 1   -1.4076E-02
+ Bnd Src/Visc Work: Inducer to Inducer Periodic 1 Side 2   -1.4164E-02
+ Domain Src (Neg) : Inducer                                -1.8363E-01
+ Domain Src (Pos) : Inducer                                 1.8363E-01
+ Domain Interface : Impeller to Inducer (Side 2)           -8.4789E+02
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 1)  1.5449E+03
+ Domain Interface : Inducer to Inducer Periodic 1 (Side 2) -1.5224E+03
+                                                           -----------
+ Domain Imbalance :                                        -2.1509E+02
+
+
+ +--------------------------------------------------------------------+
+ |                     Normalised Imbalance Summary                   |
+ +--------------------------------------------------------------------+
+ |       Equation       |      Maximum Flow     |     Imbalance (%)   |
+ +--------------------------------------------------------------------+
+ | U-Mom-Diffuser       |       2.5300E+00      |        0.6041       |
+ | V-Mom-Diffuser       |       2.5300E+00      |        1.6461       |
+ | W-Mom-Diffuser       |       2.5300E+00      |       -2.6061       |
+ | P-Mass-Diffuser      |       3.8689E-03      |      -14.1224       |
+ | U-Mom-Impeller       |       2.5300E+00      |        6.9424       |
+ | V-Mom-Impeller       |       2.5300E+00      |       22.7100       |
+ | W-Mom-Impeller       |       2.5300E+00      |        7.8441       |
+ | P-Mass-Impeller      |       3.8689E-03      |      -11.0606       |
+ | U-Mom-Inducer        |       2.5300E+00      |       -1.1868       |
+ | V-Mom-Inducer        |       2.5300E+00      |       -1.3837       |
+ | W-Mom-Inducer        |       2.5300E+00      |        5.4928       |
+ | P-Mass-Inducer       |       3.8689E-03      |      -13.9134       |
+ +----------------------+-----------------------+---------------------+
+ | H-Energy-Diffuser    |       1.5449E+03      |      -11.6933       |
+ | H-Energy-Impeller    |       1.5449E+03      |      -10.9496       |
+ | H-Energy-Inducer     |       1.5449E+03      |      -13.9228       |
+ +----------------------+-----------------------+---------------------+
+
+ ======================================================================
+                     Wall Force and Moment Summary
+ ======================================================================
+                                                                          
+ Notes:
+ 1. Pressure integrals exclude the reference pressure.  To include
+    it, set the expert parameter 'include pref in forces = t'.
+ 2. These quantities are evaluated in a reference frame fixed to
+    the initial domain orientation and are not rotated if the orientation
+    changes (e.g. transient run or specified rotational offset).
+
+
+ +--------------------------------------------------------------------+
+ |                      Pressure Force On Walls                       |
+ +--------------------------------------------------------------------+
+                                    X-Comp.      Y-Comp.      Z-Comp.
+
+ Domain Group: Diffuser
+
+ Diffuser Hub                    -2.8711E-05   1.6856E-06  -2.4640E+00
+ Diffuser Shroud                  1.7034E-05  -2.8879E-07   2.5300E+00
+ Impeller Blade                   3.6908E-02  -5.8230E-01  -3.6983E-01
+ Impeller Hub                     1.5015E-01   9.2830E-02  -2.5886E-01
+ Impeller Shroud                 -3.2253E-01  -2.2231E-01   3.0120E-01
+ Inducer Hub                      5.3278E-02   2.1679E-01   4.0549E-06
+ Inducer Shroud                  -1.7424E-01  -5.1916E-01  -4.8440E-05
+                                  -----------  -----------  -----------
+ Domain Group Totals :           -2.5645E-01  -1.0141E+00  -2.6154E-01
+
+
+ +--------------------------------------------------------------------+
+ |                       Viscous Force On Walls                       |
+ +--------------------------------------------------------------------+
+                                    X-Comp.      Y-Comp.      Z-Comp.
+
+ Domain Group: Diffuser
+
+ Diffuser Hub                     1.8097E-02   7.2343E-04  -9.6785E-07
+ Diffuser Shroud                  1.1880E-02  -2.9884E-04  -1.7437E-07
+ Impeller Blade                   2.5297E-02  -1.4569E-02   1.8367E-02
+ Impeller Hub                     6.5901E-03  -1.5172E-02   1.0570E-03
+ Impeller Shroud                  1.6269E-03   3.3913E-03   4.1146E-03
+ Inducer Hub                      9.7229E-05   2.2650E-04   3.7756E-09
+ Inducer Shroud                   1.4533E-03  -4.7980E-04   5.8910E-03
+                                  -----------  -----------  -----------
+ Domain Group Totals :            6.5041E-02  -2.6179E-02   2.9428E-02
+
+
+ +--------------------------------------------------------------------+
+ |                      Pressure Moment On Walls                      |
+ +--------------------------------------------------------------------+
+                                    X-Comp.      Y-Comp.      Z-Comp.
+
+ Domain Group: Diffuser
+
+ Diffuser Hub                     2.3479E-03   5.4894E-02   1.0882E-11
+ Diffuser Shroud                 -5.8135E-04  -5.6106E-02  -1.7273E-11
+ Impeller Blade                   2.2187E-02   2.1663E-03  -4.5595E-03
+ Impeller Hub                    -3.5972E-03   7.2758E-03  -1.4762E-08
+ Impeller Shroud                  8.3095E-03  -1.4341E-02  -1.6828E-07
+ Inducer Hub                     -5.4989E-03   1.3506E-03   2.9893E-10
+ Inducer Shroud                   1.3406E-02  -4.5053E-03   1.4145E-08
+                                  -----------  -----------  -----------
+ Domain Group Totals :            3.6573E-02  -9.2663E-03  -4.5597E-03
+
+
+ +--------------------------------------------------------------------+
+ |                       Viscous Moment On Walls                      |
+ +--------------------------------------------------------------------+
+                                    X-Comp.      Y-Comp.      Z-Comp.
+
+ Domain Group: Diffuser
+
+ Diffuser Hub                    -2.9842E-05   7.4650E-04   1.9176E-05
+ Diffuser Shroud                  1.2028E-05   4.7818E-04  -3.8013E-06
+ Impeller Blade                   6.1867E-04   8.9464E-04  -1.5238E-04
+ Impeller Hub                     6.2103E-04   2.6090E-04  -1.3059E-04
+ Impeller Shroud                 -1.1872E-04   4.4679E-05   2.1427E-05
+ Inducer Hub                     -5.5769E-06   2.3692E-06  -4.2891E-10
+ Inducer Shroud                   4.1428E-05   2.2626E-05  -8.7517E-06
+                                  -----------  -----------  -----------
+ Domain Group Totals :            1.1390E-03   2.4499E-03  -2.5493E-04
+
+
+ +--------------------------------------------------------------------+
+ |                   Locations of Maximum Residuals                   |
+ +--------------------------------------------------------------------+
+ |       Equation       |      Domain Name      |     Node Number     |
+ +--------------------------------------------------------------------+
+ | Wallscale            | Impeller              |           7413      |
+ +----------------------+-----------------------+---------------------+
+ | U-Mom                | Impeller              |         330473      |
+ | V-Mom                | Impeller              |         245416      |
+ | W-Mom                | Inducer               |           2183      |
+ | P-Mass               | Impeller              |          77496      |
+ +----------------------+-----------------------+---------------------+
+ | H-Energy             | Diffuser              |            813      |
+ +----------------------+-----------------------+---------------------+
+ | K-TurbKE             | Diffuser              |          22395      |
+ | O-TurbFreq           | Impeller              |         258191      |
+ +----------------------+-----------------------+---------------------+
+
+ ======================================================================
+ |                     False Transient Information                    |
+ +--------------------------------------------------------------------+
+ |       Equation       |         Type          | Elapsed Pseudo-Time |
+ +--------------------------------------------------------------------+
+ | U-Mom-Diffuser       | Auto Timescale        |     1.79049E-04     |
+ | V-Mom-Diffuser       | Auto Timescale        |     1.79049E-04     |
+ | W-Mom-Diffuser       | Auto Timescale        |     1.79049E-04     |
+ | P-Mass-Diffuser      | Auto Timescale        |     1.79049E-04     |
+ | U-Mom-Impeller       | Auto Timescale        |     1.79049E-04     |
+ | V-Mom-Impeller       | Auto Timescale        |     1.79049E-04     |
+ | W-Mom-Impeller       | Auto Timescale        |     1.79049E-04     |
+ | P-Mass-Impeller      | Auto Timescale        |     1.79049E-04     |
+ | U-Mom-Inducer        | Auto Timescale        |     1.79049E-04     |
+ | V-Mom-Inducer        | Auto Timescale        |     1.79049E-04     |
+ | W-Mom-Inducer        | Auto Timescale        |     1.79049E-04     |
+ | P-Mass-Inducer       | Auto Timescale        |     1.79049E-04     |
+ +----------------------+-----------------------+---------------------+
+ | H-Energy-Diffuser    | Auto Timescale        |     1.79049E-04     |
+ | H-Energy-Impeller    | Auto Timescale        |     1.79049E-04     |
+ | H-Energy-Inducer     | Auto Timescale        |     1.79049E-04     |
+ +----------------------+-----------------------+---------------------+
+ | K-TurbKE-Diffuser    | Auto Timescale        |     1.79049E-04     |
+ | O-TurbFreq-Diffuser  | Auto Timescale        |     1.79049E-04     |
+ | K-TurbKE-Impeller    | Auto Timescale        |     1.79049E-04     |
+ | O-TurbFreq-Impeller  | Auto Timescale        |     1.79049E-04     |
+ | K-TurbKE-Inducer     | Auto Timescale        |     1.79049E-04     |
+ | O-TurbFreq-Inducer   | Auto Timescale        |     1.79049E-04     |
+ +----------------------+-----------------------+---------------------+
+
+ +--------------------------------------------------------------------+
+ |                     Average Scale Information                      |
+ +--------------------------------------------------------------------+
+
+ Domain Name : Diffuser
+     Global Length                                         = 6.5024E-03
+     Minimum Extent                                        = 1.0011E-03
+     Maximum Extent                                        = 2.1330E-02
+     Density                                               = 7.9930E+00
+     Dynamic Viscosity                                     = 1.0826E-05
+     Velocity                                              = 3.9052E+01
+     Advection Time                                        = 1.6651E-04
+     Reynolds Number                                       = 1.8748E+05
+     Speed of Sound                                        = 1.5196E+02
+     Mach Number                                           = 2.5700E-01
+     Thermal Conductivity                                  = 1.1493E-02
+     Specific Heat Capacity at Constant Pressure           = 8.3965E+02
+     Specific Heat Capacity at Constant Volume             = 7.3294E+02
+     Specific Heat Ratio                                   = 1.1456E+00
+     Prandtl Number                                        = 7.9096E-01
+     Temperature Range                                     = 1.6272E+01
+     Property Residual                                     = 4.1965E-04
+
+ Domain Name : Impeller
+     Global Length                                         = 4.3969E-03
+     Minimum Extent                                        = 8.0516E-03
+     Maximum Extent                                        = 1.0842E-02
+     Density                                               = 7.3805E+00
+     Dynamic Viscosity                                     = 1.0805E-05
+     Velocity                                              = 8.6968E+01
+     Advection Time                                        = 5.0557E-05
+     Reynolds Number                                       = 2.6120E+05
+     Speed of Sound                                        = 1.5220E+02
+     Mach Number                                           = 5.7139E-01
+     Thermal Conductivity                                  = 1.1429E-02
+     Specific Heat Capacity at Constant Pressure           = 8.3424E+02
+     Specific Heat Capacity at Constant Volume             = 7.2964E+02
+     Specific Heat Ratio                                   = 1.1434E+00
+     Prandtl Number                                        = 7.8867E-01
+     Temperature Range                                     = 2.6213E+01
+     Property Residual                                     = 4.3743E-04
+
+ Domain Name : Inducer
+     Global Length                                         = 6.8219E-03
+     Minimum Extent                                        = 3.7279E-03
+     Maximum Extent                                        = 3.3274E-02
+     Density                                               = 7.6651E+00
+     Dynamic Viscosity                                     = 1.0635E-05
+     Velocity                                              = 2.8482E+01
+     Advection Time                                        = 2.3952E-04
+     Reynolds Number                                       = 1.4004E+05
+     Speed of Sound                                        = 1.5072E+02
+     Mach Number                                           = 1.8898E-01
+     Thermal Conductivity                                  = 1.1103E-02
+     Specific Heat Capacity at Constant Pressure           = 8.3260E+02
+     Specific Heat Capacity at Constant Volume             = 7.2538E+02
+     Specific Heat Ratio                                   = 1.1478E+00
+     Prandtl Number                                        = 7.9750E-01
+     Temperature Range                                     = 2.0319E+00
+     Property Residual                                     = 4.6602E-04
+
+ +--------------------------------------------------------------------+
+ |                     Variable Range Information                     |
+ +--------------------------------------------------------------------+
+
+ Domain Name : Diffuser
+ +--------------------------------------------------------------------+
+ |      Variable Name                         |    min    |    max    |
+ +--------------------------------------------------------------------+
+ | Density                                    |  7.70E+00 |  8.54E+00 |
+ | Specific Heat Capacity at Constant Pressure|  8.33E+02 |  8.52E+02 |
+ | Static Entropy                             |  1.77E+03 |  1.82E+03 |
+ | Dynamic Viscosity                          |  1.06E-05 |  1.13E-05 |
+ | Thermal Conductivity                       |  1.11E-02 |  1.24E-02 |
+ | Isothermal Compressibility                 |  5.88E-06 |  6.55E-06 |
+ | Velocity u                                 |  3.33E+00 |  9.18E+01 |
+ | Velocity v                                 | -1.06E+01 |  9.76E+01 |
+ | Velocity w                                 | -3.09E+00 |  5.18E+00 |
+ | Pressure                                   | -1.41E+04 |  4.26E+03 |
+ | Turbulence Kinetic Energy                  |  4.61E-01 |  6.81E+01 |
+ | Turbulence Eddy Frequency                  |  1.20E+05 |  9.58E+06 |
+ | Eddy Viscosity                             |  5.42E-06 |  3.60E-04 |
+ | Temperature                                |  2.69E+02 |  2.86E+02 |
+ | Static Enthalpy                            |  3.99E+05 |  4.12E+05 |
+ | Total Enthalpy                             |  3.99E+05 |  4.15E+05 |
+ | Wall Scale                                 |  3.22E-12 |  1.26E-07 |
+ | Wall Distance                              |  6.50E-09 |  4.90E-04 |
+ +--------------------------------------------------------------------+
+
+ Domain Name : Impeller
+ +--------------------------------------------------------------------+
+ |      Variable Name                         |    min    |    max    |
+ +--------------------------------------------------------------------+
+ | Density                                    |  6.36E+00 |  1.07E+01 |
+ | Specific Heat Capacity at Constant Pressure|  8.21E+02 |  8.65E+02 |
+ | Static Entropy                             |  1.76E+03 |  1.83E+03 |
+ | Dynamic Viscosity                          |  1.03E-05 |  1.14E-05 |
+ | Thermal Conductivity                       |  1.05E-02 |  1.26E-02 |
+ | Isothermal Compressibility                 |  4.74E-06 |  7.43E-06 |
+ | Velocity u                                 | -6.16E+01 |  1.18E+02 |
+ | Velocity v                                 | -2.01E+02 |  5.50E+01 |
+ | Velocity w                                 | -5.44E+01 |  7.90E+01 |
+ | Pressure                                   | -3.33E+04 |  5.08E+04 |
+ | Turbulence Kinetic Energy                  |  1.84E-04 |  1.45E+02 |
+ | Turbulence Eddy Frequency                  |  1.25E+05 |  2.01E+07 |
+ | Eddy Viscosity                             |  1.96E-09 |  4.40E-04 |
+ | Temperature                                |  2.61E+02 |  2.88E+02 |
+ | Static Enthalpy                            |  3.93E+05 |  4.13E+05 |
+ | Total Enthalpy                             |  4.00E+05 |  4.16E+05 |
+ | Wall Scale                                 | -1.47E-10 |  1.24E-06 |
+ | Wall Distance                              |  0.00E+00 |  9.15E-04 |
+ +--------------------------------------------------------------------+
+
+ Domain Name : Inducer
+ +--------------------------------------------------------------------+
+ |      Variable Name                         |    min    |    max    |
+ +--------------------------------------------------------------------+
+ | Density                                    |  7.14E+00 |  8.34E+00 |
+ | Specific Heat Capacity at Constant Pressure|  8.28E+02 |  8.39E+02 |
+ | Static Entropy                             |  1.77E+03 |  1.78E+03 |
+ | Dynamic Viscosity                          |  1.06E-05 |  1.07E-05 |
+ | Thermal Conductivity                       |  1.10E-02 |  1.12E-02 |
+ | Isothermal Compressibility                 |  6.10E-06 |  7.04E-06 |
+ | Velocity u                                 | -7.96E-02 |  2.13E+01 |
+ | Velocity v                                 | -5.34E+00 |  5.04E+00 |
+ | Velocity w                                 |  7.75E+00 |  4.42E+01 |
+ | Pressure                                   | -2.57E+04 | -1.36E+03 |
+ | Turbulence Kinetic Energy                  |  4.52E-01 |  2.16E+01 |
+ | Turbulence Eddy Frequency                  |  1.03E+05 |  3.78E+06 |
+ | Eddy Viscosity                             |  1.06E-05 |  2.20E-04 |
+ | Temperature                                |  2.68E+02 |  2.70E+02 |
+ | Static Enthalpy                            |  3.98E+05 |  3.99E+05 |
+ | Total Enthalpy                             |  3.99E+05 |  3.99E+05 |
+ | Wall Scale                                 |  2.52E-11 |  4.63E-06 |
+ | Wall Distance                              |  1.05E-08 |  3.03E-03 |
+ +--------------------------------------------------------------------+
+
+
+ +--------------------------------------------------------------------+
+ |            Host Memory Information (Mbytes): Solver                |
+ +--------------------------------------------------------------------+
+ |           Host         | Nproc |   System    |    Peak     |   %   |
+ +------------------------+-------+-------------+-------------+-------+
+ | LAMDPC51               |    5  |    65480.08 |     1966.66 |  3.00 |
+ +------------------------+-------+-------------+-------------+-------+
+
+ +--------------------------------------------------------------------+
+ |              CPU Time Requirements of Solver - Total               |
+ +--------------------------------------------------------------------+
+ 
+ Subsystem Name                  Discretization       Linear Solution
+                                (secs.   %total)     (secs.   %total) 
+ ----------------------------------------------------------------------
+ Wall Scale                     3.87E+00   1.6 %     6.29E+00   2.6 %
+ Momentum and Mass              2.79E+01  11.4 %     8.59E+00   3.5 %
+ Heat Transfer                  1.03E+01   4.2 %     3.10E+00   1.3 %
+ TurbKE and TurbFreq            9.03E+00   3.7 %     6.96E+00   2.8 %
+                                -------- -------     --------  ------
+ Subsystem Summary              5.11E+01  20.8 %     2.49E+01  10.2 %
+
+ GGI Intersection               1.88E-01    0.1 %
+ File Reading                   2.82E+01   11.5 %
+ Search Calculations            2.34E-01    0.1 %
+ Variable Updates               1.63E+01    6.6 %
+ File Writing                   8.92E+01   36.4 %
+ Miscellaneous                  3.52E+01   14.3 %
+                                --------
+ Total                          2.45E+02
+
+ +--------------------------------------------------------------------+
+ |                   Job Information at End of Run                    |
+ +--------------------------------------------------------------------+
+
+ Job finished:   Mon Nov 18 16:37:30 2024
+
+ Total wall clock time: 4.801E+01 seconds
+             or: (          0:         0:         0:    48.015 )
+                 (       Days:     Hours:   Minutes:   Seconds )
+
+
+
+ --> Final synchronization point reached by all processes.
+End of solution stage.
+
+ +--------------------------------------------------------------------+
+ | The results from this run of the ANSYS CFX Solver have been        |
+ | written to                                                         |
+ | D:/Davide/Database_Test_2/LUS_1/LUS_1_pending/dp0_CFX_Solution/CF- |
+ | Xpre_case_001.res                                                  |
+ +--------------------------------------------------------------------+
+
+
+ +--------------------------------------------------------------------+
+ | For CFX runs launched from Workbench, the final locations of       |
+ | directories and files generated may differ from those shown.       |
+ +--------------------------------------------------------------------+
+
+
+This run of the ANSYS CFX Solver has finished.
