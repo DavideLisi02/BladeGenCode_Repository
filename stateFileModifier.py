@@ -311,6 +311,16 @@ class Geometry:
                         },
                         "DownstreamControl": "Free"
                     }
+            # Modifying Leading Edge of Splitter Blade
+            splitter_LE = self.parameters.splitter_LE
+            modified_Dict["Blade1"]["LeadingEdgeCut"]["New Segment"][0] = {
+                    "CurveType": "Spline",
+                    "UpstreamControl": "Free",
+                    "Data": {
+                        "data": splitter_LE
+                    },
+                    "DownstreamControl": "Free"
+                }
 
         return modified_Dict
     

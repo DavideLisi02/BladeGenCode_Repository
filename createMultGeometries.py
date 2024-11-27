@@ -30,8 +30,8 @@ r5  = 30 #30
 thickness = 0.2
 
 # Decide how many points to compute for the Bezier curves
-beta_bezier_N = 100
-HubShr_bezier_N = 100
+beta_bezier_N = 300 # Number of points to compute for beta curve
+HubShr_bezier_N = 300 # Number of points for the hub and shroud bezier
 
 # Discrtization of the parameter tau_0
 tau_0_N = 2 
@@ -45,8 +45,12 @@ tau_1_min = -0.6  # - 1 to have P1 at bet_in - delta
 w1_N = 2 
 w1_min = 1
 w1_max = 10 
-# Hub ans Shroud
-w1_hb_sh = 1
+# Hub ans Shroud | Weights for the control point of the hub and shroud profiles
+w1_hb = 2
+w1_sh = 2
+# Splitter LE Cut, Meridional Target
+splitter_LE_meridional_target_hub_settings = 0.3
+splitter_LE_meridional_target_sh_settings = 0.3
 
 # Folder Management Settings
 Project_Name = "Database_Test_11"
@@ -65,7 +69,7 @@ Folder_management.Create_Project_Folder(Project_Name = Project_Name,
 tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
 tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
 w1 = np.linspace(w1_min, w1_max, w1_N)
-HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5, 'w1_hb':w1_hb_sh, 'w1_sh':w1_hb_sh}
+HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5, 'w1_hb':w1_hb, 'w1_sh':w1_sh}
 
 
 # Creating the parameters 
@@ -78,7 +82,8 @@ pars_list = [ParametrizationSettings(
     tau_settings =  [tau_0_ijk, tau_1_ijk],
     w1_settings = w1_ijk,
     thickness = thickness,
-    w1_hb_sh_settings = w1_hb_sh,
+    splitter_LE_meridional_target_hub_settings = splitter_LE_meridional_target_hub_settings,
+    splitter_LE_meridional_target_sh_settings = splitter_LE_meridional_target_sh_settings,
     index = (i * tau_1_N * w1_N) + (j * w1_N) + k,
     par_name = f"{str(tau_0_ijk).replace('.', '')}_{str(tau_1_ijk).replace('.', '')}_{str(w1_ijk).replace('.', '')}")  # NAME OF THE SAVED FILE
                 for i,tau_0_ijk in enumerate(tau_0)
