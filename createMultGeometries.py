@@ -17,6 +17,7 @@ print_conversion_output = False
 beta_in_settings = 24.008 # (beta_2, beta in corrispondenza dell'hub all'inlet)
 beta_out_settings = 35.15 # (beta_4, beta in corrispondenza dell'hub all'outlet)
 
+# HUB AND SHROUD PARAMETERS
 # Geometrical Parameters from 1D
 L_ind = 30 #30
 L_comp = 8 #8
@@ -25,6 +26,12 @@ r2h = 2 #2
 r4  = 10 #10
 b4  = 1 #1
 r5  = 30 #30
+# Hub ans Shroud | Weights for the control point of the hub and shroud profiles
+w1_hb = 2
+w1_sh = 2
+# Splitter LE Cut, Meridional Target
+splitter_LE_meridional_target_hub_settings = 0.3
+splitter_LE_meridional_target_sh_settings = 0.3
 
 # Constant thickness settings
 thickness = 0.2
@@ -33,27 +40,22 @@ thickness = 0.2
 beta_bezier_N = 300 # Number of points to compute for beta curve
 HubShr_bezier_N = 300 # Number of points for the hub and shroud bezier
 
+# DISCRETIZATION OF THE BETA/M% CURVE'S PARAMETERS
 # Discrtization of the parameter tau_0
-tau_0_N = 2 
-tau_0_max = 0.6
-tau_0_min = 0.5
+tau_0_N = 4 
+tau_0_max = 1 #   0 < tau_0_max < 1      and     tau_0_max > tau_0_min
+tau_0_min = 0 #   0 < tau_0_min < 1      and     tau_0_min < tau_0_min
 # Discrtization of the parameter tau_1
-tau_1_N = 2
-tau_1_max = -0.5  # 2 to have P1 at beta_ou + delta
-tau_1_min = -0.6  # - 1 to have P1 at bet_in - delta
+tau_1_N = 4
+tau_1_max = 2  # 2 to have P1 at beta_ou + delta
+tau_1_min = -1  # - 1 to have P1 at bet_in - delta
 # Discrtization of the parameter w1
-w1_N = 2 
+w1_N = 3 
 w1_min = 1
 w1_max = 10 
-# Hub ans Shroud | Weights for the control point of the hub and shroud profiles
-w1_hb = 2
-w1_sh = 2
-# Splitter LE Cut, Meridional Target
-splitter_LE_meridional_target_hub_settings = 0.3
-splitter_LE_meridional_target_sh_settings = 0.3
 
 # Folder Management Settings
-Project_Name = "Database_Test_11"
+Project_Name = "Database_Test_13"
 Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"
@@ -120,6 +122,7 @@ fig.update_layout(
 
 # Display the figure
 fig.show()
+print(f"\nExpected time to create gemoteries: {3.5*tau_0_N*tau_1_N*w1_N/60} min\n")
 Go_on = input("Are you sure you want to procede? Y/n > ")
 print(f"-----------------------------------------")
 
