@@ -1,0 +1,30 @@
+ 2024/11/27 17:42:23 
+GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
+Units do not match variable 'epr streamwise'.
+ 2024/11/27 17:42:24 
+GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
+Units do not match variable 'epr streamwise'.
+ 2024/11/27 17:42:47 
+GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
+Units do not match variable 'epr streamwise'.
+ 2024/11/27 17:42:47 
+GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
+Units do not match variable 'epr streamwise'.
+ 2024/11/27 17:43:21 
+DataReader::load - Unable to load file:
+
+D:/Davide/Database_Test_14/Simulations/UNMODgeometry_18_043333333333333335_-04333333333333333_10/UNMODgeometry_18_043333333333333335_-04333333333333333_10_files/dp0/CFX/CFX/CFXpre_case_001.out
+
+CFD-Post can load files from the following applications and formats:
+ Ansys CFX
+ Ansys Common Fluids (Project, Mesh, Results and Post files)
+ Ansys FENSAP-ICE
+ Ansys FIDAP Neutral
+ Ansys Fluent
+ Ansys Forte
+ Ansys Mechanical Results (to 2020 R2)
+ Ansys Meshing
+ CFX-4 (Dump files)
+ CFX-TASCflow (must have grd/rso, bcf and prm files)
+ CGNS
+

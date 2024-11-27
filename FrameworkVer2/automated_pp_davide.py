@@ -103,14 +103,14 @@ def replace_text(template_file, new_file,trigger_strings, replacement_text):
    
 #! exe_path: address of cfd-post executable 
 
-ansys_path = r"C:\Program Files\ANSYS Inc\v241"
+ansys_path = r"C:\Program Files\ANSYS Inc\v242"
 exe_path = ansys_path + r"\CFD-Post\bin\cfdpost.exe"
 
 postproc_filename = "postprocessing.txt"
 
-address_file = r"address_list.txt"
-state_file = r"postprocessing4calibration1D_candidacy.cst"
-expression_file = r"expressionlist4calibration1D.txt"
+address_file = r"C:\Users\lisi\Desktop\address_list.txt"
+state_file = r"D:\Davide\BladeGenCode_Repository\FrameworkVer2\results_uitls\postprocessing4calibration1D_candidacy.cst"
+expression_file = r"D:\Davide\BladeGenCode_Repository\FrameworkVer2\results_uitls\expressionlist4calibration1D.txt"
 
 solution_addresses = list_elements(address_file)
 expression_names = list_elements(expression_file)

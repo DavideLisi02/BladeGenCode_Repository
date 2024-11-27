@@ -7,3 +7,11 @@ Run simulations
     1.3 oppure 1.5 mesh size factor
 
 Obtain results
+    use automated_pp_davide.py
+        Pressure ratio
+            BBB P0 S1
+            BBB P0 S5
+        Efficiency
+            BBB h0 S1
+            BBB h0 S5
+        
