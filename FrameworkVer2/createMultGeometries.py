@@ -27,8 +27,8 @@ r4  = 10 #10
 b4  = 1 #1
 r5  = 30 #30
 # Hub ans Shroud | Weights for the control point of the hub and shroud profiles
-w1_hb = 2
-w1_sh = 2
+w1_hb = 1
+w1_sh = 1
 # Splitter LE Cut, Meridional Target
 splitter_LE_meridional_target_hub_settings = 0.3
 splitter_LE_meridional_target_sh_settings = 0.3
@@ -55,7 +55,7 @@ w1_min = 1
 w1_max = 10 
 
 # Folder Management Settings
-Project_Name = "Database_Test_14"
+Project_Name = "Database_tau_w1_betacurve"
 Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"

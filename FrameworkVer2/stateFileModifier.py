@@ -26,7 +26,8 @@ class Geometry:
         super(Geometry, self).__init__()
         
         self.parameters = parameters
-        
+
+    
         self.defaultfilePath = defaultfilePath
         self.output_project_path = f"{Project_Folder}\\{Project_Name}"
         self.output_jsonPath = f"{self.output_project_path}\\{output_jsonFolder}\\MOD{file_name}.json"
@@ -44,6 +45,7 @@ class Geometry:
         with open(filePath, 'r') as file:
             DataList = file.readlines()
         return DataList
+
 
     def convert_list_to_dict(self, list):
         """
