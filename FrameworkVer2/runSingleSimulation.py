@@ -39,4 +39,10 @@ CFXbatch.run_CFXbatch(simulation_definition)
 end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 print(f"End Time: {end_time}")
 
+start_time_dt = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+end_time_dt = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+total_time = (end_time_dt - start_time_dt).total_seconds() / 60
+
+print(f"Total Time: {total_time:.2f} minutes")
+
 print("Simulazione terminata")
