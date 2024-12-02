@@ -18,7 +18,7 @@ parallel = False
 batch_size = 5
 
 #! Folder Management Settings
-Project_Name = "Database_Test_14"
+Project_Name = "Database_tau_w1_betacurve"
 Project_Folder = "D:\\Davide" # Absolute path of the project folder created for the geometries
 number_of_channels = 9
 std_ANSYS_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242"
@@ -69,7 +69,7 @@ if Go_on.lower() == 'y':
     else:
         i = 0
         for name in names:
-            print(f"############## > Simulation {i} < ##############")
+            print(f"############## > Simulation {i}:{name} < ##############")
             run_simulation(name)
             print(f"Simulation {i} completed.")
             i+=1
