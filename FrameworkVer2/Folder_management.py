@@ -1,5 +1,6 @@
 import os
 import shutil
+import json
 
 output_jsonfolder_settings = 'modifiedJSON'
 output_bgifolder_settings = 'modifiedBGI'
@@ -7,6 +8,15 @@ output_unmodified_bgifolder_settings = 'unmodifiedBGI'
 output_bgdfolder_settings = 'modifiedBGD'
 output_unmodified_bgdfolder_settings = 'unmodifiedBGD'
 output_simulation_folder = 'Simulations'
+
+def save_json(output_jsonPath, data_dict):
+    """
+    Saves the dictionary into a JSON file.
+    """
+    os.chdir("D:\\")
+    with open(output_jsonPath, 'w') as json_file:
+        json.dump(data_dict, json_file, indent=4)
+    return
 
 def Create_Folder(Path):
     """Creates a new folder at the specified path.

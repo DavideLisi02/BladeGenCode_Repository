@@ -134,6 +134,8 @@ if Go_on in ["y","Y"]:
                     for i,tau_0_ijk in enumerate(tau_0)
                     for j,tau_1_ijk in enumerate(tau_1)
                     for k,w1_ijk in enumerate(w1) }
+    Folder_management.save_json(f"{Project_Folder}\\{Project_Name}\\simulation_results.json", results_dict)
+
 
     i = 1
     for par in pars_list:
