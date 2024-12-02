@@ -48,6 +48,7 @@ class Geometry:
             DataList = file.readlines()
         return DataList
 
+    
 
     def convert_list_to_dict(self, list):
         """
@@ -194,7 +195,6 @@ class Geometry:
         modified_Dict = data_dict
         if Blade_definition == 'beta-M%' and fibers == 'General_only_at_Hub':
             layers = [0]
-            modified_Dict["Defaults"] = {"tau":self.tau, "w1":self.w1}
             modified_Dict["Blade0"]["AngleDefinition"]['SpanwiseDistribution'] = 'General'
             for layer in layers:
                 modified_Dict["Blade0"]["AngleDefinition"]["New AngleCurve"][layer]["New Segment"][0]["Data"]["data"] = curve_points_list_blade
