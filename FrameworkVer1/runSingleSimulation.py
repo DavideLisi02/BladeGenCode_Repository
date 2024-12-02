@@ -12,7 +12,7 @@ from simulationParameters import *
 ####################################################################################
 
 #! Folder Management Settings
-Project_Name = "Database_Test_14"
+Project_Name = "Database_tau_w1_betacurve"
 Project_Folder = "D:\\Davide"
 geometry_name = "UNMODgeometry_4_03_-05666666666666667_55"
 number_of_channels = 9
