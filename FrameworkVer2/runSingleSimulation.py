@@ -7,6 +7,7 @@ os.chdir(package_path)
 
 import CFXbatch
 from simulationParameters import *
+from datetime import datetime
 
 ####################################################################################
 ####################################################################################
@@ -30,7 +31,12 @@ simulation_definition = create_simulation_def(ansys_path = std_ANSYS_Folder_sett
 
 print(f"Simulation Definition:\n{simulation_definition}")
 
+start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+print(f"Start Time: {start_time}")
 
 CFXbatch.run_CFXbatch(simulation_definition)
+
+end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+print(f"End Time: {end_time}")
 
 print("Simulazione terminata")
