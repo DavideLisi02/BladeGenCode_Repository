@@ -48,7 +48,7 @@ def create_simulation_def(ansys_path = r"C:\Program Files\ANSYS Inc\v242",
 
         #! mesh and solver definition 
         "mesh size factor" : 1.3,  # 1
-        "n partitions" : 5, # number of processes
+        "n partitions" : 20, # number of processes
         "n iterations" : 500, # 500
         "target residual" : 1e-5, # threshold
 
