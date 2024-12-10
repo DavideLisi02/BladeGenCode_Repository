@@ -57,6 +57,8 @@ def plot_2d(results, labels, n_data=300, log=False, cmap=None):
         aspect='auto',
         origin='lower',
         interpolation='none',
+        vmin = 1.92,
+        vmax = 1.97,
         norm=LogNorm() if log else None
     )
     if cmap is not None:
