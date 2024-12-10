@@ -1,6 +1,7 @@
 from plot_utils import *
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 
 #####################################################################################################################################################
 File = "RESULTS_Database_tau_w1_betacurve.json"
@@ -24,9 +25,12 @@ for w1 in w1_values:
             tau_0.append(data[key]['tau_0'])
             tau_1.append(data[key]['tau_1'])
             pressure_ratio.append(data[key]['Results']['Pressure_Ratio'])
-    
-    plt.figure()
-    plot_2d(tau_0, tau_1, pressure_ratio, title=f'Pressure Ratio for w1={w1}', xlabel='tau_0', ylabel='tau_1')
+    # Convert lists to numpy arrays and reshape for plot_2d
+    results = np.array([tau_0, tau_1, pressure_ratio]).T
+    print(results)
+    labels = ["tau_0", "tau_1", "Pressure Ratio"]
+    plt.figure(f"w1 = {w1}", figsize=(8, 6))  # Set the figure size to be smaller
+    plot_2d(results, labels)
     plt.show()
     filename = f"{File}_w1_{w1}.png"
     plt.savefig(filename)

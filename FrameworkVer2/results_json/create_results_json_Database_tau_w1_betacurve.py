@@ -1,5 +1,6 @@
 import numpy as np
 from Folder_management import *
+from CoolProp.CoolProp import PropsSI
 
 # Beta at inlet and outlet from 1D
 beta_in_settings = 24.008 # (beta_2, beta in corrispondenza dell'hub all'inlet)
@@ -84,15 +85,23 @@ for sim in Simulations_list:
             elif line.startswith("BBB h0 S5"):
                 BBB_h0_S5 = float(line.split(",")[1].strip().split(" ")[0]) #m^2 s^-2
 
-        print(f"BBB P0 S1: {BBB_P0_S1}")
-        print(f"BBB P0 S5: {BBB_P0_S5}")
-        print(f"BBB h0 S1: {BBB_h0_S1}")
-        print(f"BBB h0 S5: {BBB_h0_S5}")
+        print(f"BBB P0 S1: {BBB_P0_S1} Pa")
+        print(f"BBB P0 S5: {BBB_P0_S5} Pa")
+        print(f"BBB h0 S1: {BBB_h0_S1} J/kg")
+        print(f"BBB h0 S5: {BBB_h0_S5} J/kg")
+
+        # Example fluid properties calculation using CoolProp
+        fluid_name = 'R134a'
+
+        # Calculate temperature using pressure and enthalpy
+        entropy_1 = PropsSI('S', 'P', BBB_P0_S1/1000, 'H', BBB_h0_S1/1000, fluid_name)
+        BBB_h0iso_5 = PropsSI('H', 'P', BBB_P0_S5/1000, 'S', entropy_1, fluid_name)*1000
 
         # Calculate pressure ratio
         pr_ratio = BBB_P0_S5/BBB_P0_S1
 
-        # Missing efficiency !!!!!!!!!!!!!!!!!!!
+        # Efficiency 0-to-0
+        efficiency = (BBB_h0_S1 - BBB_h0iso_5)/(BBB_h0_S1 - BBB_h0_S5)
 
         data[idx]["Results"] = {"P_0_S1":BBB_P0_S1, "P_0_S5":BBB_P0_S5, "h_0_S1":BBB_h0_S1, "h_0_S5":BBB_h0_S5, "Pressure_Ratio":pr_ratio}
 
