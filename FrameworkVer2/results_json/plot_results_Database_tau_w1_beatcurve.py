@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 from CoolProp.CoolProp import PropsSI
+#http://www.coolprop.org/coolprop/HighLevelAPI.html#parameter-table
 
 #####################################################################################################################################################
 File = "RESULTS_Database_tau_w1_betacurve.json"
