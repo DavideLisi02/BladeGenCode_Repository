@@ -1,8 +1,8 @@
 import os
 import json
 import re
-from run_command import run_command
-import Folder_management
+from utils.run_command import run_command
+import utils.Folder_management as Folder_management
 
 
 class StateFileModifier:
@@ -48,7 +48,7 @@ class StateFileModifier:
         self.tau = self.Geometry.tau
         self.w1 = self.Geometry.w1
     
-        self.output_bgdPath = destination_folder
+        self.output_bgdPath = destination_path
 
         # Folders definition for utils
         self.defaultfilePath = defaultfilePath

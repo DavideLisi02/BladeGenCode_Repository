@@ -1,4 +1,4 @@
-from Bezier import *
+from utils.Bezier import *
 
 """Parametrization Settings"""
 
@@ -6,6 +6,8 @@ class GeometrySettings:
 
     def __init__(self,
                     #Blade Parameters
+                    modify_numOfBlades = True,
+                    numOfBlades = 9,
                     beta_in = 24,
                     beta_out= 35,
                     thickness = 0.2,
@@ -26,6 +28,8 @@ class GeometrySettings:
                     #Splitter settings
                     splitter_LE_meridional_target_hub=0.3,
                     splitter_LE_meridional_target_sh=0.3,
+                    #Output settings
+                    print_conversion_output = False,
                 **kwargs):
         """
         Class containing all the settings and information about
@@ -39,6 +43,10 @@ class GeometrySettings:
         self.Beta_definition = 'beta-M%' # Possible entries: 'beta-M%'
         self.beta_bezier_N = beta_bezier_N
         self.numOfBlades = 9
+        self.fibers = 'General_only_at_Hub'
+        # Settings for the Blade Number
+        self.modify_numOfBlades = modify_numOfBlades
+        self.numOfBlades = numOfBlades
         # Settings for the Blade Parametrization
         self.beta_in = beta_in # Beta value at the inlet
         self.beta_out = beta_out # Beta value at the outlet
@@ -60,6 +68,7 @@ class GeometrySettings:
         self.r5 = r5
         # Settings for the Hub and Shroud Parametrization
         self.modify_HubShroud = modify_HubShroud
+        self.HubShroud_definition = 'xz'
         self.HubShr_bezier_N = 100
         self.spline_degree_hub_sh = 2
         self.w1_hb = w1_hb
@@ -70,6 +79,8 @@ class GeometrySettings:
         self.splitter_LE_meridional_target_hub = splitter_LE_meridional_target_hub
         self.splitter_LE_meridional_target_sh = splitter_LE_meridional_target_sh
 
+        # TERMINAL, OUTPUT SETTINGS
+        self.print_conversion_output = print_conversion_output
 
         # Computing Blade Curves
         if self.modify_Blade: 
@@ -113,8 +124,22 @@ class GeometrySettings:
                 (L_ind*0.9,  r2s),       # Point I
                 (L_ind*1  ,  r2s)        # Point L
             ]
+
+
             
-            self.Hub_Shroud_curves_points = Bezier(self.HubShroud_1D_dimensions).points # Format of this varaible: [HubProfile_points, ShrProfile_points]
+            self.Hub_Shroud_curves_points = Bezier({'object':'HubShroud',
+                                                    'HubShr_bezier_N':self.HubShr_bezier_N,
+                                                    'definition':'xz',
+                                                    'spline_degree':2,
+                                                    'L_ind':L_ind,
+                                                    'L_comp':L_comp,
+                                                    'r2s':r2s,
+                                                    'r2h':r2h,
+                                                    'r4':r4,
+                                                    'b4':b4,
+                                                    'r5':r5,
+                                                    'w1_hb':w1_hb,
+                                                    'w1_sh':w1_sh}).points # Format of this varaible: [HubProfile_points, ShrProfile_points]
             
 
             self.diffuser_Hub_points = [

@@ -1,7 +1,7 @@
-from Bezier import * # maybe to be removed from here
-from GeometryGenerator.utils.GeometrySettings import *
-from stateFileModifier import *
-import Folder_management
+from utils.Bezier import * # maybe to be removed from here
+from utils.GeometrySettings import *
+from utils.stateFileModifier import *
+import utils.Folder_management
 import plotly.graph_objects as go
 
 ###########################################################

@@ -1,8 +1,6 @@
 from utils.Bezier import * # maybe to be removed from here
 from utils.GeometrySettings import *
 from utils.stateFileModifier import *
-import utils.Folder_management as Folder_management
-import plotly.graph_objects as go
 
 
 Geometry = GeometrySettings(
