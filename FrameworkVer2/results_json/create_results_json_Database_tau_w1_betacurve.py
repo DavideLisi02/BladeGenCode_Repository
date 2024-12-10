@@ -90,21 +90,6 @@ for sim in Simulations_list:
         print(f"BBB h0 S1: {BBB_h0_S1} J/kg")
         print(f"BBB h0 S5: {BBB_h0_S5} J/kg")
 
-        # Example fluid properties calculation using CoolProp
-        fluid_name = 'R134a'
-
-        # Calculate temperature using pressure and enthalpy
-        entropy_1 = PropsSI('S', 'P', BBB_P0_S1/1000, 'H', BBB_h0_S1/1000, fluid_name)
-        BBB_h0iso_5 = PropsSI('H', 'P', BBB_P0_S5/1000, 'S', entropy_1, fluid_name)*1000
-
-        # Calculate pressure ratio
-        pr_ratio = BBB_P0_S5/BBB_P0_S1
-
-        # Efficiency 0-to-0
-        efficiency = (BBB_h0_S1 - BBB_h0iso_5)/(BBB_h0_S1 - BBB_h0_S5)
-
-        data[idx]["Results"] = {"P_0_S1":BBB_P0_S1, "P_0_S5":BBB_P0_S5, "h_0_S1":BBB_h0_S1, "h_0_S5":BBB_h0_S5, "Pressure_Ratio":pr_ratio}
-
         
 save_json(f"{Project_Folder}\\{Project_Name}\\RESULTS_Database_tau_w1_betacurve.json", data)
 
