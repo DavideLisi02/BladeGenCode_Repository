@@ -22,7 +22,7 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
-def plot_2d(results, labels, n_data=300, log=False, cmap=None):
+def plot_2d(results, labels, feature, n_data=300, log=False, cmap=None):
     """Plot result
 
     results - The results are given as a 2d array of dimensions [N, 3].
@@ -50,17 +50,29 @@ def plot_2d(results, labels, n_data=300, log=False, cmap=None):
         min(xnew), max(xnew),
         min(ynew), max(ynew)
     )
-    # plt.plot(results[:, 0], results[:, 1], 'r.')
-    imgplot = plt.imshow(
-        results_interp,
-        extent=extent,
-        aspect='auto',
-        origin='lower',
-        interpolation='none',
-        vmin = 1.92,
-        vmax = 1.97,
-        norm=LogNorm() if log else None
-    )
+    if feature == "Pressure_Ratio":
+        # plt.plot(results[:, 0], results[:, 1], 'r.')
+        imgplot = plt.imshow(
+            results_interp,
+            extent=extent,
+            aspect='auto',
+            origin='lower',
+            interpolation='none',
+            vmin = 1.92,
+            vmax = 1.97,
+            norm=LogNorm() if log else None
+        )
+    else:
+        # plt.plot(results[:, 0], results[:, 1], 'r.')
+        imgplot = plt.imshow(
+            results_interp,
+            extent=extent,
+            aspect='auto',
+            origin='lower',
+            interpolation='none',
+            norm=LogNorm() if log else None
+        )
+
     if cmap is not None:
         imgplot.set_cmap(cmap)
     plt.xlabel(labels[0])
