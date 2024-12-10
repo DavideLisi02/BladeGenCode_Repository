@@ -1,6 +1,7 @@
 import os
 import Folder_management
 import threading
+from datetime import datetime
 
 abspath = os.path.abspath(__file__)
 package_path = os.path.dirname(abspath)
@@ -35,7 +36,19 @@ def run_simulation(name):
                                                 geometry_name = name,
                                                 n_channels = number_of_channels)
     print(f"Simulation Definition:\n{simulation_definition}")
+    start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"Start Time: {start_time}")
+    
     CFXbatch.run_CFXbatch(simulation_definition)
+    
+    end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"End Time: {end_time}")
+    start_time_dt = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+    end_time_dt = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+    total_time = (end_time_dt - start_time_dt).total_seconds() / 60
+
+    print(f"Total Time: {total_time:.2f} minutes")
+
 
 
 

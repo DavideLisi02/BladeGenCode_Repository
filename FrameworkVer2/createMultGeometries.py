@@ -60,7 +60,6 @@ Project_Folder = "D:\\Davide"
 default_geometry_path = 'defaultBGI\\LUS_General_OnlySpan0_Copy.bgi'
 std_BLADEGEN_Folder_settings = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"
 
-
 ###########################################################
 ###########################################################
 
@@ -130,12 +129,11 @@ print(f"-----------------------------------------")
 if Go_on in ["y","Y"]:
     print("Starting process")
     # Creating the results dictionary 
-    results_dict = { ((i*tau_0_N+j)*tau_1_N)+k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Results"] #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
+    results_dict = { (i * tau_1_N * w1_N) + (j * w1_N) + k : [[tau_0_ijk, tau_1_ijk, w1_ijk],"Results"] #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
                     for i,tau_0_ijk in enumerate(tau_0)
                     for j,tau_1_ijk in enumerate(tau_1)
                     for k,w1_ijk in enumerate(w1) }
     Folder_management.save_json(f"{Project_Folder}\\{Project_Name}\\simulation_results.json", results_dict)
-
 
     i = 1
     for par in pars_list:
