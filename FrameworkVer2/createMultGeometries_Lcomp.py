@@ -74,7 +74,7 @@ pars_list = [ParametrizationSettings(
                 beta_in_settings = beta_in_settings,
                 beta_out_settings = beta_out_settings,
                 beta_bezier_N_settings = beta_bezier_N,
-                HubShroud_1D_dimensions = {'object':'HubShroud','definition':'xz','spline_degree':2,'L_ind':L_ind,'L_comp':L_comp_i,'r2s':r2s,'r2h':r2h,'r4':r4,'b4':b4,'r5':r5,'w1_hb':w1_hb,'w1_sh':w1_sh},
+                HubShroud_1D_dimensions = {'object':'HubShroud','HubShr_bezier_N':HubShr_bezier_N,'definition':'xz','spline_degree':2,'L_ind':L_ind,'L_comp':L_comp_i,'r2s':r2s,'r2h':r2h,'r4':r4,'b4':b4,'r5':r5,'w1_hb':w1_hb,'w1_sh':w1_sh},
                 print_conversion_output = print_conversion_output,
                 tau_settings =  [tau_0, tau_1],
                 w1_settings = w1,
@@ -138,7 +138,7 @@ print(f"-----------------------------------------")
 if Go_on in ["y","Y"]:
     print("Starting process")
     # Creating the results dictionary 
-    results_dict = { i: {L_comp: L_comp_i,"Results":None} #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
+    results_dict = { i: {"L_comp": L_comp_i,"Results":None} #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
                     for i,L_comp_i in enumerate(L_comp)}
     Folder_management.save_json(f"{Project_Folder}\\{Project_Name}\\simulation_results_L_comp.json", results_dict)
 

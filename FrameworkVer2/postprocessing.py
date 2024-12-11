@@ -25,7 +25,7 @@ os.chdir(dname)
 
 #####################################################################################################################################################
 
-Project_Name = "Database_tau_w1_betacurve"
+Project_Name = "Database_L_comp_00"
 Project_Folder = "D:\\Davide"
 
 #####################################################################################################################################################
@@ -35,7 +35,7 @@ exe_path = ansys_path + r"\CFD-Post\bin\cfdpost.exe"
 
 postproc_filename = "postprocessing.txt"
 
-Results_dict = read_json_file(f"{Project_Folder}\\{Project_Name}\\simulation_results.json")
+Results_dict = read_json_file(f"{Project_Folder}\\{Project_Name}\\simulation_results_L_comp.json")
 Simulations_list = list_folders(f"{Project_Folder}\\{Project_Name}\\Simulations")
 print(f"Simulations found:\n{Simulations_list}")
 Go_on = input(f"Found {len(Simulations_list)} simulations. Do you want to continue? Y/n > ")
@@ -43,12 +43,12 @@ Go_on = input(f"Found {len(Simulations_list)} simulations. Do you want to contin
 if Go_on.lower() == 'y':
     
     address_file = f"D:\\Davide\\BladeGenCode_Repository\\FrameworkVer2\\results_uitls\\{Project_Name}.txt"
-    '''
+    
     with open(address_file, 'a') as file:
         for sim in Simulations_list:
             print(f"Simulation: {sim}")
             file.write(f"{Project_Folder}\\{Project_Name}\\Simulations\\{sim}\\{sim}_files\\dp0\\CFX\\CFX\\CFXpre_case_001.res\n")
-    '''
+    
 
     state_file = r"D:\Davide\BladeGenCode_Repository\FrameworkVer2\results_uitls\postprocessing4calibration1D_candidacy.cst"
     expression_file = r"D:\Davide\BladeGenCode_Repository\FrameworkVer2\results_uitls\expressionlist4calibration1D.txt"

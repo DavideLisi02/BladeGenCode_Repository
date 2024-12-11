@@ -1,6 +1,11 @@
 import numpy as np
 from Folder_management import *
 
+# SETTINGS OF THE SIMULATED DATASET
+
+# Print Results & Conversion Output | Y/n = True/False
+print_results = False
+print_conversion_output = False
 
 # Beta at inlet and outlet from 1D
 beta_in_settings = 24.008 # (beta_2, beta in corrispondenza dell'hub all'inlet)
@@ -9,7 +14,6 @@ beta_out_settings = 35.15 # (beta_4, beta in corrispondenza dell'hub all'outlet)
 # HUB AND SHROUD PARAMETERS
 # Geometrical Parameters from 1D
 L_ind = 30 #30
-L_comp = 8 #8
 r2s = 5.6 #5.6
 r2h = 2 #2
 r4  = 10 #10
@@ -31,35 +35,28 @@ HubShr_bezier_N = 300 # Number of points for the hub and shroud bezier
 
 # DISCRETIZATION OF THE BETA/M% CURVE'S PARAMETERS
 # Discrtization of the parameter tau_0
-tau_0_N = 4 
-tau_0_max = 0.7 #   0 < tau_0_max < 1      and     tau_0_max > tau_0_min
-tau_0_min = 0.3 #   0 < tau_0_min < 1      and     tau_0_min < tau_0_min
+tau_0 = 0.42
 # Discrtization of the parameter tau_1
-tau_1_N = 4
-tau_1_max = -0.3  # 2 to have P1 at beta_ou + delta
-tau_1_min = -0.7  # - 1 to have P1 at bet_in - delta
+tau_1 = -0.6
 # Discrtization of the parameter w1
-w1_N = 3 
-w1_min = 1
-w1_max = 10 
+w1 = 5.5
+
+# DISCRETIZATION OF L_comp
+L_comp_N = 12
+L_comp_max = 8*1.5
+L_comp_min = 8*0.5
 
 # Folder Management Settings
-Project_Name = "Database_tau_w1_betacurve"
+Project_Name = "Database_L_comp_00"
 Project_Folder = "D:\\Davide"
 postproc_filename = "postprocessing.txt"
 ################################################################################################################
 # Valid only for Database_tau_w1_betacurve.py
-tau_0 = np.linspace(tau_0_min, tau_0_max, tau_0_N)
-tau_1 = np.linspace(tau_1_min, tau_1_max, tau_1_N)
-w1 = np.linspace(w1_min, w1_max, w1_N)
+L_comp = np.linspace(L_comp_min, L_comp_max, L_comp_N)
 ######################################################################################
 
-HubShroud_1D_dimensions = {'object':'HubShroud', 'HubShr_bezier_N':HubShr_bezier_N, 'definition':'xz', 'spline_degree':2, 'L_ind':L_ind,'L_comp':L_comp, 'r2s':r2s, 'r2h':r2h, 'r4':r4, 'b4':b4, 'r5':r5, 'w1_hb':w1_hb, 'w1_sh':w1_sh}
-
-data = { (i * tau_1_N * w1_N) + (j * w1_N) + k : {"tau_0": tau_0_ijk, "tau_1": tau_1_ijk, "w1":w1_ijk,"Results":None} #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
-                    for i,tau_0_ijk in enumerate(tau_0)
-                    for j,tau_1_ijk in enumerate(tau_1)
-                    for k,w1_ijk in enumerate(w1) }
+data =  { i: {"L_comp": L_comp_i,"Results":None} #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
+                    for i,L_comp_i in enumerate(L_comp)}
 
 Simulations_list = list_folders(f"{Project_Folder}\\{Project_Name}\\Simulations")
 
@@ -91,5 +88,5 @@ for sim in Simulations_list:
         print(f"BBB h0 S5: {BBB_h0_S5} J/kg")
 
         
-save_json(f"{Project_Folder}\\{Project_Name}\\RESULTS_Database_tau_w1_betacurve.json", data)
+save_json(f"{Project_Folder}\\{Project_Name}\\RESULTS_Database_L_comp_00.json", data)
 
