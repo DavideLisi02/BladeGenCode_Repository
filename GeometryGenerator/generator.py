@@ -30,7 +30,7 @@ Geometry = GeometrySettings(
 
 StateFile = StateFileModifier(
     Geometry,
-    defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi", # Path of the default geometry file, located in ...//utils//defaultBGI
+    defaultfilePath = f"defaultBGI\\LUS_General_OnlySpan0_Copy.bgi", # Path of the default geometry file, located in ...//utils//defaultBGI. Suggested: "defaultBGI\\LUS_General_OnlySpan0_Copy.bgi"
     destination_path = "D:\\Davide\\geometry_test.bgd", # Path where the modified geometry file will be saved
     std_BLADEGEN_Folder = "C:\\Program Files\\ANSYS Inc\\v242\\aisol\\BladeModeler\\BladeGen"  # Path of the BladeGen folders
     )
