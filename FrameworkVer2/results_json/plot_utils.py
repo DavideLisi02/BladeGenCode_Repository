@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -50,33 +49,31 @@ def plot_2d(results, labels, feature, n_data=300, log=False, cmap=None):
         min(xnew), max(xnew),
         min(ynew), max(ynew)
     )
+    vmin = 1.92
+    vmax = 1.97
+    if feature == "Efficiency_0t0":
+        vmin = 0.7735
+        vmax = 0.7790
     if feature == "Pressure_Ratio":
-        # plt.plot(results[:, 0], results[:, 1], 'r.')
-        imgplot = plt.imshow(
-            results_interp,
-            extent=extent,
-            aspect='auto',
-            origin='lower',
-            interpolation='none',
-            vmin = 1.92,
-            vmax = 1.97,
-            norm=LogNorm() if log else None
-        )
-    else:
-        # plt.plot(results[:, 0], results[:, 1], 'r.')
-        imgplot = plt.imshow(
-            results_interp,
-            extent=extent,
-            aspect='auto',
-            origin='lower',
-            interpolation='none',
-            norm=LogNorm() if log else None
-        )
+        vmin = 1.92
+        vmax = 1.97
+
+    # plt.plot(results[:, 0], results[:, 1], 'r.')
+    imgplot = plt.imshow(
+        results_interp,
+        extent=extent,
+        aspect='auto',
+        origin='lower',
+        interpolation='none',
+        vmin = vmin,
+        vmax = vmax,
+        norm=LogNorm() if log else None
+    )
 
     if cmap is not None:
         imgplot.set_cmap(cmap)
-    plt.xlabel(labels[0])
-    plt.ylabel(labels[1])
+    plt.xlabel(labels[0], fontsize=6) #added fontsize
+    plt.ylabel(labels[1], fontsize=6) #added fontsize
     cbar = plt.colorbar()
-    cbar.set_label(labels[2])
-
+    cbar.set_label(labels[2], fontsize=6) #added fontsize
+    cbar.ax.tick_params(labelsize=6) #added tick labelsize
