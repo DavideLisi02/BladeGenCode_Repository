@@ -1,4 +1,4 @@
-from utils.Bezier import * # maybe to be removed from here
+from utils.Bezier import * 
 from utils.GeometrySettings import *
 from utils.stateFileModifier import *
 
