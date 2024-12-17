@@ -1,78 +1,32 @@
- 2024/12/11 13:56:07 
+ 2024/12/17 15:43:30 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:56:09 
+ 2024/12/17 15:43:31 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:56:50 
+ 2024/12/17 15:44:11 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:56:50 
+ 2024/12/17 15:44:12 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:58:06 
+ 2024/12/17 15:45:25 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:58:07 
+ 2024/12/17 15:45:25 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:59:32 
+ 2024/12/17 15:46:39 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 13:59:33 
+ 2024/12/17 15:46:40 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 14:00:54 
+ 2024/12/17 15:47:45 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 14:00:55 
+ 2024/12/17 15:47:45 
 GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
 Units do not match variable 'epr streamwise'.
- 2024/12/11 14:02:13 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:02:14 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:03:29 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:03:30 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:04:46 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:04:46 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:06:03 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:06:04 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:07:23 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:07:24 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:08:43 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:08:44 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:10:06 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:10:06 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:11:35 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
- 2024/12/11 14:11:36 
-GeometricCCLObject::getUserVariableRange - Invalid coloring range for 'epr streamwise':
-Units do not match variable 'epr streamwise'.
+ 2024/12/17 15:48:43 
+DataReader::load - File 'D:/Davide/Database_w1_hbsh_00/Simulations/UNMODgeometry_4__10/UNMODgeometry_4__10_files/dp0/CFX/CFX/CFXpre_case_001.res' does not exist or is not readable.

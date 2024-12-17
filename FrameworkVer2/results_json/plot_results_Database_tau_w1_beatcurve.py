@@ -34,7 +34,6 @@ for key in data.keys():
     data[key]["Results"]["Efficiency_0t0"] = efficiency
 
 
-
 # Extract data for plotting
 w1_values = sorted(set(data[key]['w1'] for key in data.keys()))
 

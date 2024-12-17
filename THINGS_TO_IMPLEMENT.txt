@@ -1,5 +1,7 @@
 Run simulations
     [x] cambia L_comp 
-    [ ] cambia w HubShr
+    [ ] cambia w HubShr min, max : [0.5, 5.5]
+    mostra screenshot da bladegen per i meridional path
+    mostra risultati simulazione lus senza modifiche
 
         

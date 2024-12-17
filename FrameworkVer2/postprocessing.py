@@ -25,7 +25,7 @@ os.chdir(dname)
 
 #####################################################################################################################################################
 
-Project_Name = "Database_L_comp_00"
+Project_Name = "Database_w1_hbsh_00"
 Project_Folder = "D:\\Davide"
 
 #####################################################################################################################################################
@@ -35,7 +35,7 @@ exe_path = ansys_path + r"\CFD-Post\bin\cfdpost.exe"
 
 postproc_filename = "postprocessing.txt"
 
-Results_dict = read_json_file(f"{Project_Folder}\\{Project_Name}\\simulation_results_L_comp.json")
+Results_dict = read_json_file(f"{Project_Folder}\\{Project_Name}\\simulation_results_w1_hbsh_00.json")
 Simulations_list = list_folders(f"{Project_Folder}\\{Project_Name}\\Simulations")
 print(f"Simulations found:\n{Simulations_list}")
 Go_on = input(f"Found {len(Simulations_list)} simulations. Do you want to continue? Y/n > ")

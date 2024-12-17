@@ -14,13 +14,14 @@ beta_out_settings = 35.15 # (beta_4, beta in corrispondenza dell'hub all'outlet)
 # HUB AND SHROUD PARAMETERS
 # Geometrical Parameters from 1D
 L_ind = 30 #30
-L_comp = 8 # 8
 r2s = 5.6 #5.6
 r2h = 2 #2
 r4  = 10 #10
 b4  = 1 #1
 r5  = 30 #30
-
+# Hub ans Shroud | Weights for the control point of the hub and shroud profiles
+w1_hb = 1
+w1_sh = 1
 # Splitter LE Cut, Meridional Target
 splitter_LE_meridional_target_hub_settings = 0.3
 splitter_LE_meridional_target_sh_settings = 0.3
@@ -40,21 +41,22 @@ tau_1 = -0.6
 # Discrtization of the parameter w1
 w1 = 5.5
 
-# DISCRETIZATION OF w1_hb
-# Hub ans Shroud | Weights for the control point of the hub and shroud profiles
-w1_hbsh = [0.5,1,2.5,5,10]
+# DISCRETIZATION OF L_comp
+L_comp_N = 12
+L_comp_max = 8*1.5
+L_comp_min = 8*0.5
 
 # Folder Management Settings
-Project_Name = "Database_w1_hbsh_00"
+Project_Name = "Database_L_comp_00"
 Project_Folder = "D:\\Davide"
 postproc_filename = "postprocessing.txt"
 ################################################################################################################
 # Valid only for Database_tau_w1_betacurve.py
-
+L_comp = np.linspace(L_comp_min, L_comp_max, L_comp_N)
 ######################################################################################
 
-data =  { i: {"w1_hbsh": w1_hbsh_i,"Results":None} #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
-                    for i,w1_hbsh_i in enumerate(w1_hbsh)}
+data =  { i: {"L_comp": L_comp_i,"Results":None} #The "Results" string at the end is where the results will be stored (Still to be implemented), while the first one is the index
+                    for i,L_comp_i in enumerate(L_comp)}
 
 Simulations_list = list_folders(f"{Project_Folder}\\{Project_Name}\\Simulations")
 
